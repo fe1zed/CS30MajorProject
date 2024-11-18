@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6"
+  },
+  "include": [
+    "*.js",
+    "**/*.js",
+    "c:\\Users\\7009528\\.vscode\\extensions\\wmcicompsci.cs30-p5-1.9.0\\p5types\\global.d.ts"
+  ]
+}
