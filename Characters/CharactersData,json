@@ -1,0 +1,11 @@
+{ 
+    "Characters" : [
+        {
+            "DarkKnight": [
+                {
+                    "speed": 35
+                }
+            ]
+        }
+    ]
+}

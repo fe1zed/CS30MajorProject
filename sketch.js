@@ -39,6 +39,8 @@ class Player {
   }
 }
 
+let charactersData;
+
 let player = new Player(200, 200, 5, 100);
 
 function preload() {
@@ -47,6 +49,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  charactersData = JSON.parse(charactersData);
 }
 
 function draw() {
@@ -70,3 +73,5 @@ function windowResized() {
 // Take characters from here
 // https://ezgif.com/webp-to-gif/ezgif-3-d32a219e48.webp 
 // convert here to .gif
+
+// Linhk to join https://prod.liveshare.vsengsaas.visualstudio.com/join?00E4ADAA11E7DCE9480E1E4B502A36560F78
