@@ -34,22 +34,25 @@ class Player {
   }
 
   display() {
-    //circle(player.x, player.y, 35);
     image(this.image, this.x, this.y, this.size, this.size);
   }
 }
 
-let charactersData;
+let charactersDataJson;
 
 let player = new Player(200, 200, 5, 100);
+let charactersName = "Priestess";
 
 function preload() {
-  player.image = loadImage("Characters/DarkKnightGif.gif");
+  charactersDataJson = loadJSON('Characters/CharactersData.json');  
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  charactersData = JSON.parse(charactersData);
+
+  player.image = loadImage(charactersDataJson["Characters"][charactersName]["image"]);
+  player.speed = charactersDataJson["Characters"][charactersName]["speed"];
+  player.size = charactersDataJson["Characters"][charactersName]["size"];
 }
 
 function draw() {
@@ -57,7 +60,6 @@ function draw() {
   player.move();
   player.display();
 }
-
 
 function windowResized() {
   if (windowWidth < windowHeight) {
