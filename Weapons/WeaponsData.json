@@ -1,0 +1,27 @@
+{ 
+    "Weapons" : {
+        "Wooden Cross": {
+            "image": "Weapons/WoodenCross.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 42,
+            "pixelHeight": 186
+        },
+
+        "Jack": {
+            "image": "Weapons/Jack.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 120,
+            "pixelHeight": 20
+        }
+    }
+}

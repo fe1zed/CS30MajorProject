@@ -2,14 +2,65 @@
     "Characters" : {
         "DarkKnight": {
             "image": "Characters/DarkKnightGif.gif",
-            "speed": 5,
-            "size": 85
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 6,
+            "armor": 5,
+            "energy": 180,
+            "criticalChance": 5,
+            "meleeDamage": 4,
+            "enhanceStartingWeapon": "Bad Pistol",
+            "uniqueAbility": "Dual Wield",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            }
         },
 
         "Priestess" : {
             "image": "Characters/PriestessGif.gif",
-            "speed": 5,
-            "size": 85
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 3,
+            "armor": 5,
+            "energy": 200,
+            "criticalChance": 0,
+            "meleeDamage": 3,
+            "enhanceStartingWeapon": "Wooden Cross",
+            "uniqueAbility": "Regeneration Pact",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            }
+        },
+
+        "Rogue" : {
+            "image": "Characters/RogueGif.gif",
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 5,
+            "armor": 3,
+            "energy": 180,
+            "criticalChance": 10,
+            "meleeDamage": 5,
+            "enhanceStartingWeapon": "Jack and Mary",
+            "uniqueAbility": "Dodge",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            }
         }
     }
 }
