@@ -60,9 +60,18 @@ class Player {
 
       weaponWidth = weaponWidth / this.size * 30; 
       weaponHeight = weaponHeight / this.size * 30;
+
+      let offsetX = 0;
+      let offsetY = 0;
   
-      let offsetX = this.x + this.size / 2 + this.size / 4; 
-      let offsetY = this.y + this.size / 2 + this.size / 4;
+      if (this.MoveDirection == "right") {
+        offsetX = this.x + this.size / 2 + this.size / 4;
+        offsetY = this.y + this.size / 2 + this.size / 4;
+      }
+      else {
+        offsetX = this.x + this.size / 4;
+        offsetY = this.y + this.size / 2 + this.size / 4;
+      }
   
       let angle = atan2(mouseY - offsetY, mouseX - offsetX);
   
@@ -98,8 +107,8 @@ let weaponsDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
-let charactersName = "Alchemist";
-let weaponName = "Dormant Bubble Machine";
+let charactersName = "Priestess";
+let weaponName = "Wooden Cross";
 
 
 function preload() {
