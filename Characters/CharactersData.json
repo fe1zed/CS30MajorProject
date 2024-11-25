@@ -61,6 +61,69 @@
                 "energy": 20,
                 "skillCooldown": 2
             }
+        },
+
+        "Witch" : {
+            "image": "Characters/WitchGif.gif",
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 3,
+            "armor": 5,
+            "energy": 240,
+            "criticalChance": 0,
+            "meleeDamage": 3,
+            "enhanceStartingWeapon": "The Code",
+            "uniqueAbility": "Lightning Strike",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            }
+        },
+
+        "Assasin" : {
+            "image": "Characters/AssasinGif.gif",
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 4,
+            "armor": 5,
+            "energy": 180,
+            "criticalChance": 10,
+            "meleeDamage": 5,
+            "enhanceStartingWeapon": "Blood Blade",
+            "uniqueAbility": "Dark Blade",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            } 
+        },
+
+        "Alchemist" : {
+            "image": "Characters/AlchemistGif.gif",
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 5,
+            "armor": 5,
+            "energy": 180,
+            "criticalChance": 5,
+            "meleeDamage": 4,
+            "enhanceStartingWeapon": "Dormant Bubble Machine",
+            "uniqueAbility": "Gas Grenade",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            } 
         }
     }
 }

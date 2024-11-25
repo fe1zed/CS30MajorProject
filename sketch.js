@@ -74,22 +74,32 @@ class Player {
       pop();
     } 
     else {
-      let weaponHeight = this.size;
-      let aspectRatio = weaponsDataJson["Weapons"][weaponName]["pixelWidth"] / weaponsDataJson["Weapons"][weaponName]["pixelHeight"];
-      let weaponWidth = weaponHeight * aspectRatio; 
+      let weaponWidth = weaponsDataJson["Weapons"][weaponName]["pixelWidth"];  // 120
+      let weaponHeight = weaponsDataJson["Weapons"][weaponName]["pixelHeight"]; // 20
+
+      weaponWidth = weaponWidth / this.size * 30; 
+      weaponHeight = weaponHeight / this.size * 30;
 
       let offsetX = this.MoveDirection === "right" ? weaponWidth : this.size - weaponWidth * 2; 
-      image(this.weaponImage, this.x + offsetX, this.y, weaponWidth, weaponHeight); 
+
+      // Shownig only <<Staff>> weapons along player height 
+      if (weaponsDataJson["Weapons"][weaponName]["type"] == "Staff")
+        image(this.weaponImage, this.x + offsetX, this.y + weaponHeight / 2 - 10, weaponWidth, weaponHeight); 
+      else {
+        image(this.weaponImage, this.x + offsetX, this.y + this.size / 2 + 10, weaponWidth, weaponHeight);
+      }
     }
   }
 }
 
+// Data containers
 let charactersDataJson;
 let weaponsDataJson;
 
+// Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
-let charactersName = "DarkKnight";
-let weaponName = "Jack";
+let charactersName = "Alchemist";
+let weaponName = "Dormant Bubble Machine";
 
 
 function preload() {
