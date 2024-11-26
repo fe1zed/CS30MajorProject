@@ -64,7 +64,7 @@ class Player {
       let offsetX = 0;
       let offsetY = 0;
   
-      if (this.MoveDirection == "right") {
+      if (this.MoveDirection === "right") {
         offsetX = this.x + this.size / 2 + this.size / 4;
         offsetY = this.y + this.size / 2 + this.size / 4;
       }
@@ -74,11 +74,19 @@ class Player {
       }
   
       let angle = atan2(mouseY - offsetY, mouseX - offsetX);
-  
+
       push();
       translate(offsetX, offsetY); 
       rotate(angle); 
       imageMode(CENTER);
+      // Flip weapon so doesnt go upsidedown
+      if (angle >= -1.5 && angle <= 1.5) {
+        scale(1, 1);
+      }
+      else {
+        scale(1, -1);
+      }
+  
       image(this.weaponImage, 0, 0, weaponWidth, weaponHeight); 
       pop();
     } 
@@ -92,11 +100,26 @@ class Player {
       let offsetX = this.MoveDirection === "right" ? weaponWidth : this.size - weaponWidth * 2; 
 
       // Shownig only <<Staff>> weapons along player height 
-      if (weaponsDataJson["Weapons"][weaponName]["type"] == "Staff")
+      if (weaponsDataJson["Weapons"][weaponName]["type"] === "Staff") {
         image(this.weaponImage, this.x + offsetX, this.y + weaponHeight / 2 - 10, weaponWidth, weaponHeight); 
+      }
       else {
         image(this.weaponImage, this.x + offsetX, this.y + this.size / 2 + 10, weaponWidth, weaponHeight);
       }
+    }
+  }
+
+  attack() {
+    let weaponType = weaponsDataJson["Weapons"][weaponName]["type"];
+
+    if (weaponType === "Gun") {
+      console.log("Sending Bullet");
+    }
+    else if (weaponType === "ColdWeapon") {
+      console.log("Throwing Cold Weapon");
+    }
+    else if (weaponType === "InHand" || weaponType === "Staff") {
+      console.log("Magic cast");
     }
   }
 }
@@ -108,8 +131,7 @@ let weaponsDataJson;
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
 let charactersName = "Priestess";
-let weaponName = "Wooden Cross";
-
+let weaponName = "default";
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
@@ -122,6 +144,10 @@ function setup() {
   player.image = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
   player.speed = charactersDataJson[CHARACTERSPATH][charactersName]["speed"];
   player.size = charactersDataJson[CHARACTERSPATH][charactersName]["size"];
+
+  if (weaponName === "default") { // set to default weapon used by player if not assigned special
+    weaponName = charactersDataJson[CHARACTERSPATH][charactersName]["enhanceStartingWeapon"];
+  }
 
   player.weaponImage = loadImage(weaponsDataJson["Weapons"][weaponName]["image"]);
 }
@@ -142,6 +168,10 @@ function windowResized() {
   }
 }
 
+function mouseClicked(event) {
+  player.attack();
+}
+
 
 // https://soul-knight.fandom.com/wiki/Knight
 // Take characters from here
@@ -149,3 +179,7 @@ function windowResized() {
 // convert here to .gif
 
 // Linhk to join https://prod.liveshare.vsengsaas.visualstudio.com/join?00E4ADAA11E7DCE9480E1E4B502A36560F78
+
+
+
+//https://static.wikia.nocookie.net/soul-knight/images/0/00/Knight_25_chaotic_strike.png/revision/latest?cb=20241125030851

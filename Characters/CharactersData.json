@@ -52,7 +52,7 @@
             "energy": 180,
             "criticalChance": 10,
             "meleeDamage": 5,
-            "enhanceStartingWeapon": "Jack and Mary",
+            "enhanceStartingWeapon": "Jack",
             "uniqueAbility": "Dodge",
 
             "Upgrade" : {
