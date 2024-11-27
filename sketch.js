@@ -17,6 +17,7 @@ class Player {
     this.size = size;
     this.MoveDirection = "right";
     this.weaponImage = null;
+    this.weaponType = null;
   }
 
   move() {
@@ -54,10 +55,10 @@ class Player {
   }
   
   displayWeapon() {
-    if (weaponsDataJson["Weapons"][weaponName]["followCursor"]) {
-      let weaponWidth = weaponsDataJson["Weapons"][weaponName]["pixelWidth"];  // 120
-      let weaponHeight = weaponsDataJson["Weapons"][weaponName]["pixelHeight"]; // 20
+    let weaponWidth = weaponsDataJson["Weapons"][weaponName]["pixelWidth"];  
+    let weaponHeight = weaponsDataJson["Weapons"][weaponName]["pixelHeight"]; 
 
+    if (weaponsDataJson["Weapons"][weaponName]["followCursor"]) {
       weaponWidth = weaponWidth / this.size * 30; 
       weaponHeight = weaponHeight / this.size * 30;
 
@@ -91,9 +92,6 @@ class Player {
       pop();
     } 
     else {
-      let weaponWidth = weaponsDataJson["Weapons"][weaponName]["pixelWidth"];  // 120
-      let weaponHeight = weaponsDataJson["Weapons"][weaponName]["pixelHeight"]; // 20
-
       weaponWidth = weaponWidth / this.size * 30; 
       weaponHeight = weaponHeight / this.size * 30;
 
@@ -114,6 +112,31 @@ class Player {
 
     if (weaponType === "Gun") {
       console.log("Sending Bullet");
+
+      let bullet = {
+        size: 10,
+        image: weaponsDataJson["Weapons"][weaponName]["Bullet"]["image"],
+        speed: weaponsDataJson["Weapons"][weaponName]["Bullet"]["speed"],
+        dx: 0,
+        dy: 0,
+      };
+
+      if (this.MoveDirection === "right") {
+        bullet.x = this.x + this.size / 2 + this.size / 4;
+        bullet.y = this.y + this.size / 2 + this.size / 4;
+      }
+      else {
+        bullet.x = this.x + this.size / 4;
+        bullet.y = this.y + this.size / 2 + this.size / 4;
+      }
+
+      bullet.dx = -(bullet.x - mouseX) / 30;
+      bullet.dy = -(bullet.y - mouseY) / 30;
+
+      console.log("dX: " + bullet.dx);
+      console.log("dY: " + bullet.dy);
+
+      bullets.push(bullet);
     }
     else if (weaponType === "ColdWeapon") {
       console.log("Throwing Cold Weapon");
@@ -130,8 +153,10 @@ let weaponsDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
-let charactersName = "Priestess";
+let charactersName = "Alchemist";
 let weaponName = "default";
+
+let bullets = [];
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
@@ -150,6 +175,7 @@ function setup() {
   }
 
   player.weaponImage = loadImage(weaponsDataJson["Weapons"][weaponName]["image"]);
+  player.weaponType = weaponsDataJson["Weapons"][weaponName]["type"];
 }
 
 function draw() {
@@ -157,6 +183,18 @@ function draw() {
   player.move();
   player.display();
   player.displayWeapon();
+
+  if (player.weaponType) {
+    displayBullets(); 
+  }
+}
+
+function displayBullets() {
+  for (let bullet of bullets) {
+    circle(bullet.x, bullet.y, bullet.size);
+    bullet.x += bullet.dx;
+    bullet.y += bullet.dy;
+  }
 }
 
 function windowResized() {
