@@ -137,7 +137,7 @@ class Player {
           x: offsetX,
           y: offsetY,
           size: 10,
-          image: weaponData["image"],
+          image: loadImage(weaponData["image"]),
           speed: weaponData["speed"],
           dx: (dx / length) * weaponData["speed"],
           dy: (dy / length) * weaponData["speed"]
@@ -163,7 +163,7 @@ let weaponsDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
-let charactersName = "Alchemist";
+let charactersName = "DarkKnight";
 let weaponName = "default";
 
 let bullets = [];
@@ -189,17 +189,18 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  //background(37, 52, 93);
+  background(53, 80, 96);
   player.render();
 
-  if (player.weaponType) {
+  if (player.weaponType === "Gun") {
     displayBullets(); 
   }
 }
 
 function displayBullets() {
   for (let bullet of bullets) {
-    circle(bullet.x, bullet.y, bullet.size);
+    image(bullet.image, bullet.x, bullet.y, bullet.size, bullet.size);
     bullet.x += bullet.dx;
     bullet.y += bullet.dy;
   }

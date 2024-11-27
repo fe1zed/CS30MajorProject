@@ -39,7 +39,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "pathToBulletImage",
+                "image": "Weapons/Bullets/BadPistolBullet.png",
                 "speed": 10
             }
         },
@@ -83,7 +83,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "pathToBulletImage",
+                "image": "Weapons/Bullets/MachineBullet.png",
                 "speed": 10
             }
         }
