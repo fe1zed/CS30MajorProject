@@ -40,7 +40,9 @@
 
             "Bullet" : {
                 "image": "Weapons/Bullets/BadPistolBullet.png",
-                "speed": 10
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 12 
             }
         },
 
@@ -84,7 +86,9 @@
 
             "Bullet" : {
                 "image": "Weapons/Bullets/MachineBullet.png",
-                "speed": 10
+                "speed": 10,
+                "pixelWidth": 29,
+                "pixelHeight": 29 
             }
         }
     }

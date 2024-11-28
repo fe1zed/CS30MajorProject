@@ -26,18 +26,24 @@ class Player {
   }
 
   move() {
-    const directions = {
-      [KEYS.LEFT]: () => {  this.x -= this.speed; 
-                            this.MoveDirection = "left"; },
-      [KEYS.RIGHT]: () => { this.x += this.speed; 
-                            this.MoveDirection = "right"; },
+    const directions = {                          
+      [KEYS.LEFT]: () => {  
+        this.x -= this.speed; 
+        this.MoveDirection = "left"; },
+      [KEYS.RIGHT]: () => { 
+        this.x += this.speed; 
+        this.MoveDirection = "right"; },
       
-      [KEYS.UP]: () => {    this.y -= this.speed; },
-      [KEYS.DOWN]: () => {  this.y += this.speed; }
+      [KEYS.UP]: () => {    
+        this.y -= this.speed; },
+      [KEYS.DOWN]: () => {  
+        this.y += this.speed; }
     };
   
     for (let key in directions) {
-      if (keyIsDown(key)) directions[key]();
+      if (keyIsDown(key)) { 
+        directions[key]();
+      }
     }
   }
   
@@ -61,9 +67,10 @@ class Player {
     let weaponHeight = (pixelHeight / this.size) * 30;
 
     if (followCursor) {
-        this.displayWeaponFollowCursor(weaponWidth, weaponHeight);
-    } else {
-        this.displayWeaponStatic(weaponWidth, weaponHeight, type);
+      this.displayWeaponFollowCursor(weaponWidth, weaponHeight);
+    }
+    else {
+      this.displayWeaponStatic(weaponWidth, weaponHeight, type);
     }
   }
 
@@ -72,82 +79,83 @@ class Player {
       ? this.x + this.size / 2 + this.size / 4
       : this.x + this.size / 4;
 
-      let offsetY = this.y + this.size * 0.75;
+    let offsetY = this.y + this.size * 0.75;
 
-      let angle = atan2(mouseY - offsetY, mouseX - offsetX);
+    let angle = atan2(mouseY - offsetY, mouseX - offsetX);
 
-      push();
-      translate(offsetX, offsetY);
-      rotate(angle);
-      imageMode(CENTER);
-      scale(1, angle >= -1.5 && angle <= 1.5 ? 1 : -1);
-      image(this.weaponImage, 0, 0, weaponWidth, weaponHeight);
-      pop();
+    push();
+    translate(offsetX, offsetY);
+    rotate(angle);
+    imageMode(CENTER);
+    scale(1, angle >= -1.5 && angle <= 1.5 ? 1 : -1);
+    image(this.weaponImage, 0, 0, weaponWidth, weaponHeight);
+    pop();
   }
 
   displayWeaponStatic(weaponWidth, weaponHeight, type) {
-      let offsetX = this.MoveDirection === "right"
-          ? weaponWidth
-          : this.size - weaponWidth * 2;
+    let offsetX = this.MoveDirection === "right"
+      ? weaponWidth
+      : this.size - weaponWidth * 2;
 
-      let offsetY = type === "Staff"
-          ? this.y + weaponHeight / 2 - 10
-          : this.y + this.size / 2 + 10;
+    let offsetY = type === "Staff"
+      ? this.y + weaponHeight / 2 - 10
+      : this.y + this.size / 2 + 10;
 
-      image(this.weaponImage, this.x + offsetX, offsetY, weaponWidth, weaponHeight);
+    image(this.weaponImage, this.x + offsetX, offsetY, weaponWidth, weaponHeight);
   }
 
   attack() {
     let weaponType = weaponsDataJson["Weapons"][weaponName]["type"];
 
     if (weaponType === "Gun") {
-        this.shootBullet();
+      this.shootBullet();
     } 
     else if (weaponType === "ColdWeapon") {
-        console.log("Throwing Cold Weapon");
+      console.log("Throwing Cold Weapon");
     } 
     else if (weaponType === "InHand" || weaponType === "Staff") {
-        console.log("Magic cast");
+      console.log("Magic cast");
     } 
     else {
-        console.warn("Unknown weapon type:", weaponType);
+      console.warn("Unknown weapon type:", weaponType);
     }
   }
 
   shootBullet() {
-      console.log("Sending Bullet");
+    console.log("Sending Bullet");
 
-      let bullet = this.createBullet();
-      bullets.push(bullet);
+    let bullet = this.createBullet();
+    bullets.push(bullet);
   }
 
   createBullet() {
-      let weaponData = weaponsDataJson["Weapons"][weaponName]["Bullet"];
-      let offsetX = this.MoveDirection === "right" 
-        ? this.x + this.size / 2 + this.size / 4
-        : this.x + this.size / 4;
+    let weaponData = weaponsDataJson["Weapons"][weaponName]["Bullet"];
+    let offsetX = this.MoveDirection === "right" 
+      ? this.x + this.size / 2 + this.size / 4
+      : this.x + this.size / 4;
 
-      let offsetY = this.y + this.size * 0.75;
+    let offsetY = this.y + this.size * 0.75;
 
-      let dx = mouseX - offsetX;
-      let dy = mouseY - offsetY;
-      let length = sqrt(dx * dx + dy * dy);
+    let dx = mouseX - offsetX;
+    let dy = mouseY - offsetY;
+    let length = sqrt(dx * dx + dy * dy);
 
-      return {
-          x: offsetX,
-          y: offsetY,
-          size: 10,
-          image: loadImage(weaponData["image"]),
-          speed: weaponData["speed"],
-          dx: (dx / length) * weaponData["speed"],
-          dy: (dy / length) * weaponData["speed"]
-      };
+    return {
+      x: offsetX,
+      y: offsetY,
+      pixelWidth: weaponData["pixelWidth"],
+      pixelHeight: weaponData["pixelHeight"],
+      image: loadImage(weaponData["image"]),
+      speed: weaponData["speed"],
+      dx: (dx / length) * weaponData["speed"],
+      dy: (dy / length) * weaponData["speed"],
+      //rotationAngle: 10,
+    };
   }
 
   normalizeVector(dx, dy) {
     const length = sqrt(dx * dx + dy * dy);
-    return { x: dx / length,
-             y: dy / length };
+    return { x: dx / length, y: dy / length };
   }
 
   render() {
@@ -200,9 +208,14 @@ function draw() {
 
 function displayBullets() {
   for (let bullet of bullets) {
-    image(bullet.image, bullet.x, bullet.y, bullet.size, bullet.size);
+    //push();
+    //translate(player.x, player.y);
+    //rotate(bullet.angle);
+    //imageMode(CENTER);
+    image(bullet.image, bullet.x - bullet.pixelWidth / 2, bullet.y - bullet.pixelHeight / 2, bullet.pixelWidth, bullet.pixelHeight);
     bullet.x += bullet.dx;
     bullet.y += bullet.dy;
+    //pop();
   }
 }
 
