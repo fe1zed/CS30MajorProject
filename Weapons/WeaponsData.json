@@ -23,7 +23,9 @@
             "followCursor": true,
             "pixelWidth": 120,
             "pixelHeight": 20,
-            "type": "ColdWeapon"
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
         },
 
         "Bad Pistol": {
@@ -56,7 +58,14 @@
             "followCursor": false,
             "pixelWidth": 114,
             "pixelHeight": 78,
-            "type": "InHand"
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/TheCodeBullet.png",
+                "speed": 10,
+                "pixelWidth": 10,
+                "pixelHeight": 10 
+            }
         },
 
         "Blood Blade": {
@@ -69,7 +78,8 @@
             "followCursor": true,
             "pixelWidth": 192,
             "pixelHeight": 24,
-            "type": "ColdWeapon"
+            "type": "ColdWeapon",
+            "propelling": false
         },
 
         "Dormant Bubble Machine": {
@@ -85,10 +95,10 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/MachineBullet.png",
+                "image": "Weapons/Bullets/DormantBubbleMachineBullet.png",
                 "speed": 10,
-                "pixelWidth": 29,
-                "pixelHeight": 29 
+                "pixelWidth": 30,
+                "pixelHeight": 30 
             }
         }
     }
