@@ -1,10 +1,14 @@
 {
     "Common": {
+        "" : {
 
+        }
     },
 
     "Mini-Boss": {
+        "" : {
 
+        }
     },
 
     "Boss": {
@@ -14,7 +18,11 @@
             "deadImage": "Enemies/Boss/Queen/QueenDead.png",
             "pixelWidth": 288,
             "pixelHeight": 228,
-            "health": 1000
+            "health": 100
+        },
+
+        "" : {
+
         }
     }
 }

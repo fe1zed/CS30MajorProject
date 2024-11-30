@@ -124,8 +124,6 @@ class Player {
   }
 
   shootBullet() {
-    console.log("Sending Bullet");
-
     let bullet = this.createBullet();
     bullets.push(bullet);
   }
@@ -166,6 +164,7 @@ class Player {
       speed: weaponData["speed"],
       dx: (dx / length) * weaponData["speed"],
       dy: (dy / length) * weaponData["speed"],
+      damage: weaponsDataJson[WEAPONSPATH][weaponName]["damage"],
     };
   }
 
@@ -182,19 +181,17 @@ class Player {
 }
 
 class Enemy {
-  constructor(x, y, pixelWidth, pixelHeight, imagePath, attackImagePath, deadImagePath, health) {
+  constructor(x, y, pixelWidth, pixelHeight, health) {
     this.x = x;
     this.y = y;
     this.pixelWidth = pixelWidth;
     this.pixelHeight = pixelHeight;
-    this.heath = health;
+    this.health = health;
+    this.maxHealth = health;
     this.alive = true;
 
-    this.imagePath = imagePath;
     this.image = null;
-    this.deadImagePath = deadImagePath;
     this.deadImage = null;
-    this.attackImagePath = attackImagePath;
     this.attackImage = null
   }
 
@@ -205,10 +202,14 @@ class Enemy {
   takeDamage(damage) {
     if (!this.alive) return;
 
-    this.heath -= 10;
+    this.health -= damage;
 
-    console.log("Enemy took", damage, "damage!");
-    if (this.heath <= 0) {
+    console.log("Enemy took", damage, "damage! Hp left:", this.health);
+
+    if (this.health < this.maxHealth / 2 && this.health > 0) {
+      this.image = this.attackImage;
+    }
+    else if (this.health <= 0) {
       this.die();
     }
   }
@@ -220,8 +221,27 @@ class Enemy {
     // Delete later 
   }
 
+  displayHealthBar() {
+    let barWidth = this.pixelWidth - this.pixelWidth / 3; 
+    let barHeight = 10; 
+    let barX = this.x + this.pixelWidth / 6; 
+    let barY = this.y - 20; 
+
+    let healthRatio = this.health / this.maxHealth;
+    let filledWidth = barWidth * healthRatio;
+
+    stroke(0);
+    fill(0, 0, 0); 
+    rect(barX, barY, barWidth, barHeight);
+
+    fill(255, 0, 0);
+    rect(barX, barY, filledWidth, barHeight);
+  }
+
   render() {
     this.display();
+    if (this.alive)
+      this.displayHealthBar();
   }
 }
 
@@ -306,9 +326,8 @@ function draw() {
         bullet.x + bullet.pixelWidth > enemy.x &&
         bullet.y < enemy.y + enemy.pixelHeight &&
         bullet.y + bullet.pixelHeight > enemy.y) {
-          console.log("Enemy hit!");
-          enemy.takeDamage(10); // Метод получения урона у врага
-          bullets.splice(bullets.indexOf(bullet), 1); // Удаление пули
+          enemy.takeDamage(bullet.damage); 
+          bullets.splice(bullets.indexOf(bullet), 1);
           break;
       }
     }
@@ -348,18 +367,18 @@ function displayBullets() {
 
 function createEnemy(enemyType, enemyName) {
   let enemyData = getEnemieDataFromJSONByTypeAndName(enemyType, enemyName);
-  let newEnemy = new Enemy(400, 100, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.imagePath, enemyData.attackImagePath, enemyData.deadImagePath, enemyData.health)
-  newEnemy.image = loadImage(enemyData.imagePath);
-  newEnemy.deadImage = loadImage(enemyData.deadImagePath);
-  newEnemy.attackImage = loadImage(enemyData.attackImagePath);
+  let newEnemy = new Enemy(400, 100, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health)
+  newEnemy.image = loadImage(enemyData.image);
+  newEnemy.deadImage = loadImage(enemyData.deadImage);
+  newEnemy.attackImage = loadImage(enemyData.attackImage);
   enemies.push(newEnemy); 
 }
 
 function getEnemieDataFromJSONByTypeAndName(enemyType, enemieName) {
   return {
-    imagePath: enemiesDataJson[enemyType][enemieName]["image"],
-    attackImagePath: enemiesDataJson[enemyType][enemieName]["attackImage"],
-    deadImagePath: enemiesDataJson[enemyType][enemieName]["deadImage"],
+    image: enemiesDataJson[enemyType][enemieName]["image"],
+    attackImage: enemiesDataJson[enemyType][enemieName]["attackImage"],
+    deadImage: enemiesDataJson[enemyType][enemieName]["deadImage"],
     pixelWidth: enemiesDataJson[enemyType][enemieName]["pixelWidth"],
     pixelHeight: enemiesDataJson[enemyType][enemieName]["pixelHeight"],
     health: enemiesDataJson[enemyType][enemieName]["health"]
