@@ -180,6 +180,47 @@ class Player {
   }
 }
 
+class Enemy {
+  constructor(x, y, pixelWidth, pixelHeight, imagePath, deadImagePath) {
+    this.x = x;
+    this.y = y;
+    this.pixelWidth = pixelWidth;
+    this.pixelHeight = pixelHeight;
+    this.imagePath = imagePath;
+    this.image = null;
+    this.heath = 100;
+    this.deadImagePath = deadImagePath;
+    this.deadImage = null;
+    this.alive = true;
+  }
+
+  display() {
+    image(this.image, this.x, this.y, this.pixelWidth, this.pixelHeight);
+  }
+
+  takeDamage(damage) {
+    if (!this.alive) return;
+
+    this.heath -= 10;
+
+    console.log("Enemy took", damage, "damage!");
+    if (this.heath <= 0) {
+      this.die();
+    }
+  }
+
+  die() {
+    console.log("Enemy dead");
+    this.alive = false;
+    this.image = this.deadImage;
+    // Delete later 
+  }
+
+  render() {
+    this.display();
+  }
+}
+
 // Data containers
 let charactersDataJson;
 let weaponsDataJson;
@@ -189,18 +230,36 @@ let player = new Player(200, 200, 5, 100);
 let charactersName = "DarkKnight"; 
 let weaponName = "default";
 
+let bgImage = null;
+let heartImage = null;
+let armorImage = null;
+let energyImage = null;
+
+//                              <-- DATA TABLE WITH INFO OF CHARACTERS -->
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
 //  NAME   >>  | DarkKnight | Priestess     | Rogue   | Witch     | Assasin     | Alchemist               | 
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
 //  WEAPON >>  | Bad Pistol | Wooden Cross  | Jack    | The Code  | Blood Blade | Dormant Bubble Machine  | 
 //    : TYPE?  |   (Gun)    |    (Staff)    |(Cold Wp)| (In Hand) |  (Cold Wp)  |         (Gun)           |
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
+//  HEALTH >>  |     6      |       3       |    5    |     3     |      4      |           5             | 
+//         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
+//  ARMOR  >>  |     5      |       5       |    3    |     5     |      5      |           5             |
+//         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
+//  ENERGY >>  |    180     |      200      |   180   |    240    |     180     |          180            |
+//         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
 
 let bullets = [];
+let enemies = [];
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
   weaponsDataJson = loadJSON(WEAPONSPATH + '/WeaponsData.json');  
+
+  bgImage = loadImage('UI/BgNEW2.png');
+  heartImage = loadImage('UI/Heart.png');
+  armorImage = loadImage('UI/Armor.png');
+  energyImage = loadImage('UI/Energy.png');
 }
 
 function setup() {
@@ -222,13 +281,37 @@ function setup() {
   player.weaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]);
   player.weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
   player.weaponPropelling = player.weaponType === "ColdWeapon"? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"]: false;
+
+  createEnemy(300, 200, 288, 288, "Enemies/Boss/Queen/QueenEnraged.gif", "Enemies/Boss/Queen/QueenDead.png");
 }
 
 function draw() {
-  //background(37, 52, 93);
   background(53, 80, 96);
+
+  // ----- ENEMIES -----
+  for (let enemy of enemies) {
+    enemy.render();
+  }
+
+  for (let bullet of bullets) {
+    for (let enemy of enemies) {
+      if (!enemy.alive) continue;
+      if (bullet.x < enemy.x + enemy.pixelWidth && 
+        bullet.x + bullet.pixelWidth > enemy.x &&
+        bullet.y < enemy.y + enemy.pixelHeight &&
+        bullet.y + bullet.pixelHeight > enemy.y) {
+          console.log("Enemy hit!");
+          enemy.takeDamage(10); // Метод получения урона у врага
+          bullets.splice(bullets.indexOf(bullet), 1); // Удаление пули
+          break;
+      }
+    }
+  }
+
+  // ----- PLAYER -----
   player.render();
 
+  // ----- AMMO -----
   if (player.weaponType === "Gun") {
     displayBullets(); 
   }
@@ -238,6 +321,8 @@ function draw() {
     }
   }
 }
+
+// ----- CODE -----
 
 function displayBullets() {
   for (let bullet of bullets) {
@@ -255,6 +340,13 @@ function displayBullets() {
   }
 }
 
+function createEnemy(x, y, pixelWidth, pixelHeight, imagePath, deadImagePath) {
+  let newEnemy = new Enemy(x, y, pixelWidth, pixelHeight, imagePath, deadImagePath)
+  newEnemy.image = loadImage(newEnemy.imagePath);
+  newEnemy.deadImage = loadImage(newEnemy.deadImagePath);
+  enemies.push(newEnemy); 
+}
+
 
 function windowResized() {
   if (windowWidth < windowHeight) {
@@ -269,6 +361,13 @@ function mouseClicked(event) {
   player.attack();
 }
 
+function drawLobby() {
+  image(bgImage, 0, 0, width, height);
+}
+
+function drawHUD() {
+
+}
 
 // https://soul-knight.fandom.com/wiki/Knight
 // Take characters from here
