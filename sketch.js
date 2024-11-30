@@ -7,6 +7,7 @@
 
 const CHARACTERSPATH = "Characters";
 const WEAPONSPATH = "Weapons";
+const ENEMIESPATH = "Enemies";
 
 const KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83 };
 const BULLET_DEFAULT_SIZE = 10;
@@ -181,17 +182,20 @@ class Player {
 }
 
 class Enemy {
-  constructor(x, y, pixelWidth, pixelHeight, imagePath, deadImagePath) {
+  constructor(x, y, pixelWidth, pixelHeight, imagePath, attackImagePath, deadImagePath, health) {
     this.x = x;
     this.y = y;
     this.pixelWidth = pixelWidth;
     this.pixelHeight = pixelHeight;
+    this.heath = health;
+    this.alive = true;
+
     this.imagePath = imagePath;
     this.image = null;
-    this.heath = 100;
     this.deadImagePath = deadImagePath;
     this.deadImage = null;
-    this.alive = true;
+    this.attackImagePath = attackImagePath;
+    this.attackImage = null
   }
 
   display() {
@@ -224,6 +228,7 @@ class Enemy {
 // Data containers
 let charactersDataJson;
 let weaponsDataJson;
+let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
@@ -255,6 +260,7 @@ let enemies = [];
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
   weaponsDataJson = loadJSON(WEAPONSPATH + '/WeaponsData.json');  
+  enemiesDataJson = loadJSON(ENEMIESPATH + '/EnemiesData.json');
 
   bgImage = loadImage('UI/BgNEW2.png');
   heartImage = loadImage('UI/Heart.png');
@@ -282,7 +288,7 @@ function setup() {
   player.weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
   player.weaponPropelling = player.weaponType === "ColdWeapon"? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"]: false;
 
-  createEnemy(300, 200, 288, 288, "Enemies/Boss/Queen/QueenEnraged.gif", "Enemies/Boss/Queen/QueenDead.png");
+  createEnemy("Boss", "Queen");
 }
 
 function draw() {
@@ -340,11 +346,24 @@ function displayBullets() {
   }
 }
 
-function createEnemy(x, y, pixelWidth, pixelHeight, imagePath, deadImagePath) {
-  let newEnemy = new Enemy(x, y, pixelWidth, pixelHeight, imagePath, deadImagePath)
-  newEnemy.image = loadImage(newEnemy.imagePath);
-  newEnemy.deadImage = loadImage(newEnemy.deadImagePath);
+function createEnemy(enemyType, enemyName) {
+  let enemyData = getEnemieDataFromJSONByTypeAndName(enemyType, enemyName);
+  let newEnemy = new Enemy(400, 100, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.imagePath, enemyData.attackImagePath, enemyData.deadImagePath, enemyData.health)
+  newEnemy.image = loadImage(enemyData.imagePath);
+  newEnemy.deadImage = loadImage(enemyData.deadImagePath);
+  newEnemy.attackImage = loadImage(enemyData.attackImagePath);
   enemies.push(newEnemy); 
+}
+
+function getEnemieDataFromJSONByTypeAndName(enemyType, enemieName) {
+  return {
+    imagePath: enemiesDataJson[enemyType][enemieName]["image"],
+    attackImagePath: enemiesDataJson[enemyType][enemieName]["attackImage"],
+    deadImagePath: enemiesDataJson[enemyType][enemieName]["deadImage"],
+    pixelWidth: enemiesDataJson[enemyType][enemieName]["pixelWidth"],
+    pixelHeight: enemiesDataJson[enemyType][enemieName]["pixelHeight"],
+    health: enemiesDataJson[enemyType][enemieName]["health"]
+  }
 }
 
 

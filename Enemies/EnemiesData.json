@@ -1,0 +1,20 @@
+{
+    "Common": {
+
+    },
+
+    "Mini-Boss": {
+
+    },
+
+    "Boss": {
+        "Queen": {
+            "image": "Enemies/Boss/Queen/QueenIdle.gif",
+            "attackImage": "Enemies/Boss/Queen/QueenEnraged.gif",
+            "deadImage": "Enemies/Boss/Queen/QueenDead.png",
+            "pixelWidth": 288,
+            "pixelHeight": 228,
+            "health": 1000
+        }
+    }
+}
