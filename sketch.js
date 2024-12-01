@@ -237,6 +237,8 @@ class Enemy {
     this.state = "idle"; // idle, move, attack, dead
     this.timeBetweenStates = 200;
     this.currentTimeBetweenStates = 0;
+    this.minTimeBetweenStates = 50;
+    this.maxTimeBetweenStates = 350;
   }
 
   display() {
@@ -321,6 +323,10 @@ class Enemy {
       this.reachedPoint = true;
     }
   }
+
+  attack() {
+    console.log("Enemy Attacks!");
+  }
   
 
   applyState() {
@@ -333,6 +339,7 @@ class Enemy {
     }
     else if (this.state == "attack") {
       this.currentImage = this.attackImage;
+      this.attack();
     }
     else if (this.state == "dead") {
       this.currentImage = this.deadImage;
@@ -353,6 +360,7 @@ class Enemy {
     let states = ["idle", "move", "attack"];
     this.state = random(states);
     this.currentTimeBetweenStates = 0;
+    this.timeBetweenStates = random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
     console.log("New state:", this.state);
   }
 
@@ -363,6 +371,12 @@ class Enemy {
     if (this.alive) {
       this.displayHealthBar();
     }
+  }
+}
+
+class Queen extends Enemy {
+  attack() {
+    console.log("Queen Attacks");
   }
 }
 
