@@ -25,6 +25,13 @@ class Player {
     this.weaponImage = null;
     this.weaponType = null;
     this.weaponPropelling = null;
+
+    this.health = 0;
+    this.armor = 0;
+    this.energy = 0;
+    this.maxHealth = 0;
+    this.maxArmor = 0;
+    this.maxEnergy = 0;
   }
 
   move() {
@@ -124,8 +131,14 @@ class Player {
   }
 
   shootBullet() {
-    let bullet = this.createBullet();
-    bullets.push(bullet);
+    if (this.energy > 0) {
+      let bullet = this.createBullet();
+      bullets.push(bullet);
+      this.energy -= bullet.energyCost;
+    }
+    else {
+      console.log("Not enough energy!");
+    }
   }
 
   createBullet() {
@@ -165,12 +178,26 @@ class Player {
       dx: (dx / length) * weaponData["speed"],
       dy: (dy / length) * weaponData["speed"],
       damage: weaponsDataJson[WEAPONSPATH][weaponName]["damage"],
+      energyCost: weaponsDataJson[WEAPONSPATH][weaponName]["energyCost"]
     };
   }
 
   normalizeVector(dx, dy) {
     const length = sqrt(dx * dx + dy * dy);
     return { x: dx / length, y: dy / length };
+  }
+
+  setPlayerValues() {
+    player.image = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
+    player.speed = charactersDataJson[CHARACTERSPATH][charactersName]["speed"];
+    player.size = charactersDataJson[CHARACTERSPATH][charactersName]["size"];
+    player.health = charactersDataJson[CHARACTERSPATH][charactersName]["health"];
+    player.armor = charactersDataJson[CHARACTERSPATH][charactersName]["armor"];
+    player.energy = charactersDataJson[CHARACTERSPATH][charactersName]["energy"];
+
+    player.maxHealth = player.health;
+    player.maxArmor = player.armor;
+    player.maxEnergy = player.energy;
   }
 
   render() {
@@ -291,9 +318,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  player.image = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
-  player.speed = charactersDataJson[CHARACTERSPATH][charactersName]["speed"];
-  player.size = charactersDataJson[CHARACTERSPATH][charactersName]["size"];
+  player.setPlayerValues();
 
   // If not found such weapon, showing default
   if (!weaponsDataJson[WEAPONSPATH].hasOwnProperty(weaponName)) {
@@ -345,6 +370,8 @@ function draw() {
       displayBullets();
     }
   }
+
+  drawHUD();
 }
 
 // ----- CODE -----
@@ -385,7 +412,6 @@ function getEnemieDataFromJSONByTypeAndName(enemyType, enemieName) {
   }
 }
 
-
 function windowResized() {
   if (windowWidth < windowHeight) {
     resizeCanvas(windowWidth, windowWidth);
@@ -404,7 +430,35 @@ function drawLobby() {
 }
 
 function drawHUD() {
+  let x = 20; 
+  let y = 20; 
+  let iconSize = 30; 
+  let spacing = 50; 
+  let barWidth = 150; 
+  let barHeight = 20; 
 
+  image(heartImage, x, y, iconSize, iconSize);
+  image(armorImage, x, y + spacing, iconSize, iconSize);
+  image(energyImage, x, y + spacing * 2, iconSize, iconSize);
+
+  // Health
+  fill(0, 0, 0);
+  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2), barWidth, barHeight);
+  fill(255, 0, 0); 
+  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2), barWidth * (player.health / player.maxHealth), barHeight);
+
+  // Armor
+  fill(0, 0, 0);
+  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing, barWidth, barHeight);
+  fill(180);
+  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing, barWidth * (player.armor / player.maxArmor), barHeight);
+
+  // Energy
+  fill(0, 0, 0);
+  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing * 2, barWidth, barHeight);
+  fill(0, 0, 255); 
+  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing * 2, barWidth * (player.energy / player.maxEnergy), barHeight);
+  noFill();
 }
 
 // https://soul-knight.fandom.com/wiki/Knight
