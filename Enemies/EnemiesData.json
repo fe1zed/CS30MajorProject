@@ -15,14 +15,34 @@
         "Queen": {
             "image": "Enemies/Boss/Queen/QueenIdle.gif",
             "attackImage": "Enemies/Boss/Queen/QueenEnraged.gif",
+            "walkingImage": "Enemies/Boss/Queen/QueenIdle.gif",
             "deadImage": "Enemies/Boss/Queen/QueenDead.png",
             "pixelWidth": 288,
             "pixelHeight": 228,
-            "health": 100
+            "health": 100,
+            "closeCombat": false
         },
 
-        "" : {
+        "Skeleton King" : {
+            "image": "Enemies/Boss/SkeletonKing/SkeletonKingIdle.gif",
+            "attackImage": "Enemies/Boss/SkeletonKing/SkeletonKingIdle.gif",
+            "walkingImage": "Enemies/Boss/SkeletonKing/SkeletonKingWalking.gif",
+            "deadImage": "Enemies/Boss/SkeletonKing/SkeletonKingDead.png",
+            "pixelWidth": 240,
+            "pixelHeight": 240,
+            "health": 100,
+            "closeCombat": true
+        },
 
+        "Phantom King" : {
+            "image": "Enemies/Boss/PhantomKing/PhantomKingIdle.gif",
+            "attackImage": "Enemies/Boss/PhantomKing/PhantomKingAttack.gif",
+            "walkingImage": "Enemies/Boss/PhantomKing/PhantomKingIdle.gif",
+            "deadImage": "Enemies/Boss/PhantomKing/PhantomKingCrown.png",
+            "pixelWidth": 240,
+            "pixelHeight": 240,
+            "health": 100,
+            "closeCombat": false
         }
     }
 }

@@ -178,7 +178,7 @@ class Player {
       dx: (dx / length) * weaponData["speed"],
       dy: (dy / length) * weaponData["speed"],
       damage: weaponsDataJson[WEAPONSPATH][weaponName]["damage"],
-      energyCost: weaponsDataJson[WEAPONSPATH][weaponName]["energyCost"]
+      energyCost: weaponsDataJson[WEAPONSPATH][weaponName]["energyCost"],
     };
   }
 
@@ -198,6 +198,12 @@ class Player {
     player.maxHealth = player.health;
     player.maxArmor = player.armor;
     player.maxEnergy = player.energy;
+  }
+
+  laodPlayerWeapon() {
+    player.weaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]);
+    player.weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
+    player.weaponPropelling = player.weaponType === "ColdWeapon"? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"]: false;
   }
 
   render() {
@@ -287,6 +293,8 @@ let heartImage = null;
 let armorImage = null;
 let energyImage = null;
 
+let logoImage = null;
+
 //                              <-- DATA TABLE WITH INFO OF CHARACTERS -->
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+ 
 //  NAME   >>  | DarkKnight | Priestess     | Rogue   | Witch     | Assasin     | Alchemist               | 
@@ -313,6 +321,8 @@ function preload() {
   heartImage = loadImage('UI/Heart.png');
   armorImage = loadImage('UI/Armor.png');
   energyImage = loadImage('UI/Energy.png');
+
+  logoImage = loadImage('UI/Logo.png');
 }
 
 function setup() {
@@ -329,15 +339,14 @@ function setup() {
     weaponName = charactersDataJson[CHARACTERSPATH][charactersName]["enhanceStartingWeapon"];
   }
 
-  player.weaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]);
-  player.weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
-  player.weaponPropelling = player.weaponType === "ColdWeapon"? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"]: false;
-
-  createEnemy("Boss", "Queen");
+  player.laodPlayerWeapon();
+  
+  createEnemy("Boss", "Phantom King");
 }
 
 function draw() {
   background(53, 80, 96);
+  drawCoolImage(1000, 200, 264, logoImage);
 
   // ----- ENEMIES -----
   for (let enemy of enemies) {
@@ -459,6 +468,10 @@ function drawHUD() {
   fill(0, 0, 255); 
   rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing * 2, barWidth * (player.energy / player.maxEnergy), barHeight);
   noFill();
+}
+
+function drawCoolImage(x, y, size, choosenImage) {
+  image(choosenImage, x, y, size, size);
 }
 
 // https://soul-knight.fandom.com/wiki/Knight
