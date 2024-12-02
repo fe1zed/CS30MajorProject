@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 class Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         this.x = x;
@@ -115,18 +116,18 @@ class Enemy {
 
 
     applyState() {
-        if (this.state == "idle") {
+        if (this.state === "idle") {
             this.currentImage = this.image;
         }
-        else if (this.state == "move") {
+        else if (this.state === "move") {
             this.currentImage = this.moveImage;
             this.move();
         }
-        else if (this.state == "attack") {
+        else if (this.state === "attack") {
             this.currentImage = this.attackImage;
             this.attack();
         }
-        else if (this.state == "dead") {
+        else if (this.state === "dead") {
             this.currentImage = this.deadImage;
         }
     }
@@ -177,6 +178,20 @@ class PhantomKing extends Enemy {
     }
 }
 
+class VarkolynLeader  extends Enemy {
+    attack() {
+        console.log("Varkolyn Leader Attacks");
+    }
+}
+
+class ChristmasTreant extends Enemy {
+    attack() {
+        console.log("Christmas Treant Attacks");
+    }
+}
+
 window.Queen = Queen;
 window.SkeletonKing = SkeletonKing;
 window.PhantomKing = PhantomKing;
+window.VarkolynLeader = VarkolynLeader;
+window.ChristmasTreant = ChristmasTreant;

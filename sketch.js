@@ -279,7 +279,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Skeleton King");
+  createEnemy("Boss", "Christmas Treant");
 }
 
 function draw() {

@@ -43,6 +43,28 @@
             "pixelHeight": 240,
             "health": 100,
             "closeCombat": false
+        },
+
+        "Varkolyn Leader" : {
+            "image": "Enemies/Boss/VarkolynLeader/VarkolynLeaderIdle.gif",
+            "attackImage": "Enemies/Boss/VarkolynLeader/VarkolynLeaderAttack.gif",
+            "walkingImage": "Enemies/Boss/VarkolynLeader/VarkolynLeaderWalking.gif",
+            "deadImage": "Enemies/Boss/VarkolynLeader/VarkolynLeaderDead.png",
+            "pixelWidth": 288,
+            "pixelHeight": 288,
+            "health": 100,
+            "closeCombat": true
+        },
+
+        "Christmas Treant" : {
+            "image": "Enemies/Boss/ChristmasTreant/ChristmasTreantIdle.gif",
+            "attackImage": "Enemies/Boss/ChristmasTreant/ChristmasTreantIdle.gif",
+            "walkingImage": "Enemies/Boss/ChristmasTreant/ChristmasTreantWalking.gif",
+            "deadImage": "Enemies/Boss/ChristmasTreant/ChristmasTreantDead.png",
+            "pixelWidth": 288,
+            "pixelHeight": 288,
+            "health": 100,
+            "closeCombat": true
         }
     }
 }
