@@ -109,7 +109,7 @@
             "meleeDamage": 5,
             "enhanceStartingWeapon": "Blood Blade",
             "uniqueAbilityName": "Dark Blade",
-            "uniqueAbility" : "Characters/UniqueAbility/AssasinUniqueAbility3.png",
+            "uniqueAbility" : "Characters/UniqueAbility/AssasinUniqueAbility.png",
             "uniqueAbilityIsAura": true,
 
             "Upgrade" : {
@@ -157,7 +157,7 @@
             "meleeDamage": 5,
             "enhanceStartingWeapon": "Boxing Gloves",
             "uniqueAbilityName": "Rage",
-            "uniqueAbility" : "Characters/UniqueAbility/BerserkUniqueAbility2.png",
+            "uniqueAbility" : "Characters/UniqueAbility/BerserkUniqueAbility.png",
             "uniqueAbilityIsAura": true,
 
             "Upgrade" : {

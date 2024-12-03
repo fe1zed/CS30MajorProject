@@ -5,8 +5,6 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-//import { Enemy, Queen } from '/enemies.js';
-
 const CHARACTERSPATH = "Characters";
 const WEAPONSPATH = "Weapons";
 const ENEMIESPATH = "Enemies";
@@ -16,260 +14,15 @@ const BULLET_DEFAULT_SIZE = 10;
 const BULLET_SPEED_SCALE = 30;
 const WEAPON_SIZE_SCALE = 30;
 
-class Player {
-  constructor(x, y, speed, size) {
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-    this.image = null;
-    this.deadImage = null;
-    this.uniqueAbilityImage = null;
-    this.size = size;
-    this.MoveDirection = "right";
-    this.alive = true;
-
-    this.weaponImage = null;
-    this.weaponType = null;
-    this.weaponPropelling = null;
-
-    this.health = 0;
-    this.armor = 0;
-    this.energy = 0;
-    this.maxHealth = 0;
-    this.maxArmor = 0;
-    this.maxEnergy = 0;
-
-    this.usingUniqueAbility = false;
-    this.uniqueAbilityIsAura = false;
-    this.auraDuration = 5000; 
-    this.currentAuraDuration = 0;
-
-    this.defaultSpeed = speed;
-    this.maxSpeed = speed * 2;
-  }
-
-  move() {
-    if (!this.alive) return;
-
-    const directions = {                          
-      [KEYS.LEFT]: () => {  
-        this.x -= this.speed; 
-        this.MoveDirection = "left"; 
-      },
-      [KEYS.RIGHT]: () => { 
-        this.x += this.speed; 
-        this.MoveDirection = "right"; 
-      },
-      [KEYS.UP]: () => {    
-        this.y -= this.speed; 
-      },
-      [KEYS.DOWN]: () => {  
-        this.y += this.speed; 
-      }
-    };
-  
-    for (let key in directions) {
-      if (keyIsDown(key)) { 
-        directions[key]();
-      }
-    }
-  }
-  
-  display() {
-    if (!this.alive) {
-      image(this.deadImage, this.x, this.y, this.size, this.size);
-      return;
-    }
-
-    if (this.MoveDirection === "right") {
-      image(this.image, this.x, this.y, this.size, this.size);
-    } 
-    else {
-      push();
-      translate(this.x + this.size, this.y); 
-      scale(-1, 1); 
-      image(this.image, 0, 0, this.size, this.size); 
-      pop();
-    }
-  }
-  
-  displayWeapon() {
-    if (!this.alive) return;
-
-    let weaponData = weaponsDataJson[WEAPONSPATH][weaponName];
-    let { pixelWidth, pixelHeight, followCursor, type } = weaponData;
-    let weaponWidth = pixelWidth / this.size * 30;
-    let weaponHeight = pixelHeight / this.size * 30;
-
-    if (followCursor) {
-      this.displayWeaponFollowCursor(weaponWidth, weaponHeight);
-    }
-    else {
-      this.displayWeaponStatic(weaponWidth, weaponHeight, type);
-    }
-  }
-
-  displayWeaponFollowCursor(weaponWidth, weaponHeight) {
-    let offsetX = this.MoveDirection === "right" 
-      ? this.x + this.size / 2 + this.size / 4
-      : this.x + this.size / 4;
-
-    let offsetY = this.y + this.size * 0.75;
-
-    let angle = atan2(mouseY - offsetY, mouseX - offsetX);
-
-    push();
-    translate(offsetX, offsetY);
-    rotate(angle);
-    imageMode(CENTER);
-    scale(1, angle >= -1.5 && angle <= 1.5 ? 1 : -1);
-    image(this.weaponImage, 0, 0, weaponWidth, weaponHeight);
-    pop();
-  }
-
-  displayWeaponStatic(weaponWidth, weaponHeight, type) {
-    let offsetX = this.MoveDirection === "right"
-      ? weaponWidth
-      : this.size - weaponWidth * 2;
-
-    let offsetY = type === "Staff"
-      ? this.y + weaponHeight / 2 - 10
-      : this.y + this.size / 2 + 10;
-
-    image(this.weaponImage, this.x + offsetX, offsetY, weaponWidth, weaponHeight);
-  }
-
-  attack() {
-    if (!this.alive) return;
-    let weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
-
-    if (weaponType === "Gun" || weaponType === "ColdWeapon") {
-      this.shootBullet();
-    } 
-    else if (weaponType === "InHand" || weaponType === "Staff") {
-      console.log("Magic cast");
-    } 
-    else {
-      console.warn("Unknown weapon type:", weaponType);
-    }
-  }
-
-  shootBullet() {
-    if (this.energy > 0) {
-      let bullet = this.createBullet();
-      bullets.push(bullet);
-      this.energy -= bullet.energyCost;
-    }
-    else {
-      console.log("Not enough energy!");
-    }
-  }
-
-  createBullet() {
-    let weaponData = this.weaponPropelling? weaponsDataJson[WEAPONSPATH][weaponName] : weaponsDataJson[WEAPONSPATH][weaponName]["Bullet"];
-    let offsetX = this.MoveDirection === "right" 
-      ? this.x + this.size / 2 + this.size / 4
-      : this.x + this.size / 4;
-
-    let offsetY = this.y + this.size * 0.75;
-
-    let dx = mouseX - offsetX;
-    let dy = mouseY - offsetY;
-    let length = sqrt(dx * dx + dy * dy);
-
-    let pixelWidth = weaponData["pixelWidth"];
-    let pixelHeight = weaponData["pixelHeight"];
-
-    let weaponWidth = 0;
-    let weaponHeight = 0;
-
-    if (this.weaponPropelling) {
-      weaponWidth = pixelWidth / this.size * 30;
-      weaponHeight = pixelHeight / this.size * 30;
-    }
-    else {
-      weaponWidth = pixelWidth;
-      weaponHeight = pixelHeight;
-    }
-
-    return {
-      x: offsetX,
-      y: offsetY,
-      pixelWidth: weaponWidth,
-      pixelHeight: weaponHeight,
-      image: loadImage(weaponData["image"]),
-      speed: weaponData["speed"],
-      dx: dx / length * weaponData["speed"],
-      dy: dy / length * weaponData["speed"],
-      damage: weaponsDataJson[WEAPONSPATH][weaponName]["damage"],
-      energyCost: weaponsDataJson[WEAPONSPATH][weaponName]["energyCost"],
-    };
-  }
-
-  normalizeVector(dx, dy) {
-    const length = sqrt(dx * dx + dy * dy);
-    return { x: dx / length, y: dy / length };
-  }
-
-  setPlayerValues() {
-    player.image = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
-    player.deadImage = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["deadImage"]);
-    player.uniqueAbilityImage = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["uniqueAbility"]);
-    player.speed = charactersDataJson[CHARACTERSPATH][charactersName]["speed"];
-    player.size = charactersDataJson[CHARACTERSPATH][charactersName]["size"];
-    player.health = charactersDataJson[CHARACTERSPATH][charactersName]["health"];
-    player.armor = charactersDataJson[CHARACTERSPATH][charactersName]["armor"];
-    player.energy = charactersDataJson[CHARACTERSPATH][charactersName]["energy"];
-
-    player.uniqueAbilityIsAura = charactersDataJson[CHARACTERSPATH][charactersName]["uniqueAbilityIsAura"];
-
-    player.maxHealth = player.health;
-    player.maxArmor = player.armor;
-    player.maxEnergy = player.energy;
-  }
-
-  laodPlayerWeapon() {
-    player.weaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]);
-    player.weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
-    player.weaponPropelling = player.weaponType === "ColdWeapon"? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"]: false;
-  }
-
-  executeUniqueAbility() {
-    if (!this.usingUniqueAbility) return;
-
-    if (this.uniqueAbilityIsAura) { // показываем аруру, улучшаем способности, вычитаем время ауры
-      if (this.currentAuraDuration < this.auraDuration) {
-        image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
-        console.log("Using unique ability");
-        this.currentAuraDuration += 100;
-        this.speed = this.maxSpeed;
-      }
-      else {
-        this.usingUniqueAbility = false;
-        this.currentAuraDuration = 0;
-        this.speed = this.defaultSpeed;
-        console.log("Using unique ability ENDED");
-      }
-    }
-  }
-
-  render() {
-    this.move();
-    this.executeUniqueAbility();
-    this.display();
-    this.displayWeapon();
-  }
-}
-
 // Data containers
 let charactersDataJson;
 let weaponsDataJson;
 let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
-let player = new Player(200, 200, 5, 100);
 let charactersName = "Assasin"; 
 let weaponName = "default";
+let player = new window[charactersName](200, 200, 5, 100);
 
 let bgImage = null;
 let heartImage = null;
@@ -277,22 +30,6 @@ let armorImage = null;
 let energyImage = null;
 
 let logoImage = null;
-
-//                              <-- DATA TABLE WITH INFO OF CHARACTERS -->
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
-//  NAME   >>  | DarkKnight | Priestess     | Rogue   | Witch     | Assasin     | Alchemist               | Berserk       |
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
-//  WEAPON >>  | Bad Pistol | Wooden Cross  | Jack    | The Code  | Blood Blade | Dormant Bubble Machine  | Boxing gloves |
-//    : TYPE?  |   (Gun)    |    (Staff)    |(Cold Wp)| (In Hand) |  (Cold Wp)  |         (Gun)           |  (Cold Wp)    |
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
-//  HEALTH >>  |     6      |       3       |    5    |     3     |      4      |           5             |       9       |
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
-//  ARMOR  >>  |     5      |       5       |    3    |     5     |      5      |           5             |       3       |
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
-//  ENERGY >>  |    180     |      200      |   180   |    240    |     180     |          180            |      150      |
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
-//  AURA   >>  |    YES     |      NO       |   NO    |    NO     |     YES     |          NO             |      YES      |
-//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
 
 let bullets = [];
 let enemies = [];
@@ -385,29 +122,6 @@ function displayBullets() {
   }
 }
 
-//                              <-- DATA TABLE WITH INFO OF ENEMIES -->               | // E, D, C, B, A, S, SSS, SSS+ 
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-//         <<< |    NAME              |     TYPE      |      LEVEL    |      HP       |   RANK        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 1 >>  |    Christmas Treant  |     Boss      |      1        |      ---      |      -        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 1 >>  |    -------- ----     |     Boss      |      1        |      ---      |      -        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 1 >>  |    ------- ----      |     Boss      |      1        |      ---      |      -        |      
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 2 >>  |    Queen             |     Boss      |      2        |      100      |      B        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 2 >>  |    Skeleton King     |     Boss      |      2        |      100      |      B        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 2 >>  |    Phantom King      |     Boss      |      2        |      100      |      A        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 3 >>  |    Varkolyn Leader   |     Boss      |      3        |      ---      |      SSS+     |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 3 >>  |    ------------      |     Boss      |      3        |      ---      |      -        |
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-// FLOOR 3 >>  |    ------- ----      |     Boss      |      3        |      ---      |      -        |      
-//         --  +----------------------+---------------+---------------+---------------+---------------+
-
 function createEnemy(enemyType, enemyName) {
   let enemyData = getEnemieDataFromJSONByTypeAndName(enemyType, enemyName);
   let className = enemyName.replace(/\s+/g, '');
@@ -453,7 +167,7 @@ function mouseClicked(event) {
 }
 
 function keyPressed() {
-  if (key === "e") {
+  if (key === "e" || key === "E" || key === "У" || key === "у") {
     if (!player.usingUniqueAbility)  {
       player.usingUniqueAbility = true;
     }
@@ -463,44 +177,38 @@ function keyPressed() {
   }
 }
 
-function drawLobby() {
-  image(bgImage, 0, 0, width, height);
-}
+function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, barColor) {
+  image(icon, x, y, iconSize, iconSize); 
 
-function drawHUD() {
-  let x = 20; 
-  let y = 20; 
-  let iconSize = 30; 
-  let spacing = 50; 
-  let barWidth = 150; 
-  let barHeight = 20; 
-
-  image(heartImage, x, y, iconSize, iconSize);
-  image(armorImage, x, y + spacing, iconSize, iconSize);
-  image(energyImage, x, y + spacing * 2, iconSize, iconSize);
-
-  // Health
   fill(0, 0, 0);
-  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
-  fill(255, 0, 0); 
-  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2, barWidth * (player.health / player.maxHealth), barHeight);
+  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
 
-  // Armor
-  fill(0, 0, 0);
-  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing, barWidth, barHeight);
-  fill(180);
-  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing, barWidth * (player.armor / player.maxArmor), barHeight);
-
-  // Energy
-  fill(0, 0, 0);
-  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing * 2, barWidth, barHeight);
-  fill(0, 0, 255); 
-  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing * 2, barWidth * (player.energy / player.maxEnergy), barHeight);
+  fill(barColor);
+  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth * (value / maxValue), barHeight);
   noFill();
 }
 
+function drawHUD() {
+  let x = 20;
+  let y = 20;
+  let iconSize = 30;
+  let spacing = 50;
+  let barWidth = 150;
+  let barHeight = 20;
+
+  drawBar(heartImage, player.health, player.maxHealth, x, y, iconSize, barWidth, barHeight, color(255, 0, 0)); 
+  drawBar(armorImage, player.armor, player.maxArmor, x, y + spacing, iconSize, barWidth, barHeight, color(180)); 
+  drawBar(energyImage, player.energy, player.maxEnergy, x, y + spacing * 2, iconSize, barWidth, barHeight, color(0, 0, 255)); 
+}
+
+// ------------------------------------------
+
 function drawCoolImage(x, y, size, choosenImage) {
   image(choosenImage, x, y, size, size);
+}
+
+function drawLobby() {
+  image(bgImage, 0, 0, width, height);
 }
 
 // https://soul-knight.fandom.com/wiki/Knight
