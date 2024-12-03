@@ -190,8 +190,15 @@ class ChristmasTreant extends Enemy {
     }
 }
 
+class Nian extends Enemy {
+    attack() {
+        console.log("Nian Attacks");
+    }
+}
+
 window.Queen = Queen;
 window.SkeletonKing = SkeletonKing;
 window.PhantomKing = PhantomKing;
 window.VarkolynLeader = VarkolynLeader;
 window.ChristmasTreant = ChristmasTreant;
+window.Nian = Nian;

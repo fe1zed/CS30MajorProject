@@ -65,6 +65,17 @@
             "pixelHeight": 288,
             "health": 100,
             "closeCombat": true
+        },
+
+        "Nian" : {
+            "image": "Enemies/Boss/Nian/NianIdle.gif",
+            "attackImage": "Enemies/Boss/Nian/NianAttack.gif",
+            "walkingImage": "Enemies/Boss/Nian/NianWalking.gif",
+            "deadImage": "Enemies/Boss/Nian/NianDead.png",
+            "pixelWidth": 354,
+            "pixelHeight": 240,
+            "health": 100,
+            "closeCombat": true
         }
     }
 }

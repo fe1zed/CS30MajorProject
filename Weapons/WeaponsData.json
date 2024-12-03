@@ -78,8 +78,15 @@
             "followCursor": true,
             "pixelWidth": 192,
             "pixelHeight": 24,
-            "type": "ColdWeapon",
-            "propelling": false
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
         },
 
         "Dormant Bubble Machine": {
@@ -112,7 +119,14 @@
             "followCursor": true,
             "pixelWidth": 138,
             "pixelHeight": 60,
-            "type": "Gloves"
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BerserkPunch.png",
+                "speed": 10,
+                "pixelWidth": 60,
+                "pixelHeight": 60 
+            }
         }
     }
 }
