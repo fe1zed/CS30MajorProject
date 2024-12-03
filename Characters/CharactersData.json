@@ -124,6 +124,27 @@
                 "energy": 20,
                 "skillCooldown": 2
             } 
+        },
+
+        "Berserk" : {
+            "image": "Characters/BerserkGif.gif",
+            "speed": 6.5,
+            "size": 85,
+
+            "health": 9,
+            "armor": 3,
+            "energy": 150,
+            "criticalChance": 5,
+            "meleeDamage": 5,
+            "enhanceStartingWeapon": "Boxing Gloves",
+            "uniqueAbility": "Rage",
+
+            "Upgrade" : {
+                "health": 1,
+                "armor": 1,
+                "energy": 20,
+                "skillCooldown": 2
+            } 
         }
     }
 }

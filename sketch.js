@@ -40,15 +40,18 @@ class Player {
     const directions = {                          
       [KEYS.LEFT]: () => {  
         this.x -= this.speed; 
-        this.MoveDirection = "left"; },
+        this.MoveDirection = "left"; 
+      },
       [KEYS.RIGHT]: () => { 
         this.x += this.speed; 
-        this.MoveDirection = "right"; },
-      
+        this.MoveDirection = "right"; 
+      },
       [KEYS.UP]: () => {    
-        this.y -= this.speed; },
+        this.y -= this.speed; 
+      },
       [KEYS.DOWN]: () => {  
-        this.y += this.speed; }
+        this.y += this.speed; 
+      }
     };
   
     for (let key in directions) {
@@ -74,8 +77,8 @@ class Player {
   displayWeapon() {
     let weaponData = weaponsDataJson[WEAPONSPATH][weaponName];
     let { pixelWidth, pixelHeight, followCursor, type } = weaponData;
-    let weaponWidth = (pixelWidth / this.size) * 30;
-    let weaponHeight = (pixelHeight / this.size) * 30;
+    let weaponWidth = pixelWidth / this.size * 30;
+    let weaponHeight = pixelHeight / this.size * 30;
 
     if (followCursor) {
       this.displayWeaponFollowCursor(weaponWidth, weaponHeight);
@@ -127,6 +130,9 @@ class Player {
     else if (weaponType === "InHand" || weaponType === "Staff") {
       console.log("Magic cast");
     } 
+    else if (weaponType === "Gloves") {
+      console.log("Sending wave");
+    }
     else {
       console.warn("Unknown weapon type:", weaponType);
     }
@@ -162,8 +168,8 @@ class Player {
     let weaponHeight = 0;
 
     if (this.weaponPropelling) {
-      weaponWidth = (pixelWidth / this.size) * 30;
-      weaponHeight = (pixelHeight / this.size) * 30;
+      weaponWidth = pixelWidth / this.size * 30;
+      weaponHeight = pixelHeight / this.size * 30;
     }
     else {
       weaponWidth = pixelWidth;
@@ -177,8 +183,8 @@ class Player {
       pixelHeight: weaponHeight,
       image: loadImage(weaponData["image"]),
       speed: weaponData["speed"],
-      dx: (dx / length) * weaponData["speed"],
-      dy: (dy / length) * weaponData["speed"],
+      dx: dx / length * weaponData["speed"],
+      dy: dy / length * weaponData["speed"],
       damage: weaponsDataJson[WEAPONSPATH][weaponName]["damage"],
       energyCost: weaponsDataJson[WEAPONSPATH][weaponName]["energyCost"],
     };
@@ -223,7 +229,7 @@ let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
-let charactersName = "DarkKnight"; 
+let charactersName = "Berserk"; 
 let weaponName = "default";
 
 let bgImage = null;
@@ -293,14 +299,13 @@ function draw() {
 
   for (let bullet of bullets) {
     for (let enemy of enemies) {
-      if (!enemy.alive) continue;
-      if (bullet.x < enemy.x + enemy.pixelWidth && 
-        bullet.x + bullet.pixelWidth > enemy.x &&
-        bullet.y < enemy.y + enemy.pixelHeight &&
-        bullet.y + bullet.pixelHeight > enemy.y) {
-          enemy.takeDamage(bullet.damage); 
-          bullets.splice(bullets.indexOf(bullet), 1);
-          break;
+      if (!enemy.alive) { 
+        continue;
+      }
+      if (bullet.x < enemy.x + enemy.pixelWidth && bullet.x + bullet.pixelWidth > enemy.x && bullet.y < enemy.y + enemy.pixelHeight && bullet.y + bullet.pixelHeight > enemy.y) {
+        enemy.takeDamage(bullet.damage); 
+        bullets.splice(bullets.indexOf(bullet), 1);
+        break;
       }
     }
   }
@@ -312,7 +317,7 @@ function draw() {
   if (player.weaponType === "Gun") {
     displayBullets(); 
   }
-  else if (player.weaponType == "ColdWeapon") {
+  else if (player.weaponType === "ColdWeapon") {
     if (player.weaponPropelling) {
       displayBullets();
     }
@@ -390,7 +395,7 @@ function getEnemieDataFromJSONByTypeAndName(enemyType, enemieName) {
     pixelWidth: enemiesDataJson[enemyType][enemieName]["pixelWidth"],
     pixelHeight: enemiesDataJson[enemyType][enemieName]["pixelHeight"],
     health: enemiesDataJson[enemyType][enemieName]["health"]
-  }
+  };
 }
 
 function windowResized() {
@@ -424,21 +429,21 @@ function drawHUD() {
 
   // Health
   fill(0, 0, 0);
-  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2), barWidth, barHeight);
+  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
   fill(255, 0, 0); 
-  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2), barWidth * (player.health / player.maxHealth), barHeight);
+  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2, barWidth * (player.health / player.maxHealth), barHeight);
 
   // Armor
   fill(0, 0, 0);
-  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing, barWidth, barHeight);
+  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing, barWidth, barHeight);
   fill(180);
-  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing, barWidth * (player.armor / player.maxArmor), barHeight);
+  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing, barWidth * (player.armor / player.maxArmor), barHeight);
 
   // Energy
   fill(0, 0, 0);
-  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing * 2, barWidth, barHeight);
+  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing * 2, barWidth, barHeight);
   fill(0, 0, 255); 
-  rect(x + iconSize + spacing / 2, y + (iconSize / 2) - (barHeight / 2) + spacing * 2, barWidth * (player.energy / player.maxEnergy), barHeight);
+  rect(x + iconSize + spacing / 2, y + iconSize / 2 - barHeight / 2 + spacing * 2, barWidth * (player.energy / player.maxEnergy), barHeight);
   noFill();
 }
 

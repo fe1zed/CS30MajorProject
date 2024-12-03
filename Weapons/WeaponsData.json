@@ -100,6 +100,19 @@
                 "pixelWidth": 30,
                 "pixelHeight": 30 
             }
+        },
+
+        "Boxing Gloves" : {
+            "image": "Weapons/BoxingGloves.png",
+            "damage": 5,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": true,
+            "pixelWidth": 138,
+            "pixelHeight": 60,
+            "type": "Gloves"
         }
     }
 }
