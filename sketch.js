@@ -22,8 +22,12 @@ class Player {
     this.y = y;
     this.speed = speed;
     this.image = null;
+    this.deadImage = null;
+    this.uniqueAbilityImage = null;
     this.size = size;
     this.MoveDirection = "right";
+    this.alive = true;
+
     this.weaponImage = null;
     this.weaponType = null;
     this.weaponPropelling = null;
@@ -34,9 +38,19 @@ class Player {
     this.maxHealth = 0;
     this.maxArmor = 0;
     this.maxEnergy = 0;
+
+    this.usingUniqueAbility = false;
+    this.uniqueAbilityIsAura = false;
+    this.auraDuration = 5000; 
+    this.currentAuraDuration = 0;
+
+    this.defaultSpeed = speed;
+    this.maxSpeed = speed * 2;
   }
 
   move() {
+    if (!this.alive) return;
+
     const directions = {                          
       [KEYS.LEFT]: () => {  
         this.x -= this.speed; 
@@ -62,6 +76,11 @@ class Player {
   }
   
   display() {
+    if (!this.alive) {
+      image(this.deadImage, this.x, this.y, this.size, this.size);
+      return;
+    }
+
     if (this.MoveDirection === "right") {
       image(this.image, this.x, this.y, this.size, this.size);
     } 
@@ -75,6 +94,8 @@ class Player {
   }
   
   displayWeapon() {
+    if (!this.alive) return;
+
     let weaponData = weaponsDataJson[WEAPONSPATH][weaponName];
     let { pixelWidth, pixelHeight, followCursor, type } = weaponData;
     let weaponWidth = pixelWidth / this.size * 30;
@@ -119,20 +140,15 @@ class Player {
   }
 
   attack() {
+    if (!this.alive) return;
     let weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
 
-    if (weaponType === "Gun") {
-      this.shootBullet();
-    } 
-    else if (weaponType === "ColdWeapon") {
+    if (weaponType === "Gun" || weaponType === "ColdWeapon") {
       this.shootBullet();
     } 
     else if (weaponType === "InHand" || weaponType === "Staff") {
       console.log("Magic cast");
     } 
-    else if (weaponType === "Gloves") {
-      console.log("Sending wave");
-    }
     else {
       console.warn("Unknown weapon type:", weaponType);
     }
@@ -197,11 +213,15 @@ class Player {
 
   setPlayerValues() {
     player.image = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
+    player.deadImage = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["deadImage"]);
+    player.uniqueAbilityImage = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["uniqueAbility"]);
     player.speed = charactersDataJson[CHARACTERSPATH][charactersName]["speed"];
     player.size = charactersDataJson[CHARACTERSPATH][charactersName]["size"];
     player.health = charactersDataJson[CHARACTERSPATH][charactersName]["health"];
     player.armor = charactersDataJson[CHARACTERSPATH][charactersName]["armor"];
     player.energy = charactersDataJson[CHARACTERSPATH][charactersName]["energy"];
+
+    player.uniqueAbilityIsAura = charactersDataJson[CHARACTERSPATH][charactersName]["uniqueAbilityIsAura"];
 
     player.maxHealth = player.health;
     player.maxArmor = player.armor;
@@ -214,13 +234,32 @@ class Player {
     player.weaponPropelling = player.weaponType === "ColdWeapon"? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"]: false;
   }
 
+  executeUniqueAbility() {
+    if (!this.usingUniqueAbility) return;
+
+    if (this.uniqueAbilityIsAura) { // показываем аруру, улучшаем способности, вычитаем время ауры
+      if (this.currentAuraDuration < this.auraDuration) {
+        image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
+        console.log("Using unique ability");
+        this.currentAuraDuration += 100;
+        this.speed = this.maxSpeed;
+      }
+      else {
+        this.usingUniqueAbility = false;
+        this.currentAuraDuration = 0;
+        this.speed = this.defaultSpeed;
+        console.log("Using unique ability ENDED");
+      }
+    }
+  }
+
   render() {
     this.move();
+    this.executeUniqueAbility();
     this.display();
     this.displayWeapon();
   }
 }
-
 
 // Data containers
 let charactersDataJson;
@@ -229,7 +268,7 @@ let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let player = new Player(200, 200, 5, 100);
-let charactersName = "Berserk"; 
+let charactersName = "Assasin"; 
 let weaponName = "default";
 
 let bgImage = null;
@@ -251,6 +290,8 @@ let logoImage = null;
 //  ARMOR  >>  |     5      |       5       |    3    |     5     |      5      |           5             |       3       |
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
 //  ENERGY >>  |    180     |      200      |   180   |    240    |     180     |          180            |      150      |
+//         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
+//  AURA   >>  |    YES     |      NO       |   NO    |    NO     |     YES     |          NO             |      YES      |
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
 
 let bullets = [];
@@ -409,6 +450,17 @@ function windowResized() {
 
 function mouseClicked(event) {
   player.attack();
+}
+
+function keyPressed() {
+  if (key === "e") {
+    if (!player.usingUniqueAbility)  {
+      player.usingUniqueAbility = true;
+    }
+    else {
+      console.warn("Already using unique ability");
+    }
+  }
 }
 
 function drawLobby() {

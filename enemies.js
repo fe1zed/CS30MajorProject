@@ -162,37 +162,37 @@ class Enemy {
 
 class Queen extends Enemy {
     attack() {
-        console.log("Queen Attacks");
+        //console.log("Queen Attacks");
     }
 }
 
 class SkeletonKing extends Enemy {
     attack() {
-        console.log("Skeleton King Attacks");
+        //console.log("Skeleton King Attacks");
     }
 }
 
 class PhantomKing extends Enemy {
     attack() {
-        console.log("Phantom King Attacks");
+        //console.log("Phantom King Attacks");
     }
 }
 
 class VarkolynLeader  extends Enemy {
     attack() {
-        console.log("Varkolyn Leader Attacks");
+        //console.log("Varkolyn Leader Attacks");
     }
 }
 
 class ChristmasTreant extends Enemy {
     attack() {
-        console.log("Christmas Treant Attacks");
+        //console.log("Christmas Treant Attacks");
     }
 }
 
 class Nian extends Enemy {
     attack() {
-        console.log("Nian Attacks");
+        //console.log("Nian Attacks");
     }
 }
 

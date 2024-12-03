@@ -2,6 +2,7 @@
     "Characters" : {
         "DarkKnight": {
             "image": "Characters/DarkKnightGif.gif",
+            "deadImage" : "Characters/Dead/DarkKnightDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -11,7 +12,9 @@
             "criticalChance": 5,
             "meleeDamage": 4,
             "enhanceStartingWeapon": "Bad Pistol",
-            "uniqueAbility": "Dual Wield",
+            "uniqueAbilityName": "Dual Wield",
+            "uniqueAbility" : "Characters/UniqueAbility/DarkKnightUniqueAbility.png",
+            "uniqueAbilityIsAura": true,
 
             "Upgrade" : {
                 "health": 1,
@@ -23,6 +26,7 @@
 
         "Priestess" : {
             "image": "Characters/PriestessGif.gif",
+            "deadImage" : "Characters/Dead/PriestessDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -32,7 +36,9 @@
             "criticalChance": 0,
             "meleeDamage": 3,
             "enhanceStartingWeapon": "Wooden Cross",
-            "uniqueAbility": "Regeneration Pact",
+            "uniqueAbilityName": "Regeneration Pact",
+            "uniqueAbility" : "Characters/UniqueAbility/PriestessUniqueAbility.png",
+            "uniqueAbilityIsAura": false,
 
             "Upgrade" : {
                 "health": 1,
@@ -44,6 +50,7 @@
 
         "Rogue" : {
             "image": "Characters/RogueGif.gif",
+            "deadImage" : "Characters/Dead/RogueDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -53,7 +60,9 @@
             "criticalChance": 10,
             "meleeDamage": 5,
             "enhanceStartingWeapon": "Jack",
-            "uniqueAbility": "Dodge",
+            "uniqueAbilityName": "Dodge",
+            "uniqueAbility" : "Characters/UniqueAbility/RogueUniqueAbility.gif",
+            "uniqueAbilityIsAura": false,
 
             "Upgrade" : {
                 "health": 1,
@@ -65,6 +74,7 @@
 
         "Witch" : {
             "image": "Characters/WitchGif.gif",
+            "deadImage" : "Characters/Dead/WitchDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -74,7 +84,9 @@
             "criticalChance": 0,
             "meleeDamage": 3,
             "enhanceStartingWeapon": "The Code",
-            "uniqueAbility": "Lightning Strike",
+            "uniqueAbilityName": "Lightning Strike",
+            "uniqueAbility" : "Characters/UniqueAbility/WitchUniqueAbility.png",
+            "uniqueAbilityIsAura": false,
 
             "Upgrade" : {
                 "health": 1,
@@ -86,6 +98,7 @@
 
         "Assasin" : {
             "image": "Characters/AssasinGif.gif",
+            "deadImage" : "Characters/Dead/AssasinDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -95,7 +108,9 @@
             "criticalChance": 10,
             "meleeDamage": 5,
             "enhanceStartingWeapon": "Blood Blade",
-            "uniqueAbility": "Dark Blade",
+            "uniqueAbilityName": "Dark Blade",
+            "uniqueAbility" : "Characters/UniqueAbility/AssasinUniqueAbility3.png",
+            "uniqueAbilityIsAura": true,
 
             "Upgrade" : {
                 "health": 1,
@@ -107,6 +122,7 @@
 
         "Alchemist" : {
             "image": "Characters/AlchemistGif.gif",
+            "deadImage" : "Characters/Dead/AlchemistDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -116,7 +132,9 @@
             "criticalChance": 5,
             "meleeDamage": 4,
             "enhanceStartingWeapon": "Dormant Bubble Machine",
-            "uniqueAbility": "Gas Grenade",
+            "uniqueAbilityName": "Gas Grenade",
+            "uniqueAbility" : "Characters/UniqueAbility/AlchemistUniqueAbility.png",
+            "uniqueAbilityIsAura": false,
 
             "Upgrade" : {
                 "health": 1,
@@ -128,6 +146,7 @@
 
         "Berserk" : {
             "image": "Characters/BerserkGif.gif",
+            "deadImage" : "Characters/Dead/BerserkDead.png",
             "speed": 6.5,
             "size": 85,
 
@@ -137,7 +156,9 @@
             "criticalChance": 5,
             "meleeDamage": 5,
             "enhanceStartingWeapon": "Boxing Gloves",
-            "uniqueAbility": "Rage",
+            "uniqueAbilityName": "Rage",
+            "uniqueAbility" : "Characters/UniqueAbility/BerserkUniqueAbility2.png",
+            "uniqueAbilityIsAura": true,
 
             "Upgrade" : {
                 "health": 1,
