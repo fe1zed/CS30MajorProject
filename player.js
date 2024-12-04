@@ -14,6 +14,7 @@
 //  AURA   >>  |    YES     |      NO       |   NO    |    NO     |     YES     |          NO             |      YES      |
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
 
+/* eslint-disable indent */
 class Player { // 219
     constructor(x, y, speed, size) {
         this.x = x;
@@ -38,7 +39,7 @@ class Player { // 219
         this.maxEnergy = 0;
 
         this.usingUniqueAbility = false;
-        this.uniqueAbilityIsAura = false;
+        //this.uniqueAbilityIsAura = false;
         this.auraDuration = 3;
         this.currentAuraDuration = 0;
         this.auraStartTime = 0;
@@ -415,12 +416,71 @@ class DarkKnight extends Player { // 175
 
 
 class Priestess extends Player {
-    attack() {
+    constructor(x, y, speed, size) {
+        super(x, y, speed, size);
+        this.zoneBuffActive = false;  // Флаг активности двойного оружия
 
+        this.zoneBuffPosition = {x: 0, y: 0 };
+        this.zoneBuffTime = 3;
+        this.zoeneBuffStartTime = 0;
+        this.zoneBuffSize = 250;
+    }
+
+    attack() {
+        if(this.alive)
+            super.shootBullet();
     }
 
     executeUniqueAbility() {
+        if (!this.usingUniqueAbility) return;
 
+        // creating healing zone       
+        console.log("Spawn healig zone at x:" + this.x + "y:" + this.y);
+        this.zoneBuffPosition = {x: this.x - this.size, y: this.y - this.size};
+        this.usingUniqueAbility = false;
+        this.zoneBuffActive = true;
+    }
+
+    displayZoneBuff() {
+        let zoneBuffDurationMillis = this.zoneBuffTime * 1000;
+    
+        if (this.zoeneBuffStartTime === 0) {
+            this.zoeneBuffStartTime = millis();
+            console.log("Using unique ability {Regeneration Pact} STARTED");
+        }
+    
+        let elapsedTime = millis() - this.zoeneBuffStartTime;
+    
+        if (elapsedTime < zoneBuffDurationMillis) {
+            image(this.uniqueAbilityImage,this.zoneBuffPosition.x, this.zoneBuffPosition.y, this.zoneBuffSize, this.zoneBuffSize);
+        } 
+        else {
+            this.zoeneBuffStartTime = 0; 
+            this.zoneBuffActive = false;
+            console.log("Using unique ability {Regeneration Pact} ENDED");
+        }
+    }
+
+    heal() {
+        if (this.x > this.zoneBuffPosition.x && this.x < this.zoneBuffPosition.x + this.zoneBuffSize &&
+            this.y > this.zoneBuffPosition.y && this.y < this.zoneBuffPosition.y + this.zoneBuffSize
+        ) {
+            console.log("healing");
+            if (this.health < this.maxHealth) {
+                this.health += 0.01;
+            }
+        }
+    }
+
+    render() {
+        this.move();
+        this.executeUniqueAbility();
+        if(this.zoneBuffActive) {
+            this.displayZoneBuff();
+            this.heal();
+        }
+        this.display();
+        this.displayWeapon();
     }
 }
 
@@ -468,7 +528,8 @@ class Assasin extends Player {
         if (elapsedTime < auraDurationMillis) {
             image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
             this.speed = this.maxSpeed * 1.5;
-        } else {
+        } 
+        else {
             this.usingUniqueAbility = false;
             this.auraStartTime = 0; 
             this.speed = this.defaultSpeed;

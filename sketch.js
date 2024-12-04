@@ -21,7 +21,7 @@ let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let charactersName = "DarkKnight"; 
-let weaponName = "Boxing Gloves";
+let weaponName = "The Code";
 let player = new window[charactersName](200, 200, 5, 100);
 
 let bgImage = null;
@@ -63,7 +63,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Nian");
+  createEnemy("Boss", "Varkolyn Leader");
 }
 
 function draw() {
