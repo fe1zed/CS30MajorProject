@@ -20,7 +20,7 @@ let weaponsDataJson;
 let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
-let charactersName = "Priestess"; 
+let charactersName = "Rogue"; 
 let weaponName = "default";
 let player = new window[charactersName](200, 200, 5, 100);
 
@@ -51,6 +51,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   player.setPlayerValues();
+  player.loadAdditionalData();
 
   // If not found such weapon, showing default
   if (!weaponsDataJson[WEAPONSPATH].hasOwnProperty(weaponName)) {

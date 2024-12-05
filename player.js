@@ -15,7 +15,7 @@
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
 
 /* eslint-disable indent */
-class Player { // 219
+class Player {
     constructor(x, y, speed, size) {
         this.x = x;
         this.y = y;
@@ -39,7 +39,6 @@ class Player { // 219
         this.maxEnergy = 0;
 
         this.usingUniqueAbility = false;
-        //this.uniqueAbilityIsAura = false;
         this.auraDuration = 3;
         this.currentAuraDuration = 0;
         this.auraStartTime = 0;
@@ -234,10 +233,14 @@ class Player { // 219
         this.display();
         this.displayWeapon();
     }
+
+    loadAdditionalData() {
+        // Use this to add some data 
+    }
 }
 
 
-class DarkKnight extends Player { // 175
+class DarkKnight extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
         this.secondWeaponImage = null;  // Второе оружие
@@ -414,7 +417,6 @@ class DarkKnight extends Player { // 175
     }
 }
 
-
 class Priestess extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
@@ -470,7 +472,6 @@ class Priestess extends Player {
         if (this.x > this.zoneBuffPosition.x && this.x < this.zoneBuffPosition.x + this.zoneBuffSize &&
             this.y > this.zoneBuffPosition.y && this.y < this.zoneBuffPosition.y + this.zoneBuffSize
         ) {
-            //console.log(elapsedTime)
             if (elapsedTime >= this.timeBetweenHeal) {
                 if (this.health < this.maxHealth) {
                     this.health += 1;
@@ -498,15 +499,66 @@ class Priestess extends Player {
 }
 
 class Rogue extends Player {
+    constructor(x, y, speed, size) {
+        super(x, y, speed, size);
+
+        this.originalImage = null;     
+        this.abilityStartTime = 0;     
+        this.dodgeDuration = 0.3;      
+        this.dodgeStartTime = 0;
+        this.dodgeSpeedMultiplier = 10;
+        this.dodged = false;
+    }
+
     attack() {
         if(this.alive)
             super.shootBullet();
     }
 
     executeUniqueAbility() {
-        
+        if (!this.usingUniqueAbility) return;
+
+        let dodgeDurationMillis = this.dodgeDuration * 1000;
+    
+        if (this.dodgeStartTime === 0) {
+            this.dodgeStartTime = millis();
+            console.log("Using unique ability {DODGE} STARTED");
+        }
+    
+        let elapsedTime = millis() - this.dodgeStartTime;
+    
+        if (elapsedTime < dodgeDurationMillis) {
+            this.image = this.uniqueAbilityImage;
+            if (!this.dodged) {
+                this.dodge();
+                this.dodged = true;
+            }
+            
+        } 
+        else {
+            this.usingUniqueAbility = false;
+            this.dodgeStartTime = 0; 
+            this.image = this.originalImage;
+            this.dodged = false;
+            console.log("Using unique ability {DODGE} ENDED");
+        }
+    }
+    
+
+    loadAdditionalData() {
+        this.originalImage = loadImage("Characters/RogueGif.gif"/*[CHARACTERSPATH][charactersName]["image"]*/);
+        this.uniqueAbilityImage = loadImage("Characters/UniqueAbility/RogueUniqueAbility.gif");//[CHARACTERSPATH][charactersName]["uniqueAbility"]);
+    }
+
+    dodge() {
+        let angle = atan2(mouseY - this.y, mouseX - this.x); 
+        let dodgeDistance = this.speed * this.dodgeSpeedMultiplier;
+
+        this.x += cos(angle) * dodgeDistance;
+        this.y += sin(angle) * dodgeDistance;
     }
 }
+
 
 class Witch extends Player {
     attack() {
@@ -569,7 +621,25 @@ class Berserk extends Player {
     }
 
     executeUniqueAbility() {
-        
+        if (!this.usingUniqueAbility) return;
+
+        let auraDurationMillis = this.auraDuration * 1000;
+    
+        if (this.auraStartTime === 0) {
+            this.auraStartTime = millis();
+            console.log("Using unique ability {Dark Blade} STARTED");
+        }
+    
+        let elapsedTime = millis() - this.auraStartTime;
+    
+        if (elapsedTime < auraDurationMillis) {
+            image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
+        } 
+        else {
+            this.usingUniqueAbility = false;
+            this.auraStartTime = 0; 
+            console.log("Using unique ability {Dark Blade} ENDED");
+        }
     }
 }
 
