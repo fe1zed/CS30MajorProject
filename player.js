@@ -421,9 +421,12 @@ class Priestess extends Player {
         this.zoneBuffActive = false;  // Флаг активности двойного оружия
 
         this.zoneBuffPosition = {x: 0, y: 0 };
-        this.zoneBuffTime = 3;
-        this.zoeneBuffStartTime = 0;
+        this.zoneBuffTime = 5;
+        this.zoneBuffStartTime = 0;
         this.zoneBuffSize = 250;
+
+        this.healLastTime = 1;
+        this.timeBetweenHeal = 1000; // in millis
     }
 
     attack() {
@@ -444,32 +447,42 @@ class Priestess extends Player {
     displayZoneBuff() {
         let zoneBuffDurationMillis = this.zoneBuffTime * 1000;
     
-        if (this.zoeneBuffStartTime === 0) {
-            this.zoeneBuffStartTime = millis();
+        if (this.zoneBuffStartTime === 0) {
+            this.zoneBuffStartTime = millis();
             console.log("Using unique ability {Regeneration Pact} STARTED");
         }
     
-        let elapsedTime = millis() - this.zoeneBuffStartTime;
+        let elapsedTime = millis() - this.zoneBuffStartTime;
     
         if (elapsedTime < zoneBuffDurationMillis) {
             image(this.uniqueAbilityImage,this.zoneBuffPosition.x, this.zoneBuffPosition.y, this.zoneBuffSize, this.zoneBuffSize);
         } 
         else {
-            this.zoeneBuffStartTime = 0; 
+            this.zoneBuffStartTime = 0; 
             this.zoneBuffActive = false;
             console.log("Using unique ability {Regeneration Pact} ENDED");
         }
     }
 
     heal() {
+        let elapsedTime = millis() - this.healLastTime; // time between last heal and current time;
+
         if (this.x > this.zoneBuffPosition.x && this.x < this.zoneBuffPosition.x + this.zoneBuffSize &&
             this.y > this.zoneBuffPosition.y && this.y < this.zoneBuffPosition.y + this.zoneBuffSize
         ) {
-            console.log("healing");
-            if (this.health < this.maxHealth) {
-                this.health += 0.01;
+            //console.log(elapsedTime)
+            if (elapsedTime >= this.timeBetweenHeal) {
+                if (this.health < this.maxHealth) {
+                    this.health += 1;
+                    this.healLastTime = millis();
+                    console.log("healing");
+                }
             }
         }
+    }
+
+    attack() {
+
     }
 
     render() {

@@ -20,8 +20,8 @@ let weaponsDataJson;
 let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
-let charactersName = "DarkKnight"; 
-let weaponName = "The Code";
+let charactersName = "Priestess"; 
+let weaponName = "default";
 let player = new window[charactersName](200, 200, 5, 100);
 
 let bgImage = null;
