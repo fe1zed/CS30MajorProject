@@ -239,7 +239,6 @@ class Player {
     }
 }
 
-
 class DarkKnight extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
@@ -559,15 +558,99 @@ class Rogue extends Player {
     }
 }
 
-
 class Witch extends Player {
+    constructor(x, y, speed, size) {
+        super(x, y, speed, size);
+
+        this.amountOfSpikes = 6;
+        this.pathToIceSpike = "Weapons/Bullets/IceSpike.png";
+        this.iceSpikeImage = null;
+        this.spikes = [];
+        this.shootedSpikes = false;
+        this.usingUniqueAbility = false;
+    }
+
     attack() {
         if(this.alive)
             super.shootBullet();
     }
 
     executeUniqueAbility() {
-        
+        if (!this.usingUniqueAbility) return;
+
+        let auraDurationMillis = this.auraDuration * 1000;
+    
+        if (this.auraStartTime === 0) {
+            this.auraStartTime = millis();
+            console.log("Using unique ability {SUPER MAJIC CAST} STARTED");
+        }
+    
+        let elapsedTime = millis() - this.auraStartTime;
+    
+        if (elapsedTime < auraDurationMillis) {
+            image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
+            this.usingUniqueAbility = true;
+            if(!this.shootedSpikes){
+                this.shootSpikes();
+            }
+        } 
+        else {
+            this.usingUniqueAbility = false;
+            this.auraStartTime = 0; 
+            this.shootedSpikes = false;
+            this.spikes.pop();
+            console.log("Using unique ability {SUPER MAJIC CAST} ENDED");
+        }
+    }
+
+    shootSpikes() {
+        console.log("Shooting spikes");
+        for (let i = 0; i < this.amountOfSpikes; i++) {
+            this.spikes.push(this.createIceSpike(this.x, this.y));
+            console.log("Creating spike");
+        }
+        this.shootedSpikes = true;
+    }
+
+    moveSpikes(numOfSpikes) {
+        let degreeToRotate = 360 / numOfSpikes;
+        let startDegree = 0;
+    }
+
+    createIceSpike(x, y) {
+        return {
+            x: x,
+            y: y,
+            pixelWidth: 240,
+            pixelHeight: 240,
+            image: this.iceSpikeImage,
+            speed: 5,
+            dx: "xz",
+            dy: "xz",
+            damage: 20,
+        };
+    }
+
+    displaySpikes() {
+        for(let spike of this.spikes) {
+            image(spike.image, spike.x, spike.y, spike.pixelWidth, spike.pixelHeight);
+        }
+    }
+
+    loadAdditionalData() {
+        this.iceSpikeImage = loadImage(this.pathToIceSpike);
+    }
+
+
+    render() {
+        this.move();
+        this.executeUniqueAbility();
+        if(this.usingUniqueAbility) {
+            this.displaySpikes();
+            this.moveSpikes();
+        }
+        this.display();
+        this.displayWeapon();
     }
 }
 
