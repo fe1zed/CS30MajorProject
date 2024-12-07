@@ -89,6 +89,21 @@ function draw() {
     }
   }
 
+  if (charactersName === "Witch") {
+    for (let spike of player.spikes) {
+      for (let enemy of enemies) {
+        if (!enemy.alive) { 
+          continue;
+        }
+        if (spike.x < enemy.x + enemy.pixelWidth && spike.x + spike.pixelWidth > enemy.x && spike.y < enemy.y + enemy.pixelHeight && spike.y + spike.pixelHeight > enemy.y) {
+          enemy.takeDamage(spike.damage); 
+          player.spikes.splice(player.spikes.indexOf(spike), 1);
+          break;
+        }
+      }
+    }
+  }
+
   // ----- PLAYER -----
   player.render();
 

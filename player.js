@@ -139,7 +139,6 @@ class Player {
     }
 
     attack() {
-        console.log("651515165151");
         if (!this.alive) return;
     }
 
@@ -562,7 +561,7 @@ class Witch extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
 
-        this.amountOfSpikes = 6;
+        this.amountOfSpikes = 10;
         this.pathToIceSpike = "Weapons/Bullets/IceSpike.png";
         this.iceSpikeImage = null;
         this.spikes = [];
@@ -590,6 +589,7 @@ class Witch extends Player {
         if (elapsedTime < auraDurationMillis) {
             image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
             this.usingUniqueAbility = true;
+            this.speed = this.maxSpeed;
             if(!this.shootedSpikes){
                 this.shootSpikes();
             }
@@ -598,26 +598,35 @@ class Witch extends Player {
             this.usingUniqueAbility = false;
             this.auraStartTime = 0; 
             this.shootedSpikes = false;
-            this.spikes.pop();
+            this.spikes = [];
+            this.speed = this.defaultSpeed;
             console.log("Using unique ability {SUPER MAJIC CAST} ENDED");
         }
     }
 
     shootSpikes() {
         console.log("Shooting spikes");
+        this.spikes = [];
+        let degreeToRotate = 360 / this.amountOfSpikes;
+    
         for (let i = 0; i < this.amountOfSpikes; i++) {
-            this.spikes.push(this.createIceSpike(this.x, this.y));
-            console.log("Creating spike");
+            let angleInDegrees = i * degreeToRotate; // Угол для льдышки
+            this.spikes.push(this.createIceSpike(this.x - this.size, this.y - this.size, angleInDegrees));
+            console.log("Creating spike at angle:", angleInDegrees);
         }
+    
         this.shootedSpikes = true;
     }
 
-    moveSpikes(numOfSpikes) {
-        let degreeToRotate = 360 / numOfSpikes;
-        let startDegree = 0;
+    moveSpikes() {
+        for (let spike of this.spikes) {
+            spike.x += spike.dx; // Двигаем по x
+            spike.y += spike.dy; // Двигаем по y
+        }
     }
 
-    createIceSpike(x, y) {
+    createIceSpike(x, y, angleInDegrees) {
+        let angleInRadians = radians(angleInDegrees);
         return {
             x: x,
             y: y,
@@ -625,16 +634,25 @@ class Witch extends Player {
             pixelHeight: 240,
             image: this.iceSpikeImage,
             speed: 5,
-            dx: "xz",
-            dy: "xz",
+            dx: cos(angleInRadians) * 7.5, // Скорость по x
+            dy: sin(angleInRadians) * 7.5, // Скорость по y
             damage: 20,
+            angle: angleInDegrees + 90,
         };
     }
 
     displaySpikes() {
-        for(let spike of this.spikes) {
-            image(spike.image, spike.x, spike.y, spike.pixelWidth, spike.pixelHeight);
+        for (let i = 0; i < this.spikes.length; i++) {
+            let spike = this.spikes[i];
+            push();
+            imageMode(CENTER);
+            translate(spike.x + this.size + this.size / 2, spike.y + this.size + this.size / 2); // Перемещаемся в позицию льдышки
+            angleMode(DEGREES)
+            rotate(spike.angle);
+            image(spike.image, 0, 0, spike.pixelWidth, spike.pixelHeight); // Отображаем льдышку
+            pop();
         }
+        angleMode(RADIANS);
     }
 
     loadAdditionalData() {
