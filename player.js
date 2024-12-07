@@ -673,12 +673,22 @@ class Witch extends Player {
 }
 
 class Assasin extends Player {
+    constructor(x, y, speed, size) {
+        super(x, y, speed, size);
+
+        this.amountOfSpikes = 10;
+        this.pathToIceSpike = "Weapons/Bullets/BloodBladeWave.png";
+        this.iceSpikeImage = null;
+        this.spikes = [];
+        this.shootedSpikes = false;
+        this.usingUniqueAbility = false;
+    }
+
     attack() {
         if(this.alive)
             super.shootBullet();
     }
 
-    // Assasing unique skill is <<Dark Blade>> that makes him the fastest unit in the hole game
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
 
@@ -686,21 +696,94 @@ class Assasin extends Player {
     
         if (this.auraStartTime === 0) {
             this.auraStartTime = millis();
-            console.log("Using unique ability {Dark Blade} STARTED");
+            console.log("Using unique ability {DARK BLADE} STARTED");
         }
     
         let elapsedTime = millis() - this.auraStartTime;
     
         if (elapsedTime < auraDurationMillis) {
             image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
+            this.usingUniqueAbility = true;
             this.speed = this.maxSpeed * 1.5;
+            if(!this.shootedSpikes){
+                this.shootSpikes();
+            }
         } 
         else {
             this.usingUniqueAbility = false;
             this.auraStartTime = 0; 
+            this.shootedSpikes = false;
+            this.spikes = [];
             this.speed = this.defaultSpeed;
-            console.log("Using unique ability {Dark Blade} ENDED");
+            console.log("Using unique ability {DARK BLADE} ENDED");
         }
+    }
+
+    shootSpikes() {
+        console.log("Shooting spikes");
+        this.spikes = [];
+        let degreeToRotate = 360 / this.amountOfSpikes;
+    
+        for (let i = 0; i < this.amountOfSpikes; i++) {
+            let angleInDegrees = i * degreeToRotate; // Угол для льдышки
+            this.spikes.push(this.createIceSpike(this.x - this.size, this.y - this.size, angleInDegrees));
+            console.log("Creating spike at angle:", angleInDegrees);
+        }
+    
+        this.shootedSpikes = true;
+    }
+
+    moveSpikes() {
+        for (let spike of this.spikes) {
+            spike.x += spike.dx; // Двигаем по x
+            spike.y += spike.dy; // Двигаем по y
+        }
+    }
+
+    createIceSpike(x, y, angleInDegrees) {
+        let angleInRadians = radians(angleInDegrees);
+        return {
+            x: x,
+            y: y,
+            pixelWidth: 120,
+            pixelHeight: 120,
+            image: this.iceSpikeImage,
+            speed: 5,
+            dx: cos(angleInRadians) * 7.5, // Скорость по x
+            dy: sin(angleInRadians) * 7.5, // Скорость по y
+            damage: 20,
+            angle: angleInDegrees ,
+        };
+    }
+
+    displaySpikes() {
+        for (let i = 0; i < this.spikes.length; i++) {
+            let spike = this.spikes[i];
+            push();
+            imageMode(CENTER);
+            translate(spike.x + this.size + this.size / 2, spike.y + this.size + this.size / 2); // Перемещаемся в позицию льдышки
+            angleMode(DEGREES)
+            rotate(spike.angle);
+            image(spike.image, 0, 0, spike.pixelWidth, spike.pixelHeight); // Отображаем льдышку
+            pop();
+        }
+        angleMode(RADIANS);
+    }
+
+    loadAdditionalData() {
+        this.iceSpikeImage = loadImage(this.pathToIceSpike);
+    }
+
+
+    render() {
+        this.move();
+        this.executeUniqueAbility();
+        if(this.usingUniqueAbility) {
+            this.displaySpikes();
+            this.moveSpikes();
+        }
+        this.display();
+        this.displayWeapon();
     }
 }
 
