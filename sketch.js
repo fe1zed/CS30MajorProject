@@ -20,7 +20,7 @@ let weaponsDataJson;
 let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
-let charactersName = "Assasin"; 
+let charactersName = "Alchemist"; 
 let weaponName = "default";
 let player = new window[charactersName](200, 200, 5, 100);
 
@@ -64,7 +64,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Varkolyn Leader");
+  createEnemy("Boss", "Nian");
 }
 
 function draw() {

@@ -45,6 +45,10 @@ class Player {
 
         this.defaultSpeed = speed;
         this.maxSpeed = speed * 2;
+
+        this.timeBetweenShots = 250;
+        this.defaulTimeBetweenShots = 250;
+        this.lastTimeShooted = 0;
     }
 
     move() {
@@ -143,6 +147,10 @@ class Player {
     }
 
     shootBullet() {
+        if (millis() < this.lastTimeShooted + this.timeBetweenShots) return;
+
+        this.lastTimeShooted = millis();
+
         if (this.energy > 0) {
             let bullet = this.createBullet();
             bullets.push(bullet);
@@ -799,6 +807,12 @@ class Alchemist extends Player {
 }
 
 class Berserk extends Player {
+    constructor(x, y, speed, size) {
+        super(x, y, speed, size);
+
+        this.rageAttackSpeed = this.defaulTimeBetweenShots / 2;
+    }
+
     attack() {
         if(this.alive)
             super.shootBullet();
@@ -811,18 +825,20 @@ class Berserk extends Player {
     
         if (this.auraStartTime === 0) {
             this.auraStartTime = millis();
-            console.log("Using unique ability {Dark Blade} STARTED");
+            console.log("Using unique ability {RAGE} STARTED");
         }
     
         let elapsedTime = millis() - this.auraStartTime;
     
         if (elapsedTime < auraDurationMillis) {
             image(this.uniqueAbilityImage, this.x - 20, this.y - 15, 120, 120);
+            this.timeBetweenShots = this.rageAttackSpeed;
         } 
         else {
             this.usingUniqueAbility = false;
             this.auraStartTime = 0; 
-            console.log("Using unique ability {Dark Blade} ENDED");
+            this.timeBetweenShots = this.defaulTimeBetweenShots;
+            console.log("Using unique ability {RAGE} ENDED");
         }
     }
 }
