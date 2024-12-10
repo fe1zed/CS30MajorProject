@@ -133,7 +133,7 @@
             "meleeDamage": 4,
             "enhanceStartingWeapon": "Dormant Bubble Machine",
             "uniqueAbilityName": "Gas Grenade",
-            "uniqueAbility" : "Characters/UniqueAbility/AlchemistUniqueAbility.png",
+            "uniqueAbility" : "Characters/UniqueAbility/PiosonedPuddle.png",
             "uniqueAbilityIsAura": false,
 
             "Upgrade" : {

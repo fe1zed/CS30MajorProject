@@ -433,8 +433,8 @@ class Priestess extends Player {
         this.zoneBuffStartTime = 0;
         this.zoneBuffSize = 250;
 
-        this.healLastTime = 1;
-        this.timeBetweenHeal = 1000; // in millis
+        this.damagedLastTime = 1;
+        this.timeBetweenDamage = 1000; // in millis
     }
 
     attack() {
@@ -473,15 +473,15 @@ class Priestess extends Player {
     }
 
     heal() {
-        let elapsedTime = millis() - this.healLastTime; // time between last heal and current time;
+        let elapsedTime = millis() - this.damagedLastTime; // time between last heal and current time;
 
         if (this.x > this.zoneBuffPosition.x && this.x < this.zoneBuffPosition.x + this.zoneBuffSize &&
             this.y > this.zoneBuffPosition.y && this.y < this.zoneBuffPosition.y + this.zoneBuffSize
         ) {
-            if (elapsedTime >= this.timeBetweenHeal) {
+            if (elapsedTime >= this.timeBetweenDamage) {
                 if (this.health < this.maxHealth) {
                     this.health += 1;
-                    this.healLastTime = millis();
+                    this.damagedLastTime = millis();
                     console.log("healing");
                 }
             }
@@ -796,13 +796,65 @@ class Assasin extends Player {
 }
 
 class Alchemist extends Player {
+    constructor(x, y, speed, size) {
+        super(x, y, speed, size);
+        this.zoneBuffActive = false;  // Флаг активности двойного оружия
+
+        this.zoneBuffPosition = {x: 0, y: 0 };
+        this.zoneBuffTime = 5;
+        this.zoneBuffStartTime = 0;
+        this.zoneBuffSize = 250;
+
+        this.damagedLastTime = 1;
+        this.timeBetweenDamage = 1000; // in millis
+        this.zoneDamage = 20;
+    }
+
     attack() {
         if(this.alive)
             super.shootBullet();
     }
 
     executeUniqueAbility() {
-        
+        if (!this.usingUniqueAbility) return;
+
+        // creating healing zone       
+        console.log("Spawn healig zone at x:" + this.x + "y:" + this.y);
+        this.zoneBuffPosition = {x: this.x - this.size, y: this.y - this.size};
+        this.usingUniqueAbility = false;
+        this.zoneBuffActive = true;
+    }
+
+    displayZoneBuff() {
+        let zoneBuffDurationMillis = this.zoneBuffTime * 1000;
+    
+        if (this.zoneBuffStartTime === 0) {
+            this.zoneBuffStartTime = millis();
+            console.log("Using unique ability {Gas Grenade} STARTED");
+        }
+    
+        let elapsedTime = millis() - this.zoneBuffStartTime;
+    
+        if (elapsedTime < zoneBuffDurationMillis) {
+            image(this.uniqueAbilityImage,this.zoneBuffPosition.x, this.zoneBuffPosition.y, this.zoneBuffSize, this.zoneBuffSize);
+        } 
+        else {
+            this.zoneBuffStartTime = 0; 
+            this.zoneBuffActive = false;
+            console.log("Using unique ability {Gas Grenade} ENDED");
+        }
+    }
+
+    attack() {
+        if(this.alive)
+            super.shootBullet();
+    }
+
+    render() {
+        this.move();
+        this.executeUniqueAbility();
+        this.display();
+        this.displayWeapon();
     }
 }
 

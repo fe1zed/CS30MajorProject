@@ -64,12 +64,48 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Nian");
+  createEnemy("Boss", "Varkolyn Leader");
 }
 
 function draw() {
   background(53, 80, 96);
-  drawCoolImage(1000, 200, 264, logoImage);
+  drawCoolImage(1000, 200, 256, logoImage);
+
+  if (charactersName === "Witch" || charactersName === "Assasin") {
+    for (let spike of player.spikes) {
+      for (let enemy of enemies) {
+        if (!enemy.alive) { 
+          continue;
+        }
+        if (spike.x < enemy.x + enemy.pixelWidth && spike.x + spike.pixelWidth > enemy.x && spike.y < enemy.y + enemy.pixelHeight && spike.y + spike.pixelHeight > enemy.y) {
+          enemy.takeDamage(spike.damage); 
+          player.spikes.splice(player.spikes.indexOf(spike), 1);
+          break;
+        }
+      }
+    }
+  }
+
+  if (charactersName === "Alchemist") {
+    // check for collision with poisoned puddle
+
+    if (player.zoneBuffActive) {
+      player.displayZoneBuff();
+
+      let elapsedTime = millis() - player.damagedLastTime;
+    
+      for (let enemy of enemies) {
+        if (enemy.x + enemy.pixelWidth / 2 > player.zoneBuffPosition.x && enemy.x + enemy.pixelWidth / 2 < player.zoneBuffPosition.x + player.zoneBuffSize &&
+            enemy.y + enemy.pixelHeight / 2 > player.zoneBuffPosition.y && enemy.y + enemy.pixelHeight / 2 < player.zoneBuffPosition.y + player.zoneBuffSize ) {
+          if (elapsedTime >= player.timeBetweenDamage) {
+            enemy.takeDamage(player.zoneDamage);
+            player.damagedLastTime = millis();
+            console.log("Damaging from gas");
+          }
+        }
+      }
+    }
+  }
 
   // ----- ENEMIES -----
   for (let enemy of enemies) {
@@ -85,21 +121,6 @@ function draw() {
         enemy.takeDamage(bullet.damage); 
         bullets.splice(bullets.indexOf(bullet), 1);
         break;
-      }
-    }
-  }
-
-  if (charactersName === "Witch" || charactersName === "Assasin") {
-    for (let spike of player.spikes) {
-      for (let enemy of enemies) {
-        if (!enemy.alive) { 
-          continue;
-        }
-        if (spike.x < enemy.x + enemy.pixelWidth && spike.x + spike.pixelWidth > enemy.x && spike.y < enemy.y + enemy.pixelHeight && spike.y + spike.pixelHeight > enemy.y) {
-          enemy.takeDamage(spike.damage); 
-          player.spikes.splice(player.spikes.indexOf(spike), 1);
-          break;
-        }
       }
     }
   }
