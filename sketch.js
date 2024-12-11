@@ -170,6 +170,8 @@ function createEnemy(enemyType, enemyName) {
     newEnemy.deadImage = loadImage(enemyData.deadImage);
     newEnemy.attackImage = loadImage(enemyData.attackImage);
     newEnemy.moveImage = loadImage(enemyData.moveImage);
+
+    newEnemy.loadAdditionalData();
     
     enemies.push(newEnemy);
   } 

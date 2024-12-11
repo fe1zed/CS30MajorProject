@@ -169,8 +169,12 @@ class Enemy {
         let states = ["idle", "move", "attack"];
         this.state = random(states);
         this.currentTimeBetweenStates = 0;
-        this.timeBetweenStates = random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
-        console.log("New state:", this.state);
+        this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
+        console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
+    }
+
+    loadAdditionalData() {
+
     }
 
     render() {
@@ -202,8 +206,23 @@ class PhantomKing extends Enemy {
 }
 
 class VarkolynLeader  extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) {
+        super(x, y, pixelWidth, pixelHeight, health);
+
+        this.enemyBulletImage = null;
+    }
+
     attack() {
-        //console.log("Varkolyn Leader Attacks");
+        if (this.direction === "right") {
+            image(this.enemyBulletImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250);
+        }
+        else {
+            image(this.enemyBulletImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
+        }
+    }
+
+    loadAdditionalData() {
+        this.enemyBulletImage = loadImage("Enemies/Sprites/EnergySphere.gif");
     }
 }
 
