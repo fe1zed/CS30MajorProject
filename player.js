@@ -234,6 +234,23 @@ class Player {
         console.log("Player uses unique ability. Override of each of character.");
     }
 
+    takeDamage(damage) {
+        if (!this.alive) return;
+
+        this.health -= damage;
+
+        console.log("Player took", damage, "damage! Hp left:", this.health);
+
+        if (this.health <= 0) {
+            this.die();
+        }
+    }
+
+    die() {
+        console.log("Player dead");
+        this.alive = false;
+    }
+
     render() {
         this.move();
         this.executeUniqueAbility();

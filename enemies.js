@@ -48,6 +48,8 @@ class Enemy {
         this.currentTimeBetweenStates = 0;
         this.minTimeBetweenStates = 50;
         this.maxTimeBetweenStates = 350;
+
+        this.playerInstance = null;
     }
 
     display() {
@@ -70,10 +72,7 @@ class Enemy {
 
         console.log("Enemy took", damage, "damage! Hp left:", this.health);
 
-      /*if (this.health < this.maxHealth / 2 && this.health > 0) {
-        this.image = this.attackImage;
-      } 
-      else*/ if (this.health <= 0) {
+        if (this.health <= 0) {
             this.die();
         }
     }
@@ -174,7 +173,11 @@ class Enemy {
     }
 
     loadAdditionalData() {
+        
+    }
 
+    loadPlayerData(_player) {
+        this.playerInstance = _player;
     }
 
     displayBullets() {
@@ -217,12 +220,18 @@ class VarkolynLeader  extends Enemy {
         this.enemyBulletImage = null;
         this.bullets = [];
         this.bulletAmount = 5;
-        this.bulletsDeley = 0.1;
+        this.bulletsDeley = 1000; // millis
+        this.currentTime = 0;
     }
 
     attack() {
+        if (this.currentTime + this.bulletsDeley <= millis()) {
+            this.shootBullet();
+            this.currentTime = millis();
+        } 
+
         if (this.direction === "right") {
-            image(this.enemyBulletImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250);
+            image(this.enemyBulletImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250); 
         }
         else {
             image(this.enemyBulletImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
@@ -234,22 +243,24 @@ class VarkolynLeader  extends Enemy {
     }
 
     createBullet() {
-        return new SinusoidalAttack(this.bulletStartX, this.bulletStartY, 20, 20);
+        return new SinusoidalAttack(this.bulletStartX, this.bulletStartY, 20, 20, 10); //constructor(x, y, bulletWidth, bulletHeight, speed)
     }
 
     shootBullet() {
-        // Make deley for spwaning bullets
-        for (let i = 0; i < this.bulletAmount; i++) {
-            console.log(`Creating ${this.bulletAmount} bullets`);
-            this.bulletStartX = this.x + this.pixelWidth * 2 / 3 + 125;
-            this.bulletStartY = this.y + 125;
-            this.bullets.push(this.createBullet()); 
-        }
+        this.bulletStartX = this.x + this.pixelWidth * 2 / 3 + 125;
+        this.bulletStartY = this.y + 125;
+        this.bullets.push(this.createBullet()); 
     }
 
     displayBullets() {
-        for (let bullet of this.bullets) {
+        for (let i = 0; i < this.bullets.length - 1; i++) {
+            let bullet = this.bullets[i];
             bullet.render();
+
+            if (bullet.checkCollisionWithPlayer(this.playerInstance)) {
+                this.playerInstance.takeDamage(bullet.damage);
+                this.bullets.splice(i, 1);
+            }
         }
     }
 }
@@ -274,17 +285,16 @@ window.ChristmasTreant = ChristmasTreant;
 window.Nian = Nian;
 
 // Attack variaties
-class StraightAttack {
-
-}
-
 class SinusoidalAttack {
-    constructor (x, y, bulletWidth, bulletHeight, speed) {
+    constructor(x, y, bulletWidth, bulletHeight, speed) {
         this.x = x;
         this.y = y;
         this.bulletWidth = bulletWidth;
         this.bulletHeight = bulletHeight;
-        this.bulletSpeed = 5;
+        this.speed = speed;
+        this.baseY = y;
+        this.elapsed = 0;
+        this.damage = 1;
     }
 
     display() {
@@ -293,21 +303,17 @@ class SinusoidalAttack {
     }
 
     move() {
-        push();
-        translate(this.x, this.y);
-        this.x += this.bulletSpeed;
-        this.y = 75 * sin(this.x / 100) + 125 / 2;
-        this.y += enemies[0].y;
-        pop();
+        this.x += this.speed; // Move horizontally
+        this.elapsed += 0.05; // Increment the sine wave time
+        this.y = this.baseY + 20 * sin(this.elapsed * 5); // Adjust vertical position
+    }
+
+    checkCollisionWithPlayer(player) {
+        return (this.x < player.x + player.size && this.x + this.bulletWidth > player.x && this.y < player.y + player.size && this.y + this.bulletHeight > player.y);
     }
 
     render() {
         this.move();
         this.display();
     }
-}
-
-
-class Lazer {
-    
 }
