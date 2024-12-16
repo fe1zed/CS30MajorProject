@@ -50,6 +50,7 @@ class Enemy {
         this.maxTimeBetweenStates = 350;
 
         this.playerInstance = null;
+        this.bulletImage = null;
     }
 
     display() {
@@ -220,8 +221,9 @@ class VarkolynLeader  extends Enemy {
         this.enemyBulletImage = null;
         this.bullets = [];
         this.bulletAmount = 5;
-        this.bulletsDeley = 1000; // millis
+        this.bulletsDeley = 200; // millis
         this.currentTime = 0;
+        this.bulletSpeed = 10;
     }
 
     attack() {
@@ -240,15 +242,22 @@ class VarkolynLeader  extends Enemy {
 
     loadAdditionalData() {
         this.enemyBulletImage = loadImage("Enemies/Sprites/EnergySphere.gif");
+        this.bulletImage = loadImage("Enemies/Sprites/DefaultBullet.png")
     }
 
     createBullet() {
-        return new SinusoidalAttack(this.bulletStartX, this.bulletStartY, 20, 20, 10); //constructor(x, y, bulletWidth, bulletHeight, speed)
+        let dx = this.playerInstance.x - this.bulletStartX;
+        let dy = this.playerInstance.y - this.bulletStartY;
+        let length = sqrt(dx * dx + dy * dy);
+
+        return new SwirlAttack(this.bulletStartX, this.bulletStartY, 20, 20, 0.05, 2.5, this.bulletImage);
+        return new LineAttack(this.bulletStartX, this.bulletStartY, 20, 20, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed); 
+
     }
 
     shootBullet() {
-        this.bulletStartX = this.x + this.pixelWidth * 2 / 3 + 125;
-        this.bulletStartY = this.y + 125;
+        this.bulletStartX = this.x + this.pixelWidth * 2 / 3 + 100;
+        this.bulletStartY = this.y + 100;
         this.bullets.push(this.createBullet()); 
     }
 
@@ -259,6 +268,10 @@ class VarkolynLeader  extends Enemy {
 
             if (bullet.checkCollisionWithPlayer(this.playerInstance)) {
                 this.playerInstance.takeDamage(bullet.damage);
+                this.bullets.splice(i, 1);
+            }
+
+            if (bullet.isOutOfBounds()) {
                 this.bullets.splice(i, 1);
             }
         }
@@ -284,32 +297,100 @@ window.VarkolynLeader = VarkolynLeader;
 window.ChristmasTreant = ChristmasTreant;
 window.Nian = Nian;
 
-// Attack variaties
-class SinusoidalAttack {
-    constructor(x, y, bulletWidth, bulletHeight, speed) {
+//Attack variaties
+class LineAttack {
+    constructor(x, y, bulletWidth, bulletHeight, dx, dy, _image) {
         this.x = x;
         this.y = y;
+
+        this.dx = dx;
+        this.dy = dy;
+
         this.bulletWidth = bulletWidth;
         this.bulletHeight = bulletHeight;
-        this.speed = speed;
         this.baseY = y;
         this.elapsed = 0;
         this.damage = 1;
+
+        this.image = _image;
     }
 
     display() {
-        fill("red");
-        circle(this.x, this.y, this.bulletWidth);
+        //fill("red");
+        //circle(this.x, this.y, this.bulletWidth);
+        image(this.image, this.x, this.y, this.bulletWidth, this.bulletHeight);
     }
 
     move() {
-        this.x += this.speed; // Move horizontally
-        this.elapsed += 0.05; // Increment the sine wave time
-        this.y = this.baseY + 20 * sin(this.elapsed * 5); // Adjust vertical position
+        this.x += this.dx;
+        this.y += this.dy;
     }
 
     checkCollisionWithPlayer(player) {
         return (this.x < player.x + player.size && this.x + this.bulletWidth > player.x && this.y < player.y + player.size && this.y + this.bulletHeight > player.y);
+    }
+
+    isOutOfBounds() {
+        return (
+            this.x + this.bulletWidth < -500 ||  
+            this.x > width + 500 ||  
+            this.y + this.bulletHeight < -500 ||  
+            this.y > height + 500    
+        );
+    }
+
+    render() {
+        this.move();
+        this.display();
+    }
+}
+
+class SwirlAttack {
+    constructor(bulletStartX, bulletStartY, bulletWidth, bulletHeight, rotationSpeed, radiusIncrement, _image) {
+        this.bulletStartX = bulletStartX;   
+        this.bulletStartY = bulletStartY;  
+        this.bulletWidth = bulletWidth;    
+        this.bulletHeight = bulletHeight;  
+        this.choice = random(100);
+        this.rotationSpeed = this.choice > 50? rotationSpeed: -rotationSpeed;  
+        this.radius = 30;  
+        this.radiusIncrement = this.choice > 50? radiusIncrement: -radiusIncrement;  
+        this.angle = 0;  
+        this.damage = 1;
+        this.image = _image;
+    }
+
+    display() {
+        //fill("red");
+        //circle(this.x, this.y, this.bulletWidth);
+        image(this.image, this.x, this.y, this.bulletWidth, this.bulletHeight);
+    }
+
+    move() {
+        this.angle += this.rotationSpeed;
+
+        this.x = this.bulletStartX + cos(this.angle) * this.radius;
+        this.y = this.bulletStartY + sin(this.angle) * this.radius;
+
+        this.radius += this.radiusIncrement;
+    }
+
+    checkCollisionWithPlayer(player) {
+        return (
+            this.x < player.x + player.size &&
+            this.x + this.bulletWidth > player.x &&
+            this.y < player.y + player.size &&
+            this.y + this.bulletHeight > player.y
+        );
+    }
+
+    isOutOfBounds() {
+        return (
+            this.x + this.bulletWidth < -500 ||  
+            this.x > width + 500 ||  
+            this.y + this.bulletHeight < -500 ||  
+            this.y > height + 500    
+        );
     }
 
     render() {
