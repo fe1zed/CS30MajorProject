@@ -194,7 +194,8 @@ class Enemy {
         let dy = this.playerInstance.y - this.bulletStartY;
         let length = sqrt(dx * dx + dy * dy);
 
-        //return new RotatingSphereAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
+        return new Deviding(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed, this.bulletImage); 
+        return new RotatingSphereAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
         return new LineAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed, this.bulletImage); 
     }
 
@@ -214,7 +215,7 @@ class Enemy {
                 this.bullets.splice(i, 1);
             }
 
-            if (bullet.isOutOfBounds()) {
+            if (bullet.isOutOfBounds() || bullet.distance > 400) {
                 this.bullets.splice(i, 1);
             }
         }
@@ -362,9 +363,34 @@ class RotatingSphereAttack extends Attack {
 
         this.distance += 1; 
     }
+}
 
-    render() {
-        this.move(); 
-        this.display(); 
+class Deviding extends Attack {
+    constructor(x, y, bulletWidth, bulletHeight, dx, dy, _image) {
+        super(x, y, bulletWidth, bulletHeight, _image);
+        this.dx = dx;
+        this.dy = dy;
+        this.distance = 0;
+    }
+
+    move() {
+        this.x += this.dx;
+        this.y += this.dy;
+        let distanceIncreasment = sqrt(this.dx * this.dx + this.dy * this.dy);
+        this.distance += distanceIncreasment;
+        this.devide(); 
+    }
+
+    devide() {
+        if (this.distance > 100) {
+            console.log("Devide!");
+            this.distance = 0;
+
+            // create 1 more bullet 
+            enemies[0].bullets.push(
+                new Deviding(enemies[0].bulletStartX - enemies[0].bulletSize / 2, enemies[0].bulletStartY - enemies[0].bulletSize / 2,
+                enemies[0].bulletSize, enemies[0].bulletSize, enemies[0].dx / enemies[0].length * enemies[0].bulletSpeed,
+                enemies[0].dy / enemies[0].length * enemies[0].bulletSpeed, enemies[0].bulletImage));
+        }
     }
 }
