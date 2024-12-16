@@ -50,7 +50,15 @@ class Enemy {
         this.maxTimeBetweenStates = 350;
 
         this.playerInstance = null;
+
+        this.enemyMagicSphereImage = null;
         this.bulletImage = null;
+        this.bullets = [];
+        this.bulletAmount = 5;
+        this.bulletsDeley = 200; // millis
+        this.currentTime = 0;
+        this.bulletSpeed = 10;
+        this.bulletSize = 40;
     }
 
     display() {
@@ -181,8 +189,35 @@ class Enemy {
         this.playerInstance = _player;
     }
 
-    displayBullets() {
+    createBullet() {
+        let dx = this.playerInstance.x - this.bulletStartX;
+        let dy = this.playerInstance.y - this.bulletStartY;
+        let length = sqrt(dx * dx + dy * dy);
 
+        //return new RotatingSphereAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
+        return new LineAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed, this.bulletImage); 
+    }
+
+    shootBullet() {
+        this.bulletStartX = this.direction === "right"? this.x + this.pixelWidth * 2 / 3 + 125: this.x - this.pixelWidth * 2 / 3 + 125;
+        this.bulletStartY = this.y + 125;
+        this.bullets.push(this.createBullet()); 
+    }
+
+    displayBullets() {
+        for (let i = 0; i < this.bullets.length - 1; i++) {
+            let bullet = this.bullets[i];
+            bullet.render();
+
+            if (bullet.checkCollisionWithPlayer(this.playerInstance)) {
+                this.playerInstance.takeDamage(bullet.damage);
+                this.bullets.splice(i, 1);
+            }
+
+            if (bullet.isOutOfBounds()) {
+                this.bullets.splice(i, 1);
+            }
+        }
     }
 
     render() {
@@ -217,13 +252,6 @@ class PhantomKing extends Enemy {
 class VarkolynLeader  extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
-
-        this.enemyBulletImage = null;
-        this.bullets = [];
-        this.bulletAmount = 5;
-        this.bulletsDeley = 200; // millis
-        this.currentTime = 0;
-        this.bulletSpeed = 10;
     }
 
     attack() {
@@ -233,48 +261,16 @@ class VarkolynLeader  extends Enemy {
         } 
 
         if (this.direction === "right") {
-            image(this.enemyBulletImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250); 
+            image(this.enemyMagicSphereImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250); 
         }
         else {
-            image(this.enemyBulletImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
+            image(this.enemyMagicSphereImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
         }
     }
 
     loadAdditionalData() {
-        this.enemyBulletImage = loadImage("Enemies/Sprites/EnergySphere.gif");
+        this.enemyMagicSphereImage = loadImage("Enemies/Sprites/EnergySphere.gif");
         this.bulletImage = loadImage("Enemies/Sprites/DefaultBullet.png")
-    }
-
-    createBullet() {
-        let dx = this.playerInstance.x - this.bulletStartX;
-        let dy = this.playerInstance.y - this.bulletStartY;
-        let length = sqrt(dx * dx + dy * dy);
-
-        return new SwirlAttack(this.bulletStartX, this.bulletStartY, 20, 20, 0.05, 2.5, this.bulletImage);
-        return new LineAttack(this.bulletStartX, this.bulletStartY, 20, 20, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed); 
-
-    }
-
-    shootBullet() {
-        this.bulletStartX = this.x + this.pixelWidth * 2 / 3 + 100;
-        this.bulletStartY = this.y + 100;
-        this.bullets.push(this.createBullet()); 
-    }
-
-    displayBullets() {
-        for (let i = 0; i < this.bullets.length - 1; i++) {
-            let bullet = this.bullets[i];
-            bullet.render();
-
-            if (bullet.checkCollisionWithPlayer(this.playerInstance)) {
-                this.playerInstance.takeDamage(bullet.damage);
-                this.bullets.splice(i, 1);
-            }
-
-            if (bullet.isOutOfBounds()) {
-                this.bullets.splice(i, 1);
-            }
-        }
     }
 }
 
@@ -297,33 +293,18 @@ window.VarkolynLeader = VarkolynLeader;
 window.ChristmasTreant = ChristmasTreant;
 window.Nian = Nian;
 
-//Attack variaties
-class LineAttack {
-    constructor(x, y, bulletWidth, bulletHeight, dx, dy, _image) {
+class Attack {
+    constructor(x, y, bulletWidth, bulletHeight, _image) {
         this.x = x;
         this.y = y;
-
-        this.dx = dx;
-        this.dy = dy;
-
         this.bulletWidth = bulletWidth;
         this.bulletHeight = bulletHeight;
-        this.baseY = y;
-        this.elapsed = 0;
-        this.damage = 1;
-
         this.image = _image;
+        this.damage = 1;
     }
 
     display() {
-        //fill("red");
-        //circle(this.x, this.y, this.bulletWidth);
         image(this.image, this.x, this.y, this.bulletWidth, this.bulletHeight);
-    }
-
-    move() {
-        this.x += this.dx;
-        this.y += this.dy;
     }
 
     checkCollisionWithPlayer(player) {
@@ -339,62 +320,51 @@ class LineAttack {
         );
     }
 
+    move() {
+        // Placeholder, should be overridden in subclasses
+    }
+
     render() {
         this.move();
         this.display();
     }
 }
 
-class SwirlAttack {
-    constructor(bulletStartX, bulletStartY, bulletWidth, bulletHeight, rotationSpeed, radiusIncrement, _image) {
-        this.bulletStartX = bulletStartX;   
-        this.bulletStartY = bulletStartY;  
-        this.bulletWidth = bulletWidth;    
-        this.bulletHeight = bulletHeight;  
-        this.choice = random(100);
-        this.rotationSpeed = this.choice > 50? rotationSpeed: -rotationSpeed;  
-        this.radius = 30;  
-        this.radiusIncrement = this.choice > 50? radiusIncrement: -radiusIncrement;  
-        this.angle = 0;  
-        this.damage = 1;
-        this.image = _image;
-    }
-
-    display() {
-        //fill("red");
-        //circle(this.x, this.y, this.bulletWidth);
-        image(this.image, this.x, this.y, this.bulletWidth, this.bulletHeight);
+class LineAttack extends Attack { 
+    constructor(x, y, bulletWidth, bulletHeight, dx, dy, _image) {
+        super(x, y, bulletWidth, bulletHeight, _image);
+        this.dx = dx;
+        this.dy = dy;
     }
 
     move() {
-        this.angle += this.rotationSpeed;
+        this.x += this.dx;
+        this.y += this.dy;
+    }
+}
 
-        this.x = this.bulletStartX + cos(this.angle) * this.radius;
-        this.y = this.bulletStartY + sin(this.angle) * this.radius;
-
-        this.radius += this.radiusIncrement;
+class RotatingSphereAttack extends Attack {
+    constructor(x, y, bulletWidth, bulletHeight, _image, speed, distance) {
+        super(x, y, bulletWidth, bulletHeight, _image);
+        this.speed = speed; 
+        this.distance = distance;
+        this.angle = 0; 
+        this.centerX = x; 
+        this.centerY = y; 
     }
 
-    checkCollisionWithPlayer(player) {
-        return (
-            this.x < player.x + player.size &&
-            this.x + this.bulletWidth > player.x &&
-            this.y < player.y + player.size &&
-            this.y + this.bulletHeight > player.y
-        );
-    }
+    move() {
+        this.angle += this.speed;
+        if (this.angle >= 360) this.angle = 0;
 
-    isOutOfBounds() {
-        return (
-            this.x + this.bulletWidth < -500 ||  
-            this.x > width + 500 ||  
-            this.y + this.bulletHeight < -500 ||  
-            this.y > height + 500    
-        );
+        this.x = this.centerX + this.distance * cos(radians(this.angle));
+        this.y = this.centerY + this.distance * sin(radians(this.angle));
+
+        this.distance += 1; 
     }
 
     render() {
-        this.move();
-        this.display();
+        this.move(); 
+        this.display(); 
     }
 }
