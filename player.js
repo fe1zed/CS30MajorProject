@@ -53,6 +53,9 @@ class Player {
         this.takenHealthWidth = 150; 
         this.takenArmorWidth = 150; 
         this.takenEnergyWidth = 150; 
+
+        this.timeToRepairArmor = 5000;
+        this.lastTimeGotDamage = 0;
     }
 
     move() {
@@ -241,7 +244,15 @@ class Player {
     takeDamage(damage) {
         if (!this.alive) return;
 
-        this.health -= damage;
+        this.lastTimeGotDamage = millis();
+
+        if (this.armor > 0) {
+            this.armor -= damage;
+        }   
+        else {
+            this.health -= damage;
+        }
+        
 
         console.log("Player took", damage, "damage! Hp left:", this.health);
 
@@ -255,11 +266,23 @@ class Player {
         this.alive = false;
     }
 
+    rapairArmor() {
+        if (this.armor >= this.maxArmor) return;
+        let currentTime = millis();
+
+        if (currentTime > this.lastTimeGotDamage + this.timeToRepairArmor) {
+                this.armor += 1;
+                this.lastTimeGotDamage = millis();
+            console.log("Rapairing armor");
+        }
+    }
+
     render() {
         this.move();
         this.executeUniqueAbility();
         this.display();
         this.displayWeapon();
+        this.rapairArmor();
     }
 
     loadAdditionalData() {
@@ -270,31 +293,26 @@ class Player {
 class DarkKnight extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
-        this.secondWeaponImage = null;  // Второе оружие
-        this.dualWieldActive = false;  // Флаг активности двойного оружия
+        this.secondWeaponImage = null;  
+        this.dualWieldActive = false;  
     }
 
     attack() {
         if (this.alive) {
-            super.shootBullet(); // Атаковать с основным оружием
+            super.shootBullet(); 
 
             if (this.dualWieldActive) {
-                // Атаковать с вторым оружием
                 this.shootSecondWeapon();
             }
         }
     }
 
     shootSecondWeapon() {
-        // Логика стрельбы из второго оружия
         if (this.energy > 0) {
-            let secondBullet = this.createSecondBullet(); // Создаем пуля для второго оружия
+            let secondBullet = this.createSecondBullet(); 
             bullets.push(secondBullet);
             this.energy -= secondBullet.energyCost;
         } 
-        else {
-            console.log("Не хватает энергии для второго оружия!");
-        }
     }
 
     executeUniqueAbility() {
@@ -321,7 +339,6 @@ class DarkKnight extends Player {
         }
     }
 
-    // Переопределение метода для отображения оружия
     displayWeapon() {
         if (!this.alive) return;
 
@@ -428,7 +445,7 @@ class DarkKnight extends Player {
 
     laodPlayerWeapon() {
         player.weaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]);
-        player.secondWeaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]); // Загрузим изображение второго оружия
+        player.secondWeaponImage = loadImage(weaponsDataJson[WEAPONSPATH][weaponName]["image"]); 
         player.weaponType = weaponsDataJson[WEAPONSPATH][weaponName]["type"];
         player.weaponPropelling = player.weaponType === "ColdWeapon" ? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"] : false;
     }
@@ -441,13 +458,14 @@ class DarkKnight extends Player {
         if(this.dualWieldActive) {
             this.displaySecondWeapon();
         }
+        this.rapairArmor();
     }
 }
 
 class Priestess extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
-        this.zoneBuffActive = false;  // Флаг активности двойного оружия
+        this.zoneBuffActive = false;  
 
         this.zoneBuffPosition = {x: 0, y: 0 };
         this.zoneBuffTime = 5;
@@ -455,18 +473,16 @@ class Priestess extends Player {
         this.zoneBuffSize = 250;
 
         this.damagedLastTime = 1;
-        this.timeBetweenDamage = 1000; // in millis
+        this.timeBetweenDamage = 1000;
     }
 
     attack() {
-        if(this.alive)
-            super.shootBullet();
+        if(this.alive) super.shootBullet();
     }
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
 
-        // creating healing zone       
         console.log("Spawn healig zone at x:" + this.x + "y:" + this.y);
         this.zoneBuffPosition = {x: this.x - this.size, y: this.y - this.size};
         this.usingUniqueAbility = false;
@@ -494,7 +510,7 @@ class Priestess extends Player {
     }
 
     heal() {
-        let elapsedTime = millis() - this.damagedLastTime; // time between last heal and current time;
+        let elapsedTime = millis() - this.damagedLastTime; 
 
         if (this.x > this.zoneBuffPosition.x && this.x < this.zoneBuffPosition.x + this.zoneBuffSize &&
             this.y > this.zoneBuffPosition.y && this.y < this.zoneBuffPosition.y + this.zoneBuffSize
@@ -573,8 +589,8 @@ class Rogue extends Player {
     
 
     loadAdditionalData() {
-        this.originalImage = loadImage("Characters/RogueGif.gif"/*[CHARACTERSPATH][charactersName]["image"]*/);
-        this.uniqueAbilityImage = loadImage("Characters/UniqueAbility/RogueUniqueAbility.gif");//[CHARACTERSPATH][charactersName]["uniqueAbility"]);
+        this.originalImage = loadImage("Characters/RogueGif.gif");
+        this.uniqueAbilityImage = loadImage("Characters/UniqueAbility/RogueUniqueAbility.gif");
     }
 
     dodge() {
@@ -599,8 +615,7 @@ class Witch extends Player {
     }
 
     attack() {
-        if(this.alive)
-            super.shootBullet();
+        if(this.alive) super.shootBullet();
     }
 
     executeUniqueAbility() {
@@ -639,7 +654,7 @@ class Witch extends Player {
         let degreeToRotate = 360 / this.amountOfSpikes;
     
         for (let i = 0; i < this.amountOfSpikes; i++) {
-            let angleInDegrees = i * degreeToRotate; // Угол для льдышки
+            let angleInDegrees = i * degreeToRotate;
             this.spikes.push(this.createIceSpike(this.x - this.size, this.y - this.size, angleInDegrees));
             console.log("Creating spike at angle:", angleInDegrees);
         }
@@ -649,8 +664,8 @@ class Witch extends Player {
 
     moveSpikes() {
         for (let spike of this.spikes) {
-            spike.x += spike.dx; // Двигаем по x
-            spike.y += spike.dy; // Двигаем по y
+            spike.x += spike.dx; 
+            spike.y += spike.dy; 
         }
     }
 
@@ -663,8 +678,8 @@ class Witch extends Player {
             pixelHeight: 240,
             image: this.iceSpikeImage,
             speed: 5,
-            dx: cos(angleInRadians) * 7.5, // Скорость по x
-            dy: sin(angleInRadians) * 7.5, // Скорость по y
+            dx: cos(angleInRadians) * 7.5, 
+            dy: sin(angleInRadians) * 7.5, 
             damage: 20,
             angle: angleInDegrees + 90,
         };
@@ -675,10 +690,10 @@ class Witch extends Player {
             let spike = this.spikes[i];
             push();
             imageMode(CENTER);
-            translate(spike.x + this.size + this.size / 2, spike.y + this.size + this.size / 2); // Перемещаемся в позицию льдышки
-            angleMode(DEGREES)
+            translate(spike.x + this.size + this.size / 2, spike.y + this.size + this.size / 2);
+            angleMode(DEGREES);
             rotate(spike.angle);
-            image(spike.image, 0, 0, spike.pixelWidth, spike.pixelHeight); // Отображаем льдышку
+            image(spike.image, 0, 0, spike.pixelWidth, spike.pixelHeight); 
             pop();
         }
         angleMode(RADIANS);
@@ -714,8 +729,7 @@ class Assasin extends Player {
     }
 
     attack() {
-        if(this.alive)
-            super.shootBullet();
+        if(this.alive) super.shootBullet();
     }
 
     executeUniqueAbility() {
@@ -754,7 +768,7 @@ class Assasin extends Player {
         let degreeToRotate = 360 / this.amountOfSpikes;
     
         for (let i = 0; i < this.amountOfSpikes; i++) {
-            let angleInDegrees = i * degreeToRotate; // Угол для льдышки
+            let angleInDegrees = i * degreeToRotate; 
             this.spikes.push(this.createIceSpike(this.x - this.size, this.y - this.size, angleInDegrees));
             console.log("Creating spike at angle:", angleInDegrees);
         }
@@ -764,8 +778,8 @@ class Assasin extends Player {
 
     moveSpikes() {
         for (let spike of this.spikes) {
-            spike.x += spike.dx; // Двигаем по x
-            spike.y += spike.dy; // Двигаем по y
+            spike.x += spike.dx; 
+            spike.y += spike.dy; 
         }
     }
 
@@ -778,8 +792,8 @@ class Assasin extends Player {
             pixelHeight: 120,
             image: this.iceSpikeImage,
             speed: 5,
-            dx: cos(angleInRadians) * 7.5, // Скорость по x
-            dy: sin(angleInRadians) * 7.5, // Скорость по y
+            dx: cos(angleInRadians) * 7.5, 
+            dy: sin(angleInRadians) * 7.5, 
             damage: 20,
             angle: angleInDegrees,
         };
@@ -790,10 +804,10 @@ class Assasin extends Player {
             let spike = this.spikes[i];
             push();
             imageMode(CENTER);
-            translate(spike.x + this.size + this.size / 2, spike.y + this.size + this.size / 2); // Перемещаемся в позицию льдышки
-            angleMode(DEGREES)
+            translate(spike.x + this.size + this.size / 2, spike.y + this.size + this.size / 2);
+            angleMode(DEGREES);
             rotate(spike.angle);
-            image(spike.image, 0, 0, spike.pixelWidth, spike.pixelHeight); // Отображаем льдышку
+            image(spike.image, 0, 0, spike.pixelWidth, spike.pixelHeight);
             pop();
         }
         angleMode(RADIANS);
@@ -819,7 +833,7 @@ class Assasin extends Player {
 class Alchemist extends Player {
     constructor(x, y, speed, size) {
         super(x, y, speed, size);
-        this.zoneBuffActive = false;  // Флаг активности двойного оружия
+        this.zoneBuffActive = false;  
 
         this.zoneBuffPosition = {x: 0, y: 0 };
         this.zoneBuffTime = 5;
@@ -827,19 +841,17 @@ class Alchemist extends Player {
         this.zoneBuffSize = 250;
 
         this.damagedLastTime = 1;
-        this.timeBetweenDamage = 1000; // in millis
+        this.timeBetweenDamage = 1000; 
         this.zoneDamage = 20;
     }
 
     attack() {
-        if(this.alive)
-            super.shootBullet();
+        if(this.alive) super.shootBullet();
     }
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
 
-        // creating healing zone       
         console.log("Spawn healig zone at x:" + this.x + "y:" + this.y);
         this.zoneBuffPosition = {x: this.x - this.size, y: this.y - this.size};
         this.usingUniqueAbility = false;
@@ -867,8 +879,7 @@ class Alchemist extends Player {
     }
 
     attack() {
-        if(this.alive)
-            super.shootBullet();
+        if(this.alive) super.shootBullet();
     }
 
     render() {
@@ -887,8 +898,7 @@ class Berserk extends Player {
     }
 
     attack() {
-        if(this.alive)
-            super.shootBullet();
+        if(this.alive) super.shootBullet();
     }
 
     executeUniqueAbility() {

@@ -60,7 +60,7 @@ class Enemy {
         this.bulletSpeed = 10;
         this.bulletSize = 40;
 
-        this.takenHealthWidth = this.pixelWidth - this.pixelWidth / 3; // Изначально = максимальной ширине
+        this.takenHealthWidth = this.pixelWidth - this.pixelWidth / 3; 
     }
 
     display() {
@@ -110,7 +110,7 @@ class Enemy {
 
         // White for taken health
         if (this.takenHealthWidth > filledWidth) {
-            this.takenHealthWidth -= 0.2;
+            this.takenHealthWidth -= 0.75;
         }
         fill(255);
         rect(barX, barY, this.takenHealthWidth, barHeight);
@@ -184,7 +184,7 @@ class Enemy {
             return;
         }
 
-        let states = ["attack"]; //["idle", "move", "attack"]; // 
+        let states = ["idle", "move", "attack"]; // ["attack"]; //
         this.state = random(states);
         this.currentTimeBetweenStates = 0;
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
@@ -286,8 +286,8 @@ class VarkolynLeader  extends Enemy {
     }
 
     loadAdditionalData() {
-        this.enemyMagicSphereImage = loadImage("Enemies/Sprites/EnergySphere.gif");
-        this.bulletImage = loadImage("Enemies/Sprites/DefaultBullet.png")
+        this.enemyMagicSphereImage = loadImage("Enemies/Sprites/ToxicEnergySphere.gif");
+        this.bulletImage = loadImage("Enemies/Sprites/DefaultBullet.png");
     }
 }
 
