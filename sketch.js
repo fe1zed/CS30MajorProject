@@ -217,14 +217,33 @@ function keyPressed() {
   }
 }
 
-function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, barColor) {
+function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, barColor, type) {
   image(icon, x, y, iconSize, iconSize); 
+  let currentWidth = barWidth * (value / maxValue);
+  let takenWidth;
+
+  if (type === "h") takenWidth = player.takenHealthWidth
+  else if (type === "a") takenWidth = player.takenArmorWidth;
+  else if (type === "m") takenWidth = player.takenManaWidth;
+
+
+  if (takenWidth > currentWidth) {
+    takenWidth -= 1;
+  }
+
+  if (type === "h") player.takenHealthWidth = takenWidth;
+  else if (type === "a") player.takenArmorWidth = takenWidth;
+  else if (type === "m") player.takenManaWidth = takenWidth;
 
   fill(0, 0, 0);
   rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
 
+  fill(255);
+  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, takenWidth, barHeight);
+
   fill(barColor);
-  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth * (value / maxValue), barHeight);
+  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, currentWidth, barHeight);
+  
   noFill();
 }
 
@@ -236,9 +255,9 @@ function drawHUD() {
   let barWidth = 150;
   let barHeight = 20;
 
-  drawBar(heartImage, player.health, player.maxHealth, x, y, iconSize, barWidth, barHeight, color(255, 0, 0)); 
-  drawBar(armorImage, player.armor, player.maxArmor, x, y + spacing, iconSize, barWidth, barHeight, color(180)); 
-  drawBar(energyImage, player.energy, player.maxEnergy, x, y + spacing * 2, iconSize, barWidth, barHeight, color(0, 0, 255)); 
+  drawBar(heartImage, player.health, player.maxHealth, x, y, iconSize, barWidth, barHeight, color(255, 0, 0), "h"); 
+  drawBar(armorImage, player.armor, player.maxArmor, x, y + spacing, iconSize, barWidth, barHeight, color(180), "a"); 
+  drawBar(energyImage, player.energy, player.maxEnergy, x, y + spacing * 2, iconSize, barWidth, barHeight, color(0, 0, 255), "m"); 
 }
 
 // ------------------------------------------

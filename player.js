@@ -49,6 +49,10 @@ class Player {
         this.timeBetweenShots = 250;
         this.defaulTimeBetweenShots = 250;
         this.lastTimeShooted = 0;
+
+        this.takenHealthWidth = 150; 
+        this.takenArmorWidth = 150; 
+        this.takenEnergyWidth = 150; 
     }
 
     move() {
@@ -777,7 +781,7 @@ class Assasin extends Player {
             dx: cos(angleInRadians) * 7.5, // Скорость по x
             dy: sin(angleInRadians) * 7.5, // Скорость по y
             damage: 20,
-            angle: angleInDegrees ,
+            angle: angleInDegrees,
         };
     }
 

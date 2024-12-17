@@ -59,6 +59,8 @@ class Enemy {
         this.currentTime = 0;
         this.bulletSpeed = 10;
         this.bulletSize = 40;
+
+        this.takenHealthWidth = this.pixelWidth - this.pixelWidth / 3; // Изначально = максимальной ширине
     }
 
     display() {
@@ -94,17 +96,26 @@ class Enemy {
 
     displayHealthBar() {
         let barWidth = this.pixelWidth - this.pixelWidth / 3;
-        let barHeight = 10;
+        let barHeight = 12.5;
         let barX = this.x + this.pixelWidth / 6;
         let barY = this.y - 20;
 
         let healthRatio = this.health / this.maxHealth;
         let filledWidth = barWidth * healthRatio;
 
+        // Black for BG
         stroke(0);
         fill(0, 0, 0);
         rect(barX, barY, barWidth, barHeight);
 
+        // White for taken health
+        if (this.takenHealthWidth > filledWidth) {
+            this.takenHealthWidth -= 0.2;
+        }
+        fill(255);
+        rect(barX, barY, this.takenHealthWidth, barHeight);
+
+        // Red for health
         fill(255, 0, 0);
         rect(barX, barY, filledWidth, barHeight);
     }
@@ -145,7 +156,6 @@ class Enemy {
         console.log("Enemy Attacks!");
     }
 
-
     applyState() {
         if (this.state === "idle") {
             this.currentImage = this.image;
@@ -174,7 +184,7 @@ class Enemy {
             return;
         }
 
-        let states = ["attack"]; //["idle", "move", "attack"];
+        let states = ["attack"]; //["idle", "move", "attack"]; // 
         this.state = random(states);
         this.currentTimeBetweenStates = 0;
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
@@ -194,9 +204,15 @@ class Enemy {
         let dy = this.playerInstance.y - this.bulletStartY;
         let length = sqrt(dx * dx + dy * dy);
 
-        return new Deviding(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed, this.bulletImage); 
-        return new RotatingSphereAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
-        return new LineAttack(this.bulletStartX - this.bulletSize / 2, this.bulletStartY - this.bulletSize / 2, this.bulletSize, this.bulletSize, dx / length * this.bulletSpeed, dy / length * this.bulletSpeed, this.bulletImage); 
+        let bulletSpawnX = this.bulletStartX - this.bulletSize / 2;
+        let bulletSpawnY = this.bulletStartY - this.bulletSize / 2;
+
+        let normalizedDX = dx / length * this.bulletSpeed;
+        let normalizedDY = dy / length * this.bulletSpeed
+
+        return new ShootAround(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage); 
+        // return new RotatingSphereAttack(bulletSpawnX,bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
+        // return new LineAttack(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, normalizedDX, normalizedDY, this.bulletImage); 
     }
 
     shootBullet() {
@@ -365,32 +381,17 @@ class RotatingSphereAttack extends Attack {
     }
 }
 
-class Deviding extends Attack {
-    constructor(x, y, bulletWidth, bulletHeight, dx, dy, _image) {
+class ShootAround extends Attack {
+    constructor(x, y, bulletWidth, bulletHeight, _image) {
         super(x, y, bulletWidth, bulletHeight, _image);
-        this.dx = dx;
-        this.dy = dy;
-        this.distance = 0;
+        this.randomAngle = random(0, 360);
+
+        this.dx = cos(radians(this.randomAngle)) * 10;  
+        this.dy = sin(radians(this.randomAngle)) * 10;  
     }
 
     move() {
         this.x += this.dx;
         this.y += this.dy;
-        let distanceIncreasment = sqrt(this.dx * this.dx + this.dy * this.dy);
-        this.distance += distanceIncreasment;
-        this.devide(); 
-    }
-
-    devide() {
-        if (this.distance > 100) {
-            console.log("Devide!");
-            this.distance = 0;
-
-            // create 1 more bullet 
-            enemies[0].bullets.push(
-                new Deviding(enemies[0].bulletStartX - enemies[0].bulletSize / 2, enemies[0].bulletStartY - enemies[0].bulletSize / 2,
-                enemies[0].bulletSize, enemies[0].bulletSize, enemies[0].dx / enemies[0].length * enemies[0].bulletSpeed,
-                enemies[0].dy / enemies[0].length * enemies[0].bulletSpeed, enemies[0].bulletImage));
-        }
     }
 }
