@@ -274,9 +274,3 @@ function drawLobby() {
 // Take characters from here
 // https://ezgif.com/webp-to-gif/ezgif-3-d32a219e48.webp 
 // convert here to .gif
-
-// Linhk to join https://prod.liveshare.vsengsaas.visualstudio.com/join?00E4ADAA11E7DCE9480E1E4B502A36560F78
-
-
-
-//https://static.wikia.nocookie.net/soul-knight/images/0/00/Knight_25_chaotic_strike.png/revision/latest?cb=20241125030851
