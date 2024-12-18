@@ -222,13 +222,13 @@ function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, bar
   let currentWidth = barWidth * (value / maxValue);
   let takenWidth;
 
-  if (type === "h") takenWidth = player.takenHealthWidth
+  if (type === "h") takenWidth = player.takenHealthWidth;
   else if (type === "a") takenWidth = player.takenArmorWidth;
   else if (type === "m") takenWidth = player.takenManaWidth;
 
 
   if (takenWidth > currentWidth) {
-    takenWidth -= 1;
+    takenWidth -= (takenWidth - currentWidth) / 10;
   }
 
   if (type === "h") player.takenHealthWidth = takenWidth;

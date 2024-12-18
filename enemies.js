@@ -110,7 +110,7 @@ class Enemy {
 
         // White for taken health
         if (this.takenHealthWidth > filledWidth) {
-            this.takenHealthWidth -= 0.75;
+            this.takenHealthWidth -= (this.takenHealthWidth - filledWidth) / 10;
         }
         fill(255);
         rect(barX, barY, this.takenHealthWidth, barHeight);
@@ -186,7 +186,9 @@ class Enemy {
 
         let states = ["idle", "move", "attack"]; // ["attack"]; //
         this.state = random(states);
+        //this.additionalChanceForAttackState = random(states);
         this.currentTimeBetweenStates = 0;
+        //if (this.additionalChanceForAttackState === "attack") this.state = "attack"; // Increasing chances for attack state
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
         console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
     }
@@ -208,7 +210,7 @@ class Enemy {
         let bulletSpawnY = this.bulletStartY - this.bulletSize / 2;
 
         let normalizedDX = dx / length * this.bulletSpeed;
-        let normalizedDY = dy / length * this.bulletSpeed
+        let normalizedDY = dy / length * this.bulletSpeed;
 
         return new ShootAround(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage); 
         // return new RotatingSphereAttack(bulletSpawnX,bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
