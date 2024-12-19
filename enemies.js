@@ -61,6 +61,8 @@ class Enemy {
         this.bulletSize = 40;
 
         this.takenHealthWidth = this.pixelWidth - this.pixelWidth / 3; 
+
+        this.angle = 0;
     }
 
     display() {
@@ -201,7 +203,34 @@ class Enemy {
         this.playerInstance = _player;
     }
 
-    createBullet() {
+    createBullet(bulletSpawnX, bulletSpawnY, bulletSize, bulletImage, normalizedDX, normalizedDY) {
+        // return new ShootAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage); 
+        // return new RotatingSphereAttack(bulletSpawnX,bulletSpawnY, bulletSize, bulletSize, bulletImage, 5, 0);
+        // return new LineAttack(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, normalizedDX, normalizedDY, bulletImage); 
+    }
+
+    // also shoots bullets but used for many bullets sending 1 time
+    createBullets(bulletsArray, bulletSpawnX, bulletSpawnY, bulletSize, bulletImage, normalizedDX, normalizedDY) {
+        // let amountOfAttacksAround = 12;
+        // let angle = 360 / amountOfAttacksAround;
+
+        // for (let i = 0; i < amountOfAttacksAround; i++) {
+        //     bulletsArray.push(new LineAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage, angle * i)); 
+        // }
+
+        let amountOfAttacksAround = 6;
+        let angle = 360 / amountOfAttacksAround;
+
+        for (let i = 0; i < amountOfAttacksAround; i++) {
+            bulletsArray.push(new LineAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage, angle * i + this.angle)); 
+        }
+        this.angle += 10;
+    }
+
+    shootBullet() {
+        this.bulletStartX = this.direction === "right"? this.x + this.pixelWidth * 2 / 3 + 125: this.x - this.pixelWidth * 2 / 3 + 125;
+        this.bulletStartY = this.y + 125;
+
         let dx = this.playerInstance.x - this.bulletStartX;
         let dy = this.playerInstance.y - this.bulletStartY;
         let length = sqrt(dx * dx + dy * dy);
@@ -212,15 +241,8 @@ class Enemy {
         let normalizedDX = dx / length * this.bulletSpeed;
         let normalizedDY = dy / length * this.bulletSpeed;
 
-        return new ShootAround(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage); 
-        // return new RotatingSphereAttack(bulletSpawnX,bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0);
-        // return new LineAttack(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, normalizedDX, normalizedDY, this.bulletImage); 
-    }
-
-    shootBullet() {
-        this.bulletStartX = this.direction === "right"? this.x + this.pixelWidth * 2 / 3 + 125: this.x - this.pixelWidth * 2 / 3 + 125;
-        this.bulletStartY = this.y + 125;
-        this.bullets.push(this.createBullet()); 
+        //this.bullets.push(this.createBullet(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY)); 
+        this.createBullets(this.bullets, bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY);
     }
 
     displayBullets() {
@@ -271,6 +293,8 @@ class PhantomKing extends Enemy {
 class VarkolynLeader  extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
+        this.bulletStartX;
+        this.bulletStartY; 
     }
 
     attack() {
@@ -289,7 +313,7 @@ class VarkolynLeader  extends Enemy {
 
     loadAdditionalData() {
         this.enemyMagicSphereImage = loadImage("Enemies/Sprites/ToxicEnergySphere.gif");
-        this.bulletImage = loadImage("Enemies/Sprites/DefaultBullet.png");
+        this.bulletImage = loadImage("Enemies/Sprites/GreenDefaultBullet.png");
     }
 }
 
@@ -300,8 +324,27 @@ class ChristmasTreant extends Enemy {
 }
 
 class Nian extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) {
+        super(x, y, pixelWidth, pixelHeight, health);
+    }
+
     attack() {
-        //console.log("Nian Attacks");
+        if (this.currentTime + this.bulletsDeley <= millis()) {
+            this.shootBullet();
+            this.currentTime = millis();
+        } 
+
+        if (this.direction === "right") {
+            image(this.enemyMagicSphereImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250); 
+        }
+        else {
+            image(this.enemyMagicSphereImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
+        }
+    }
+
+    loadAdditionalData() {
+        this.enemyMagicSphereImage = loadImage("Enemies/Sprites/OrangeEnergySphere.gif");
+        this.bulletImage = loadImage("Enemies/Sprites/OrangeDefaultBullet.png");
     }
 }
 
@@ -390,6 +433,21 @@ class ShootAround extends Attack {
 
         this.dx = cos(radians(this.randomAngle)) * 10;  
         this.dy = sin(radians(this.randomAngle)) * 10;  
+    }
+
+    move() {
+        this.x += this.dx;
+        this.y += this.dy;
+    }
+}
+
+class LineAround extends Attack {
+    constructor(x, y, bulletWidth, bulletHeight, _image, angle) {
+        super(x, y, bulletWidth, bulletHeight, _image);
+        this.angle = angle;
+
+        this.dx = cos(radians(this.angle)) * 10;  
+        this.dy = sin(radians(this.angle)) * 10;  
     }
 
     move() {
