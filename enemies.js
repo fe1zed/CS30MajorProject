@@ -63,6 +63,10 @@ class Enemy {
         this.takenHealthWidth = this.pixelWidth - this.pixelWidth / 3; 
 
         this.angle = 0;
+
+        this.bulletStartXPos = 0;
+        this.bulletStartXNeg = 0;
+        this.energyShpereSize = 250;
     }
 
     display() {
@@ -186,7 +190,7 @@ class Enemy {
             return;
         }
 
-        let states = ["idle", "move", "attack"]; // ["attack"]; //
+        let states = ["attack"]; //["idle", "move", "attack"]; // 
         this.state = random(states);
         //this.additionalChanceForAttackState = random(states);
         this.currentTimeBetweenStates = 0;
@@ -228,8 +232,9 @@ class Enemy {
     }
 
     shootBullet() {
-        this.bulletStartX = this.direction === "right"? this.x + this.pixelWidth * 2 / 3 + 125: this.x - this.pixelWidth * 2 / 3 + 125;
-        this.bulletStartY = this.y + 125;
+        this.bulletStartX = this.direction === "right"? this.x + this.bulletStartXPos + this.energyShpereSize / 2:
+        this.x - this.bulletStartXNeg + this.energyShpereSize / 2;
+        this.bulletStartY = this.y + this.energyShpereSize / 2;
 
         let dx = this.playerInstance.x - this.bulletStartX;
         let dy = this.playerInstance.y - this.bulletStartY;
@@ -293,8 +298,8 @@ class PhantomKing extends Enemy {
 class VarkolynLeader  extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
-        this.bulletStartX;
-        this.bulletStartY; 
+        this.bulletStartXPos = this.pixelWidth * 2 / 3;
+        this.bulletStartXNeg = this.pixelWidth * 2 / 3;
     }
 
     attack() {
@@ -304,10 +309,10 @@ class VarkolynLeader  extends Enemy {
         } 
 
         if (this.direction === "right") {
-            image(this.enemyMagicSphereImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250); 
+            image(this.enemyMagicSphereImage, this.x + this.bulletStartXPos, this.y, this.energyShpereSize, this.energyShpereSize); 
         }
         else {
-            image(this.enemyMagicSphereImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
+            image(this.enemyMagicSphereImage, this.x - this.bulletStartXNeg, this.y, this.energyShpereSize, this.energyShpereSize);
         }
     }
 
@@ -326,6 +331,8 @@ class ChristmasTreant extends Enemy {
 class Nian extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
+        this.bulletStartXPos = this.x + this.pixelWidth * 2 / 3;
+        this.bulletStartXNeg = this.x - this.pixelWidth * 2 / 3;
     }
 
     attack() {
@@ -335,10 +342,10 @@ class Nian extends Enemy {
         } 
 
         if (this.direction === "right") {
-            image(this.enemyMagicSphereImage, this.x + this.pixelWidth * 2 / 3, this.y, 250, 250); 
+            image(this.enemyMagicSphereImage, this.bulletStartXPos + 75, this.y, this.energyShpereSize, this.energyShpereSize); 
         }
         else {
-            image(this.enemyMagicSphereImage, this.x - this.pixelWidth * 2 / 3, this.y, 250, 250);
+            image(this.enemyMagicSphereImage, this.bulletStartXNeg + 75, this.y, this.energyShpereSize, this.energyShpereSize);
         }
     }
 
@@ -370,7 +377,7 @@ class Attack {
     }
 
     checkCollisionWithPlayer(player) {
-        return (this.x < player.x + player.size && this.x + this.bulletWidth > player.x && this.y < player.y + player.size && this.y + this.bulletHeight > player.y);
+        return this.x < player.x + player.size && this.x + this.bulletWidth > player.x && this.y < player.y + player.size && this.y + this.bulletHeight > player.y;
     }
 
     isOutOfBounds() {

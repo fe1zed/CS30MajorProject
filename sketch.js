@@ -64,7 +64,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Nian");
+  createEnemy("Boss", "Varkolyn Leader");
 }
 
 function draw() {
@@ -273,4 +273,4 @@ function drawLobby() {
 // https://soul-knight.fandom.com/wiki/Knight
 // Take characters from here
 // https://ezgif.com/webp-to-gif/ezgif-3-d32a219e48.webp 
-// convert here to .gif
+// convert here to .gif .png
