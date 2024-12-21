@@ -67,6 +67,9 @@ class Enemy {
         this.bulletStartXPos = 0;
         this.bulletStartXNeg = 0;
         this.energyShpereSize = 250;
+
+        this.attacks = ["LineAttack", "RotatingSphereAttack", "ShootAround", "LineAround1", "LineAround2"];
+        this.choosedAttack = "";
     }
 
     display() {
@@ -190,12 +193,14 @@ class Enemy {
             return;
         }
 
-        let states = ["attack"]; //["idle", "move", "attack"]; // 
+        let states = ["idle", "move", "attack"]; // ["attack"]; //
         this.state = random(states);
         //this.additionalChanceForAttackState = random(states);
         this.currentTimeBetweenStates = 0;
         //if (this.additionalChanceForAttackState === "attack") this.state = "attack"; // Increasing chances for attack state
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
+        this.choosedAttack = random(this.attacks);
+        console.log("Choosed attack", this.choosedAttack);
         console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
     }
 
@@ -246,8 +251,34 @@ class Enemy {
         let normalizedDX = dx / length * this.bulletSpeed;
         let normalizedDY = dy / length * this.bulletSpeed;
 
+        if (this.choosedAttack === "ShootAround") {
+            this.bullets.push(new ShootAround(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage)); 
+        }
+        else if (this.choosedAttack === "RotatingSphereAttack") {
+            this.bullets.push(new RotatingSphereAttack(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage, 5, 0));
+        }
+        else if (this.choosedAttack === "LineAttack") {
+            this.bullets.push(new LineAttack(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, normalizedDX, normalizedDY, this.bulletImage)); 
+        }
+        else if (this.choosedAttack === "LineAround1") {
+            let amountOfAttacksAround = 12;
+            let angle = 360 / amountOfAttacksAround;
+
+            for (let i = 0; i < amountOfAttacksAround; i++) {
+                this.bullets.push(new LineAround(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage, angle * i)); 
+            }
+        }
+        else if (this.choosedAttack === "LineAround2") {
+            let amountOfAttacksAround = 6;
+            let angle = 360 / amountOfAttacksAround;
+    
+            for (let i = 0; i < amountOfAttacksAround; i++) {
+                this.bullets.push(new LineAround(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletSize, this.bulletImage, angle * i + this.angle)); 
+            }
+            this.angle += 10;
+        }
         //this.bullets.push(this.createBullet(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY)); 
-        this.createBullets(this.bullets, bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY);
+        //this.createBullets(this.bullets, bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY);
     }
 
     displayBullets() {
@@ -331,8 +362,8 @@ class ChristmasTreant extends Enemy {
 class Nian extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
-        this.bulletStartXPos = this.x + this.pixelWidth * 2 / 3;
-        this.bulletStartXNeg = this.x - this.pixelWidth * 2 / 3;
+        this.bulletStartXPos = this.pixelWidth * 2 / 3 + 75;
+        this.bulletStartXNeg = this.pixelWidth * 2 / 3 + 75;
     }
 
     attack() {
@@ -342,10 +373,10 @@ class Nian extends Enemy {
         } 
 
         if (this.direction === "right") {
-            image(this.enemyMagicSphereImage, this.bulletStartXPos + 75, this.y, this.energyShpereSize, this.energyShpereSize); 
+            image(this.enemyMagicSphereImage, this.x + this.bulletStartXPos, this.y, this.energyShpereSize, this.energyShpereSize); 
         }
         else {
-            image(this.enemyMagicSphereImage, this.bulletStartXNeg + 75, this.y, this.energyShpereSize, this.energyShpereSize);
+            image(this.enemyMagicSphereImage, this.x - this.bulletStartXNeg, this.y, this.energyShpereSize, this.energyShpereSize);
         }
     }
 

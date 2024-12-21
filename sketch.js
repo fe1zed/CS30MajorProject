@@ -44,7 +44,7 @@ function preload() {
   armorImage = loadImage('UI/Armor.png');
   energyImage = loadImage('UI/Energy.png');
 
-  logoImage = loadImage('UI/Logo.png');
+  logoImage = loadImage('UI/logo.png');
 }
 
 function setup() {
@@ -64,7 +64,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Varkolyn Leader");
+  createEnemy("Boss", "Nian"); //Varkolyn Leader
 }
 
 function draw() {
