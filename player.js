@@ -255,7 +255,6 @@ class Player {
             this.health -= damage;
         }
         
-
         console.log("Player took", damage, "damage! Hp left:", this.health);
 
         if (this.health <= 0) {
@@ -369,7 +368,6 @@ class DarkKnight extends Player {
             this.displayWeaponStatic(weaponWidth, weaponHeight, type);
         }
     }
-
     
     displaySecondWeapon() {
         if (!this.alive) return;
@@ -831,7 +829,6 @@ class Assasin extends Player {
     loadAdditionalData() {
         this.iceSpikeImage = loadImage(this.pathToIceSpike);
     }
-
 
     render() {
         this.move();

@@ -66,7 +66,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Nian"); //Varkolyn Leader
+  createEnemy("Boss", "Varkolyn Leader"); //
 }
 
 function draw() {

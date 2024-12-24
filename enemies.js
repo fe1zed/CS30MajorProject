@@ -43,7 +43,7 @@ class Enemy {
         this.targetX = this.x;
         this.targetY = this.y;
         this.speed = 2;
-        this.state = "idle"; // idle, move, attack, dead
+        this.state = "idle"; // idle, move, attack, dead/*, uniqueAbility*/
         this.timeBetweenStates = 200;
         this.currentTimeBetweenStates = 0;
         this.minTimeBetweenStates = 50;
@@ -185,7 +185,13 @@ class Enemy {
         }
         else if (this.state === "dead") {
             this.currentImage = this.deadImage;
-        }
+            this.bullets = [];
+        }/*
+        else if (this.state === "uniqueAbility") {
+            this.executeUniqueAbility1();
+            let states = ["idle", "move", "attack"/*, "uniqueAbility"/]; // ["attack"]; // ["uniqueAbility"]; //
+            this.state = random(states);
+        }*/
     }
 
     changeState() {
@@ -199,16 +205,17 @@ class Enemy {
             return;
         }
 
-        let states = ["idle", "move", "attack"]; // ["attack"]; //
+        let states = ["idle", "move", "attack"/*, "uniqueAbility"*/]; // ["attack"]; // ["uniqueAbility"]; //
         this.state = random(states);
         //this.additionalChanceForAttackState = random(states);
         this.currentTimeBetweenStates = 0;
         //if (this.additionalChanceForAttackState === "attack") this.state = "attack"; // Increasing chances for attack state
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
         this.choosedAttack = random(this.attacks);
-        this.bullets = [];
         console.log("Choosed attack", this.choosedAttack);
         console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
+
+        this.executeUniqueAbility1();
     }
 
     loadAdditionalData() {
@@ -305,6 +312,14 @@ class Enemy {
         }
     }
 
+    executeUniqueAbility1() {
+        // rewrite
+    }
+
+    executeUniqueAbility2() {
+        // rewrite
+    }
+
     render() {
         this.applyState();
         this.changeState();
@@ -339,6 +354,14 @@ class VarkolynLeader  extends Enemy {
         super(x, y, pixelWidth, pixelHeight, health);
         this.bulletStartXPos = this.pixelWidth * 2 / 3;
         this.bulletStartXNeg = this.pixelWidth * 2 / 3;
+
+        this.poisonedPoolImage = null;
+        this.poisonedPoolSize = 150;
+        this.poisonedPoolNumber = 7;
+        this.poisonedPoolsCoordinates = [];
+
+        this.warriors = [];
+        this.warriorsNumber = 7;
     }
 
     attack() {
@@ -358,6 +381,46 @@ class VarkolynLeader  extends Enemy {
     loadAdditionalData() {
         this.enemyMagicSphereImage = loadImage("Enemies/Sprites/ToxicEnergySphere.gif");
         this.bulletImage = loadImage("Enemies/Sprites/GreenDefaultBullet.png");
+        this.poisonedPoolImage = loadImage("Enemies/Boss/VarkolynLeader/PoisonedPool.png");
+    }
+
+    executeUniqueAbility1() {
+        // instantiates x-amount poisoned pools
+        console.log("spawn 7 poisoned pools");
+        this.poisonedPoolsCoordinates = [];
+        for (let i = 0; i < this.poisonedPoolNumber; i++) {
+            let newX = random(0, width);
+            let newY = random(0, height);
+
+            this.poisonedPoolsCoordinates.push(this.pushCoordinates(newX, newY));
+        }
+    }
+    
+    executeUniqueAbility2() {
+        // push enemie to warriors and clear on parent death
+        this.warriors.push()
+    }
+
+    displayPoisonedPool() {
+        for (let i = 0; i < this.poisonedPoolsCoordinates.length; i++) {
+            let pool = this.poisonedPoolsCoordinates[i];
+            image(this.poisonedPoolImage, pool.x, pool.y, this.poisonedPoolSize, this.poisonedPoolSize);
+        }
+    }
+
+    pushCoordinates(_x, _y) {
+        return {x: _x, y: _y};
+    }
+
+    render() {
+        this.applyState();
+        this.changeState();
+        this.displayPoisonedPool();
+        this.display();
+        this.displayBullets();
+        if (this.alive) {
+            this.displayHealthBar();
+        }
     }
 }
 
