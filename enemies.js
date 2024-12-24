@@ -355,6 +355,9 @@ class VarkolynLeader  extends Enemy {
         this.bulletStartXPos = this.pixelWidth * 2 / 3;
         this.bulletStartXNeg = this.pixelWidth * 2 / 3;
 
+        this.timeBetweenPoisonedPoolAttack = 1000; // in millis
+        this.currentTimeBetweenPoisonedPoolAttack = 0; 
+
         this.poisonedPoolImage = null;
         this.poisonedPoolSize = 150;
         this.poisonedPoolNumber = 7;
@@ -397,14 +400,21 @@ class VarkolynLeader  extends Enemy {
     }
     
     executeUniqueAbility2() {
-        // push enemie to warriors and clear on parent death
-        this.warriors.push()
+        // push enemy to warriors and clear on parent death
+        this.warriors.push();
     }
 
     displayPoisonedPool() {
         for (let i = 0; i < this.poisonedPoolsCoordinates.length; i++) {
             let pool = this.poisonedPoolsCoordinates[i];
             image(this.poisonedPoolImage, pool.x, pool.y, this.poisonedPoolSize, this.poisonedPoolSize);
+
+            if (pool.x < this.playerInstance.x + this.playerInstance.size && pool.x + this.poisonedPoolSize > this.playerInstance.x && pool.y < this.playerInstance.y + this.playerInstance.size && pool.y + this.poisonedPoolSize > this.playerInstance.y) {
+                if (this.currentTimeBetweenPoisonedPoolAttack + this.timeBetweenPoisonedPoolAttack < millis()) {
+                    this.currentTimeBetweenPoisonedPoolAttack = millis();
+                    this.playerInstance.takeDamage(1);
+                }
+            }
         }
     }
 
@@ -454,7 +464,7 @@ class Nian extends Enemy {
     loadAdditionalData() {
         this.enemyMagicSphereImage = loadImage("Enemies/Sprites/OrangeEnergySphere.gif");
         this.bulletImage = loadImage("Enemies/Sprites/OrangeDefaultBullet.png");
-    }
+    } 
 }
 
 window.Queen = Queen;
