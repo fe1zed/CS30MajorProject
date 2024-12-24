@@ -30,6 +30,7 @@ let armorImage = null;
 let energyImage = null;
 
 let logoImage = null;
+let coinImage = null;
 
 let bullets = [];
 let enemies = [];
@@ -43,6 +44,7 @@ function preload() {
   heartImage = loadImage('UI/Heart.png');
   armorImage = loadImage('UI/Armor.png');
   energyImage = loadImage('UI/Energy.png');
+  coinImage = loadImage('UI/Coin.png');
 
   logoImage = loadImage('UI/logo.png');
 }
@@ -217,6 +219,8 @@ function keyPressed() {
   }
 }
 
+
+// ---------------- UI Render ---------------- 
 function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, barColor, type) {
   image(icon, x, y, iconSize, iconSize); 
   let currentWidth = barWidth * (value / maxValue);
@@ -247,6 +251,21 @@ function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, bar
   noFill();
 }
 
+function drawCoins() {
+  let coinsBarX = width - 100;
+  let coinsBarY = 15;
+  let barWidth = 100;
+  let barHeight = 30;
+
+  fill("gray");
+  rect(coinsBarX, coinsBarY, barWidth, barHeight); 
+
+  image(coinImage, coinsBarX + 5, coinsBarY + 2, 15, 25);
+  textSize(32);
+  fill("white");
+  text(player.coins, coinsBarX + barHeight, coinsBarY + 27);
+}
+
 function drawHUD() {
   let x = 20;
   let y = 20;
@@ -258,6 +277,8 @@ function drawHUD() {
   drawBar(heartImage, player.health, player.maxHealth, x, y, iconSize, barWidth, barHeight, color(255, 0, 0), "h"); 
   drawBar(armorImage, player.armor, player.maxArmor, x, y + spacing, iconSize, barWidth, barHeight, color(180), "a"); 
   drawBar(energyImage, player.energy, player.maxEnergy, x, y + spacing * 2, iconSize, barWidth, barHeight, color(0, 0, 255), "m"); 
+
+  drawCoins();
 }
 
 // ------------------------------------------

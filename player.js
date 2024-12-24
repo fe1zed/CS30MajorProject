@@ -56,6 +56,8 @@ class Player {
 
         this.timeToRepairArmor = 5000;
         this.lastTimeGotDamage = 0;
+
+        this.coins = 0;
     }
 
     move() {
@@ -287,6 +289,19 @@ class Player {
 
     loadAdditionalData() {
         // Use this to add some data 
+    }
+
+    receiveEnergy(energy) {
+        if (this.energy + energy > this.maxEnergy) {
+            this.energy = this.maxEnergy;
+        }
+        else {
+            this.energy += energy;
+        }
+    }
+
+    receiveCoins(coins) {
+        this.coins += coins;
     }
 }
 

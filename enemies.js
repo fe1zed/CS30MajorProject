@@ -70,6 +70,9 @@ class Enemy {
 
         this.attacks = ["LineAttack", "RotatingSphereAttack", "ShootAround", "LineAround1", "LineAround2"];
         this.choosedAttack = "";
+
+        this.coinsAwardAfterDeath = 50;
+        this.energyAwardAfterDeath = 100;
     }
 
     display() {
@@ -101,6 +104,9 @@ class Enemy {
         console.log("Enemy dead");
         this.alive = false;
         this.image = this.deadImage;
+        player.receiveCoins(this.coinsAwardAfterDeath);
+        player.receiveEnergy(this.energyAwardAfterDeath);
+        this.bullets = [];
     }
 
     displayHealthBar() {
@@ -200,6 +206,7 @@ class Enemy {
         //if (this.additionalChanceForAttackState === "attack") this.state = "attack"; // Increasing chances for attack state
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
         this.choosedAttack = random(this.attacks);
+        this.bullets = [];
         console.log("Choosed attack", this.choosedAttack);
         console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
     }
@@ -212,6 +219,7 @@ class Enemy {
         this.playerInstance = _player;
     }
 
+    /*
     createBullet(bulletSpawnX, bulletSpawnY, bulletSize, bulletImage, normalizedDX, normalizedDY) {
         // return new ShootAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage); 
         // return new RotatingSphereAttack(bulletSpawnX,bulletSpawnY, bulletSize, bulletSize, bulletImage, 5, 0);
@@ -234,7 +242,7 @@ class Enemy {
             bulletsArray.push(new LineAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage, angle * i + this.angle)); 
         }
         this.angle += 10;
-    }
+    }*/
 
     shootBullet() {
         this.bulletStartX = this.direction === "right"? this.x + this.bulletStartXPos + this.energyShpereSize / 2:
