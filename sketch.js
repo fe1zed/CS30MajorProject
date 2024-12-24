@@ -66,7 +66,7 @@ function setup() {
 
   player.laodPlayerWeapon();
   
-  createEnemy("Boss", "Nian"); //Varkolyn Leader
+  createEnemy("Boss", "Varkolyn Leader"); // 
 }
 
 function draw() {
@@ -166,12 +166,20 @@ function createEnemy(enemyType, enemyName) {
   let className = enemyName.replace(/\s+/g, '');
 
   if (typeof window[className] === 'function') {
-    let newEnemy = new window[className](400, 100, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health);
+    let newEnemy = null;
+    if (enemyType === "Boss") {
+      newEnemy = new window[className](400, 100, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
+    }
+    else {
+      newEnemy = new window[className](random(100, width - 100), random(100, height - 100), enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
+    }
     
     newEnemy.image = loadImage(enemyData.image);
-    newEnemy.deadImage = loadImage(enemyData.deadImage);
-    newEnemy.attackImage = loadImage(enemyData.attackImage);
-    newEnemy.moveImage = loadImage(enemyData.moveImage);
+    if (enemyType === "Boss") {
+      newEnemy.deadImage = loadImage(enemyData.deadImage);
+      newEnemy.attackImage = loadImage(enemyData.attackImage);
+      newEnemy.moveImage = loadImage(enemyData.moveImage);
+    }
 
     newEnemy.loadAdditionalData();
     newEnemy.loadPlayerData(player); 

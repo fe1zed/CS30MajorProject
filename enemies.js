@@ -22,7 +22,7 @@
 //         --  +----------------------+---------------+---------------+---------------+---------------+
 
 /* eslint-disable indent */
-class Enemy {
+class EnemyBoss {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         this.x = x;
         this.y = y;
@@ -186,12 +186,7 @@ class Enemy {
         else if (this.state === "dead") {
             this.currentImage = this.deadImage;
             this.bullets = [];
-        }/*
-        else if (this.state === "uniqueAbility") {
-            this.executeUniqueAbility1();
-            let states = ["idle", "move", "attack"/*, "uniqueAbility"/]; // ["attack"]; // ["uniqueAbility"]; //
-            this.state = random(states);
-        }*/
+        }
     }
 
     changeState() {
@@ -205,17 +200,15 @@ class Enemy {
             return;
         }
 
-        let states = ["idle", "move", "attack"/*, "uniqueAbility"*/]; // ["attack"]; // ["uniqueAbility"]; //
+        let states = ["idle", "move", "attack"]; // ["attack"]; // ["uniqueAbility"]; //
         this.state = random(states);
-        //this.additionalChanceForAttackState = random(states);
         this.currentTimeBetweenStates = 0;
-        //if (this.additionalChanceForAttackState === "attack") this.state = "attack"; // Increasing chances for attack state
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
         this.choosedAttack = random(this.attacks);
         console.log("Choosed attack", this.choosedAttack);
         console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
 
-        this.executeUniqueAbility1();
+        this.executeUniqueAbility2();
     }
 
     loadAdditionalData() {
@@ -225,31 +218,6 @@ class Enemy {
     loadPlayerData(_player) {
         this.playerInstance = _player;
     }
-
-    /*
-    createBullet(bulletSpawnX, bulletSpawnY, bulletSize, bulletImage, normalizedDX, normalizedDY) {
-        // return new ShootAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage); 
-        // return new RotatingSphereAttack(bulletSpawnX,bulletSpawnY, bulletSize, bulletSize, bulletImage, 5, 0);
-        // return new LineAttack(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, normalizedDX, normalizedDY, bulletImage); 
-    }
-
-    // also shoots bullets but used for many bullets sending 1 time
-    createBullets(bulletsArray, bulletSpawnX, bulletSpawnY, bulletSize, bulletImage, normalizedDX, normalizedDY) {
-        // let amountOfAttacksAround = 12;
-        // let angle = 360 / amountOfAttacksAround;
-
-        // for (let i = 0; i < amountOfAttacksAround; i++) {
-        //     bulletsArray.push(new LineAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage, angle * i)); 
-        // }
-
-        let amountOfAttacksAround = 6;
-        let angle = 360 / amountOfAttacksAround;
-
-        for (let i = 0; i < amountOfAttacksAround; i++) {
-            bulletsArray.push(new LineAround(bulletSpawnX, bulletSpawnY, bulletSize, bulletSize, bulletImage, angle * i + this.angle)); 
-        }
-        this.angle += 10;
-    }*/
 
     shootBullet() {
         this.bulletStartX = this.direction === "right"? this.x + this.bulletStartXPos + this.energyShpereSize / 2:
@@ -331,25 +299,25 @@ class Enemy {
     }
 }
 
-class Queen extends Enemy {
+class Queen extends EnemyBoss {
     attack() {
         //console.log("Queen Attacks");
     }
 }
 
-class SkeletonKing extends Enemy {
+class SkeletonKing extends EnemyBoss {
     attack() {
         //console.log("Skeleton King Attacks");
     }
 }
 
-class PhantomKing extends Enemy {
+class PhantomKing extends EnemyBoss {
     attack() {
         //console.log("Phantom King Attacks");
     }
 }
 
-class VarkolynLeader  extends Enemy {
+class VarkolynLeader  extends EnemyBoss {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
         this.bulletStartXPos = this.pixelWidth * 2 / 3;
@@ -363,8 +331,7 @@ class VarkolynLeader  extends Enemy {
         this.poisonedPoolNumber = 7;
         this.poisonedPoolsCoordinates = [];
 
-        this.warriors = [];
-        this.warriorsNumber = 7;
+        this.warriorsNumber = 3;
     }
 
     attack() {
@@ -400,8 +367,9 @@ class VarkolynLeader  extends Enemy {
     }
     
     executeUniqueAbility2() {
-        // push enemy to warriors and clear on parent death
-        this.warriors.push();
+        for (let i = 0; i < this.warriorsNumber; i++) {
+            createEnemy("Common", "Alien");
+        }
     }
 
     displayPoisonedPool() {
@@ -434,13 +402,13 @@ class VarkolynLeader  extends Enemy {
     }
 }
 
-class ChristmasTreant extends Enemy {
+class ChristmasTreant extends EnemyBoss {
     attack() {
         //console.log("Christmas Treant Attacks");
     }
 }
 
-class Nian extends Enemy {
+class Nian extends EnemyBoss {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         super(x, y, pixelWidth, pixelHeight, health);
         this.bulletStartXPos = this.pixelWidth * 2 / 3 + 75;
@@ -474,6 +442,162 @@ window.VarkolynLeader = VarkolynLeader;
 window.ChristmasTreant = ChristmasTreant;
 window.Nian = Nian;
 
+// ------------------------- ENEMY -------------------------
+
+class Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) {
+        this.x = x;
+        this.y = y;
+        this.pixelWidth = pixelWidth;
+        this.pixelHeight = pixelHeight;
+        this.health = health;
+        this.maxHealth = health;
+        this.alive = true;
+        this.image = null;
+        this.direction = "right";
+        this.reachedPoint = false;
+        this.targetX = this.x;
+        this.targetY = this.y;
+        this.speed = 2;
+        this.state = "idle";
+        this.timeBetweenStates = 200;
+        this.currentTimeBetweenStates = 0;
+        this.minTimeBetweenStates = 50;
+        this.maxTimeBetweenStates = 350;
+
+        this.playerInstance = null;
+
+        this.coinsAwardAfterDeath = 50;
+        this.energyAwardAfterDeath = 100;
+    }
+
+    display() {
+        if (this.direction === "left") {
+            push();
+            translate(this.x + this.pixelWidth, this.y);
+            scale(-1, 1);
+            image(this.image, 0, 0, this.pixelWidth, this.pixelHeight);
+            pop();
+        }
+        else {
+            image(this.image, this.x, this.y, this.pixelWidth, this.pixelHeight);
+        }
+    }
+
+    takeDamage(damage) {
+        if (!this.alive) return;
+
+        this.health -= damage;
+
+        console.log("Enemy took", damage, "damage! Hp left:", this.health);
+
+        if (this.health <= 0) {
+            this.die();
+        }
+    }
+
+    die() {
+        console.log("Enemy dead");
+        this.alive = false;
+        player.receiveCoins(this.coinsAwardAfterDeath);
+        player.receiveEnergy(this.energyAwardAfterDeath);
+        this.bullets = [];
+        let index = enemies.indexOf(this);
+        enemies.splice(index, 1);
+    }
+
+    move() {
+        if (!this.alive) return;
+
+        if (this.reachedPoint) {
+            let minDistance = 50;
+            let newX, newY;
+
+            do {
+                newX = random(0 + this.pixelWidth, width - this.pixelWidth);
+                newY = random(0 + this.pixelHeight, height - this.pixelHeight);
+            }
+            while (dist(this.x, this.y, newX, newY) < minDistance);
+
+            this.targetX = newX;
+            this.targetY = newY;
+            this.reachedPoint = false;
+        }
+
+        let deltaX = this.targetX - this.x;
+        let deltaY = this.targetY - this.y;
+        let distance = dist(this.x, this.y, this.targetX, this.targetY);
+
+        if (distance > 1) {
+            this.x += this.speed * (deltaX / distance);
+            this.y += this.speed * (deltaY / distance);
+            this.direction = deltaX > 0 ? "right" : "left";
+        }
+        else {
+            this.reachedPoint = true;
+        }
+    }
+
+    attack() {
+        console.log("Enemy Attacks!");
+    }
+
+    applyState() {
+        if (this.state === "idle") {
+
+        }
+        else if (this.state === "move") {
+            this.move();
+        }
+        else if (this.state === "attack") {
+            this.attack();
+        }
+        else if (this.state === "dead") {
+            this.bullets = [];
+        }
+    }
+
+    changeState() {
+        if (!this.alive) {
+            this.state = "dead";
+            return;
+        }
+
+        if (this.currentTimeBetweenStates < this.timeBetweenStates) {
+            this.currentTimeBetweenStates += 1;
+            return;
+        }
+
+        let states = ["idle", "move", "attack"];
+        this.state = random(states);
+        this.currentTimeBetweenStates = 0;
+        this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
+    }
+
+    loadAdditionalData() {
+
+    }
+
+    loadPlayerData(_player) {
+        this.playerInstance = _player;
+    }
+
+    render() {
+        this.applyState();
+        this.changeState();
+        this.display();
+        //this.displayBullets();
+    }
+}
+
+class Alien extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+    }
+}
+window.Alien = Alien;
+
+// ------------------------- ATTACK -------------------------
 class Attack {
     constructor(x, y, bulletWidth, bulletHeight, _image) {
         this.x = x;

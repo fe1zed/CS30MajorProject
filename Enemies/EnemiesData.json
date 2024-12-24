@@ -1,7 +1,14 @@
 {
     "Common": {
-        "" : {
-
+        "Alien" : {
+            "image": "Enemies/ThirdFloor/Alien/Alien.gif",
+            "attackImage": "",
+            "walkingImage": "",
+            "deadImage": "",
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+            "health": 20,
+            "closeCombat": false
         }
     },
 
