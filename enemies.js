@@ -208,7 +208,13 @@ class EnemyBoss {
         console.log("Choosed attack", this.choosedAttack);
         console.log(`New state: ${this.state},`, `time till next state: ${this.timeBetweenStates}`);
 
-        this.executeUniqueAbility2();
+        if (random(100) > 50) {
+            this.executeUniqueAbility1();
+        }
+        else {
+            this.executeUniqueAbility2();
+        }
+        
     }
 
     loadAdditionalData() {
@@ -368,7 +374,12 @@ class VarkolynLeader  extends EnemyBoss {
     
     executeUniqueAbility2() {
         for (let i = 0; i < this.warriorsNumber; i++) {
-            createEnemy("Common", "Alien");
+            if (random(100) > 50) {
+                createEnemy("Common", "UFO");
+            }
+            else {
+                createEnemy("Common", "Alien");
+            }
         }
     }
 
@@ -477,7 +488,6 @@ class Enemy {
         this.weaponDamage = 0;
         this.weaponImage = null;
 
-        this.bulletImage = null;
         this.bullets = [];
         this.lastTimeShooted = 0;
         this.timeBetweenShots = 250;
@@ -581,7 +591,7 @@ class Enemy {
     }
 
     createBullet() {
-        let bulletData = weaponsDataJson[WEAPONSPATH][weaponName]["Bullet"];
+        let bulletData = weaponsDataJson["Weapons"][this.usingWeapon]["Bullet"];
         let offsetX = this.direction === "right"
             ? this.x + this.pixelWidth / 2 + this.pixelWidth / 4
             : this.x + this.pixelWidth / 4;
@@ -606,6 +616,8 @@ class Enemy {
             weaponWidth = pixelWidth;
             weaponHeight = pixelHeight;
         }
+
+        console.log(bulletData["image"]);
 
         return {
             x: offsetX,
@@ -633,6 +645,15 @@ class Enemy {
       
             bullet.x += bullet.dx;
             bullet.y += bullet.dy;
+
+            if (bullet.x < this.playerInstance.x + this.playerInstance.size && 
+                bullet.x + bullet.pixelWidth > this.playerInstance.x && 
+                bullet.y < this.playerInstance.y + this.playerInstance.size && 
+                bullet.y + bullet.pixelHeight > this.playerInstance.y) {
+                this.playerInstance.takeDamage(this.weaponDamage);
+                let index = this.bullets.indexOf(bullet);
+                this.bullets.splice(index, 1);
+            }
         }
     }
 
@@ -700,7 +721,17 @@ class Alien extends Enemy {
         this.usingWeapon = "Alien Gun";
     }
 }
+
+class UFO extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Alien Gun";
+    }
+}
+
 window.Alien = Alien;
+window.UFO = UFO;
+
 
 // ------------------------- ATTACK -------------------------
 class Attack {

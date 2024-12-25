@@ -137,10 +137,10 @@
             "pixelHeight": 60,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BerserkPunch.png",
+                "image": "Enemies/ThirdFloor/Guns/AlienGunBullet.png",
                 "speed": 10,
-                "pixelWidth": 60,
-                "pixelHeight": 60 
+                "pixelWidth": 40,
+                "pixelHeight": 16 
             }
         }
     }

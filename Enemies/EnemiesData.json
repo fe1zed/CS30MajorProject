@@ -9,6 +9,17 @@
             "pixelHeight": 100,
             "health": 20,
             "closeCombat": false
+        },
+
+        "UFO" : {
+            "image": "Enemies/ThirdFloor/UFO/UFO.png",
+            "attackImage": "",
+            "walkingImage": "",
+            "deadImage": "",
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+            "health": 20,
+            "closeCombat": false
         }
     },
 
