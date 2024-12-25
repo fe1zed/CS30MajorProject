@@ -265,7 +265,7 @@ function drawCoins() {
   let barWidth = 100;
   let barHeight = 30;
 
-  fill("gray");
+  fill("black");
   rect(coinsBarX, coinsBarY, barWidth, barHeight); 
 
   image(coinImage, coinsBarX + 5, coinsBarY + 2, 15, 25);

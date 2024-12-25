@@ -130,7 +130,7 @@
         }, 
 
         "Alien Gun" : {
-            "image": "Enemies/ThirdFloor/Guns/Semi.png",
+            "image": "Enemies/ThirdFloor/Guns/AlienGun.png",
             "damage": 1,
             "criticalDamage": 2,
             "pixelWidth": 150,
@@ -141,6 +141,21 @@
                 "speed": 10,
                 "pixelWidth": 40,
                 "pixelHeight": 16 
+            }
+        },
+
+        "UFO Gun" : {
+            "image": "Enemies/ThirdFloor/Guns/UFOGun.png",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 90,
+            "pixelHeight": 54,
+
+            "Bullet" : {
+                "image": "Enemies/ThirdFloor/Guns/UFOGunBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
             }
         }
     }

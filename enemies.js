@@ -43,7 +43,7 @@ class EnemyBoss {
         this.targetX = this.x;
         this.targetY = this.y;
         this.speed = 2;
-        this.state = "idle"; // idle, move, attack, dead/*, uniqueAbility*/
+        this.state = "move"; // idle, move, attack, dead/*, uniqueAbility*/
         this.timeBetweenStates = 200;
         this.currentTimeBetweenStates = 0;
         this.minTimeBetweenStates = 50;
@@ -384,6 +384,8 @@ class VarkolynLeader  extends EnemyBoss {
     }
 
     displayPoisonedPool() {
+        if (!this.alive) return;
+
         for (let i = 0; i < this.poisonedPoolsCoordinates.length; i++) {
             let pool = this.poisonedPoolsCoordinates[i];
             image(this.poisonedPoolImage, pool.x, pool.y, this.poisonedPoolSize, this.poisonedPoolSize);
@@ -470,7 +472,7 @@ class Enemy {
         this.targetX = this.x;
         this.targetY = this.y;
         this.speed = 2;
-        this.state = "idle";
+        this.state = "move";
         this.timeBetweenStates = 200;
         this.currentTimeBetweenStates = 0;
         this.minTimeBetweenStates = 50;
@@ -490,7 +492,7 @@ class Enemy {
 
         this.bullets = [];
         this.lastTimeShooted = 0;
-        this.timeBetweenShots = 250;
+        this.timeBetweenShots = 350;
     }
 
     display() {
@@ -691,7 +693,7 @@ class Enemy {
         let states = ["idle", "move", "attack"];
         this.state = random(states);
         this.currentTimeBetweenStates = 0;
-        this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
+        this.timeBetweenStates = random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
     }
 
     loadAdditionalData() {
@@ -725,7 +727,7 @@ class Alien extends Enemy {
 class UFO extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) { 
         super(x, y, pixelWidth, pixelHeight, health);
-        this.usingWeapon = "Alien Gun";
+        this.usingWeapon = "UFO Gun";
     }
 }
 
