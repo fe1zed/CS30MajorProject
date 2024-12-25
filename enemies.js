@@ -375,10 +375,10 @@ class VarkolynLeader  extends EnemyBoss {
     executeUniqueAbility2() {
         for (let i = 0; i < this.warriorsNumber; i++) {
             if (random(100) > 50) {
-                createEnemy("Common", "UFO");
+                createEnemy("Common", "Elite Knight Enemy");
             }
             else {
-                createEnemy("Common", "Alien");
+                createEnemy("Common", "Elite Knight Enemy");
             }
         }
     }
@@ -731,8 +731,26 @@ class UFO extends Enemy {
     }
 }
 
+class KnightEnemy extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Knights Gun";
+    }
+}
+
+class EliteKnightEnemy extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Elite Knights Gun";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+
 window.Alien = Alien;
 window.UFO = UFO;
+window.KnightEnemy = KnightEnemy;
+window.EliteKnightEnemy = EliteKnightEnemy;
 
 
 // ------------------------- ATTACK -------------------------

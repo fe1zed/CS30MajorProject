@@ -157,6 +157,36 @@
                 "pixelWidth": 25,
                 "pixelHeight": 25 
             }
+        },
+
+        "Knights Gun" : {
+            "image": "Enemies/SecondFloor/Guns/KnightsGun.png",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 114,
+            "pixelHeight": 66,
+
+            "Bullet" : {
+                "image": "Enemies/ThirdFloor/Guns/AlienGunBullet.png",
+                "speed": 10,
+                "pixelWidth": 40,
+                "pixelHeight": 16 
+            }
+        },
+
+        "Elite Knights Gun" : {
+            "image": "Enemies/SecondFloor/Guns/EliteKnightsGun.png",
+            "damage": 2,
+            "criticalDamage": 2,
+            "pixelWidth": 156,
+            "pixelHeight": 36,
+
+            "Bullet" : {
+                "image": "Enemies/ThirdFloor/Guns/UFOGunBullet.png",
+                "speed": 20,
+                "pixelWidth": 40,
+                "pixelHeight": 16 
+            }
         }
     }
 }

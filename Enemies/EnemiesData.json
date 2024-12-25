@@ -2,9 +2,6 @@
     "Common": {
         "Alien" : {
             "image": "Enemies/ThirdFloor/Alien/Alien.gif",
-            "attackImage": "",
-            "walkingImage": "",
-            "deadImage": "",
             "pixelWidth": 100,
             "pixelHeight": 100,
             "health": 20,
@@ -13,9 +10,22 @@
 
         "UFO" : {
             "image": "Enemies/ThirdFloor/UFO/UFO.png",
-            "attackImage": "",
-            "walkingImage": "",
-            "deadImage": "",
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "Knight Enemy" : {
+            "image": "Enemies/SecondFloor/Knight.gif",
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "Elite Knight Enemy" : {
+            "image": "Enemies/SecondFloor/EliteKnight.gif",
             "pixelWidth": 100,
             "pixelHeight": 100,
             "health": 20,

@@ -303,3 +303,10 @@ function drawLobby() {
 // Take characters from here
 // https://ezgif.com/webp-to-gif/ezgif-3-d32a219e48.webp 
 // convert here to .gif .png
+
+
+
+// 2nd floor
+// Knight:
+// https://soul-knight.fandom.com/wiki/Knight_Kingdom#Wizard
+
