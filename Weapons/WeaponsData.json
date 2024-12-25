@@ -187,6 +187,21 @@
                 "pixelWidth": 40,
                 "pixelHeight": 16 
             }
+        },
+
+        "Wizards Scepter" : {
+            "image": "Enemies/SecondFloor/Guns/WizardsScepter.png",
+            "damage": 2,
+            "criticalDamage": 2,
+            "pixelWidth": 102,
+            "pixelHeight": 48,
+
+            "Bullet" : {
+                "image": "Enemies/ThirdFloor/Guns/UFOGunBullet.png",
+                "speed": 8,
+                "pixelWidth": 50,
+                "pixelHeight": 50 
+            }
         }
     }
 }

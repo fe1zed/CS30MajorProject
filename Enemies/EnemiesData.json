@@ -30,6 +30,14 @@
             "pixelHeight": 100,
             "health": 20,
             "closeCombat": false
+        },
+
+        "Wizard" : {
+            "image": "Enemies/SecondFloor/Wizard.gif",
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+            "health": 20,
+            "closeCombat": false
         }
     },
 
