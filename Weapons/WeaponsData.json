@@ -127,6 +127,21 @@
                 "pixelWidth": 60,
                 "pixelHeight": 60 
             }
+        }, 
+
+        "Alien Gun" : {
+            "image": "Enemies/ThirdFloor/Guns/Semi.png",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 150,
+            "pixelHeight": 60,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BerserkPunch.png",
+                "speed": 10,
+                "pixelWidth": 60,
+                "pixelHeight": 60 
+            }
         }
     }
 }

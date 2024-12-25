@@ -469,6 +469,18 @@ class Enemy {
 
         this.coinsAwardAfterDeath = 50;
         this.energyAwardAfterDeath = 100;
+
+        this.usingWeapon = "";
+
+        this.weaponWidth = 0;
+        this.weaponHeight = 0;
+        this.weaponDamage = 0;
+        this.weaponImage = null;
+
+        this.bulletImage = null;
+        this.bullets = [];
+        this.lastTimeShooted = 0;
+        this.timeBetweenShots = 250;
     }
 
     display() {
@@ -538,8 +550,95 @@ class Enemy {
         }
     }
 
+    displayWeapon() {
+        if (!this.alive) return;
+
+        let weaponWidth = this.weaponWidth / this.pixelWidth * 35;
+        let weaponHeight = this.weaponHeight / this.pixelHeight * 35;
+
+        let offsetX = this.direction === "right"
+            ? this.x + this.pixelWidth / 2 + this.pixelWidth / 4
+            : this.x + this.pixelWidth / 4;
+
+        let offsetY = this.y + this.pixelHeight * 0.75;
+
+        let angle = atan2(this.playerInstance.y - offsetY, this.playerInstance.x - offsetX);
+
+        push();
+        translate(offsetX, offsetY);
+        rotate(angle);
+        imageMode(CENTER);
+        scale(1, angle >= -1.5 && angle <= 1.5 ? 1 : -1);
+        image(this.weaponImage, 0, 0, weaponWidth, weaponHeight);
+        pop();
+    }
+
+    shootBullet() {
+        if (millis() < this.lastTimeShooted + this.timeBetweenShots) return;
+        this.lastTimeShooted = millis();
+        let bullet = this.createBullet();
+        this.bullets.push(bullet);
+    }
+
+    createBullet() {
+        let bulletData = weaponsDataJson[WEAPONSPATH][weaponName]["Bullet"];
+        let offsetX = this.direction === "right"
+            ? this.x + this.pixelWidth / 2 + this.pixelWidth / 4
+            : this.x + this.pixelWidth / 4;
+
+        let offsetY = this.y + this.pixelHeight * 0.75;
+
+        let dx = this.playerInstance.x + this.playerInstance.size / 2 - offsetX;
+        let dy = this.playerInstance.y + this.playerInstance.size / 2 - offsetY;
+        let length = sqrt(dx * dx + dy * dy);
+
+        let pixelWidth = bulletData["pixelWidth"];
+        let pixelHeight = bulletData["pixelHeight"];
+
+        let weaponWidth = 0;
+        let weaponHeight = 0;
+
+        if (this.weaponPropelling) {
+            weaponWidth = pixelWidth / this.pixelWidth * 35;
+            weaponHeight = pixelHeight / this.pixelHeight * 35;
+        }
+        else {
+            weaponWidth = pixelWidth;
+            weaponHeight = pixelHeight;
+        }
+
+        return {
+            x: offsetX,
+            y: offsetY,
+            pixelWidth: weaponWidth,
+            pixelHeight: weaponHeight,
+            image: loadImage(bulletData["image"]),
+            speed: bulletData["speed"],
+            dx: dx / length * bulletData["speed"],
+            dy: dy / length * bulletData["speed"],
+            damage: weaponsDataJson[WEAPONSPATH][weaponName]["damage"],
+        };
+    }
+
+    displayBullets() {
+        for (let bullet of this.bullets) {
+            let angle = atan2(bullet.dy, bullet.dx);
+      
+            push();
+            translate(bullet.x, bullet.y);
+            rotate(angle);
+            imageMode(CENTER);
+            image(bullet.image, 0, 0, bullet.pixelWidth, bullet.pixelHeight);
+            pop();
+      
+            bullet.x += bullet.dx;
+            bullet.y += bullet.dy;
+        }
+    }
+
     attack() {
         console.log("Enemy Attacks!");
+        this.shootBullet();
     }
 
     applyState() {
@@ -575,7 +674,11 @@ class Enemy {
     }
 
     loadAdditionalData() {
-
+        let weaponData = weaponsDataJson[WEAPONSPATH][this.usingWeapon];
+        this.weaponWidth = weaponData["pixelWidth"];
+        this.weaponHeight = weaponData["pixelHeight"];
+        this.weaponDamage = weaponData["damage"];
+        this.weaponImage = loadImage(weaponData["image"]);
     }
 
     loadPlayerData(_player) {
@@ -586,13 +689,15 @@ class Enemy {
         this.applyState();
         this.changeState();
         this.display();
-        //this.displayBullets();
+        this.displayWeapon();
+        this.displayBullets();
     }
 }
 
 class Alien extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) { 
         super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Alien Gun";
     }
 }
 window.Alien = Alien;
