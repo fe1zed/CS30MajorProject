@@ -375,10 +375,10 @@ class VarkolynLeader  extends EnemyBoss {
     executeUniqueAbility2() {
         for (let i = 0; i < this.warriorsNumber; i++) {
             if (random(100) > 50) {
-                createEnemy("Common", "Wizard");
+                createEnemy("Common", "BazingaFire");
             }
             else {
-                createEnemy("Common", "Wizard");
+                createEnemy("Common", "BazingaIce");
             }
         }
     }
@@ -717,6 +717,7 @@ class Enemy {
     }
 }
 
+// THIRD FLOOR ----------------------------------------------------------------------------------------
 class Alien extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) { 
         super(x, y, pixelWidth, pixelHeight, health);
@@ -731,6 +732,7 @@ class UFO extends Enemy {
     }
 }
 
+// SECOND FLOOR ----------------------------------------------------------------------------------------
 class KnightEnemy extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) { 
         super(x, y, pixelWidth, pixelHeight, health);
@@ -754,12 +756,76 @@ class Wizard extends Enemy {
     }
 }
 
+class Slime extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Red";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+// FIRST FLOOR ----------------------------------------------------------------------------------------
+class Boar extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Red";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+class Bazinga extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Red";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+class BazingaFire extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Orange";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+class BazingaIce extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Blue";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+class BazingaToxic extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Toxic";
+        this.timeBetweenShots = 1200;
+    }
+}
+
+class BazingaTrap extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Purple";
+        this.timeBetweenShots = 1200;
+    }
+}
 
 window.Alien = Alien;
 window.UFO = UFO;
 window.KnightEnemy = KnightEnemy;
 window.EliteKnightEnemy = EliteKnightEnemy;
 window.Wizard = Wizard;
+window.Slime = Slime;
+window.Boar = Boar;
+window.Bazinga = Bazinga;
+
+window.BazingaFire = BazingaFire;
+window.BazingaIce = BazingaIce;
+window.BazingaToxic = BazingaToxic;
+window.BazingaTrap = BazingaTrap;
 
 
 // ------------------------- ATTACK -------------------------

@@ -38,6 +38,62 @@
             "pixelHeight": 100,
             "health": 20,
             "closeCombat": false
+        },
+
+        "Slime" : {
+            "image": "Enemies/SecondFloor/Slime.gif",
+            "pixelWidth": 50,
+            "pixelHeight": 50,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "Boar" : {
+            "image": "Enemies/FirstFloor/Boar.gif",
+            "pixelWidth": 50,
+            "pixelHeight": 50,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "Bazinga" : {
+            "image": "Enemies/FirstFloor/Bazinga.gif",
+            "pixelWidth": 70,
+            "pixelHeight": 70,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "BazingaIce" : {
+            "image": "Enemies/FirstFloor/BazingaIce.gif",
+            "pixelWidth": 70,
+            "pixelHeight": 70,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "BazingaFire" : {
+            "image": "Enemies/FirstFloor/BazingaFire.gif",
+            "pixelWidth": 70,
+            "pixelHeight": 70,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "BazingaToxic" : {
+            "image": "Enemies/FirstFloor/BazingaToxic.gif",
+            "pixelWidth": 70,
+            "pixelHeight": 70,
+            "health": 20,
+            "closeCombat": false
+        },
+
+        "BazingaTrap" : {
+            "image": "Enemies/FirstFloor/BazingaTrap.gif",
+            "pixelWidth": 70,
+            "pixelHeight": 70,
+            "health": 20,
+            "closeCombat": false
         }
     },
 

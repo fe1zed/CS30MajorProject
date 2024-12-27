@@ -202,6 +202,81 @@
                 "pixelWidth": 50,
                 "pixelHeight": 50 
             }
+        },
+
+        "Sphere Red" : {
+            "image": "Enemies/Sprites/EnergySphere.gif",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+
+            "Bullet" : {
+                "image": "Enemies/Sprites/DefaultBullet.png",
+                "speed": 8,
+                "pixelWidth": 40,
+                "pixelHeight": 40 
+            }
+        },
+
+        "Sphere Orange" : {
+            "image": "Enemies/Sprites/OrangeEnergySphere.gif",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+
+            "Bullet" : {
+                "image": "Enemies/Sprites/OrangeDefaultBullet.png",
+                "speed": 8,
+                "pixelWidth": 40,
+                "pixelHeight": 40 
+            }
+        },
+
+        "Sphere Toxic" : {
+            "image": "Enemies/Sprites/ToxicEnergySphere.gif",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+
+            "Bullet" : {
+                "image": "Enemies/Sprites/ToxicDefaultBullet.png",
+                "speed": 8,
+                "pixelWidth": 40,
+                "pixelHeight": 40 
+            }
+        },
+
+        "Sphere Blue" : {
+            "image": "Enemies/Sprites/BlueEnergySphere.gif",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+
+            "Bullet" : {
+                "image": "Enemies/Sprites/BlueDefaultBullet.png",
+                "speed": 8,
+                "pixelWidth": 40,
+                "pixelHeight": 40 
+            }
+        },
+
+        "Sphere Purple" : {
+            "image": "Enemies/Sprites/PurpleEnergySphere.gif",
+            "damage": 1,
+            "criticalDamage": 2,
+            "pixelWidth": 100,
+            "pixelHeight": 100,
+
+            "Bullet" : {
+                "image": "Enemies/Sprites/PurpleDefaultBullet.png",
+                "speed": 8,
+                "pixelWidth": 40,
+                "pixelHeight": 40 
+            }
         }
     }
 }
