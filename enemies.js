@@ -43,7 +43,7 @@ class EnemyBoss {
         this.targetX = this.x;
         this.targetY = this.y;
         this.speed = 2;
-        this.state = "move"; // idle, move, attack, dead/*, uniqueAbility*/
+        this.state = "move"; // idle, move, attack, dead
         this.timeBetweenStates = 200;
         this.currentTimeBetweenStates = 0;
         this.minTimeBetweenStates = 50;
@@ -200,7 +200,7 @@ class EnemyBoss {
             return;
         }
 
-        let states = ["idle", "move", "attack"]; // ["attack"]; // ["uniqueAbility"]; //
+        let states = ["idle", "move", "attack"]; // ["attack"];
         this.state = random(states);
         this.currentTimeBetweenStates = 0;
         this.timeBetweenStates = this.state === "attack"? 750 : random(this.minTimeBetweenStates, this.maxTimeBetweenStates);
@@ -266,8 +266,6 @@ class EnemyBoss {
             }
             this.angle += 10;
         }
-        //this.bullets.push(this.createBullet(bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY)); 
-        //this.createBullets(this.bullets, bulletSpawnX, bulletSpawnY, this.bulletSize, this.bulletImage, normalizedDX, normalizedDY);
     }
 
     displayBullets() {
@@ -305,6 +303,7 @@ class EnemyBoss {
     }
 }
 
+// BOSSES -------------------------------------------------------------------------
 class Queen extends EnemyBoss {
     attack() {
         //console.log("Queen Attacks");
@@ -376,6 +375,8 @@ class VarkolynLeader  extends EnemyBoss {
         for (let i = 0; i < this.warriorsNumber; i++) {
             if (random(100) > 50) {
                 createEnemy("Common", "BazingaFire");
+                createEnemy("Common", "Varkolyn");
+
             }
             else {
                 createEnemy("Common", "BazingaIce");
@@ -732,6 +733,14 @@ class UFO extends Enemy {
     }
 }
 
+class Varkolyn extends Enemy {
+    constructor(x, y, pixelWidth, pixelHeight, health) { 
+        super(x, y, pixelWidth, pixelHeight, health);
+        this.usingWeapon = "Sphere Toxic";
+        this.timeBetweenShots = 1200;
+    }
+}
+
 // SECOND FLOOR ----------------------------------------------------------------------------------------
 class KnightEnemy extends Enemy {
     constructor(x, y, pixelWidth, pixelHeight, health) { 
@@ -815,18 +824,19 @@ class BazingaTrap extends Enemy {
 
 window.Alien = Alien;
 window.UFO = UFO;
+window.Varkolyn = Varkolyn;
+
 window.KnightEnemy = KnightEnemy;
 window.EliteKnightEnemy = EliteKnightEnemy;
 window.Wizard = Wizard;
 window.Slime = Slime;
+
 window.Boar = Boar;
 window.Bazinga = Bazinga;
-
 window.BazingaFire = BazingaFire;
 window.BazingaIce = BazingaIce;
 window.BazingaToxic = BazingaToxic;
 window.BazingaTrap = BazingaTrap;
-
 
 // ------------------------- ATTACK -------------------------
 class Attack {

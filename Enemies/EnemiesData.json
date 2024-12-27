@@ -94,6 +94,14 @@
             "pixelHeight": 70,
             "health": 20,
             "closeCombat": false
+        },
+
+        "Varkolyn" : {
+            "image": "Enemies/ThirdFloor/Varkolyn.gif",
+            "pixelWidth": 70,
+            "pixelHeight": 70,
+            "health": 20,
+            "closeCombat": false
         }
     },
 

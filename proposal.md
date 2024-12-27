@@ -5,7 +5,9 @@ This project was developed by Dmitrii Pltetmintsev and Oleh Pltetmintsev
 
 ## Needs To Have List
  - Procedural level generation 
- - Different characters, enemies, weapons
+ - Different characters
+ - Different enemies
+ - Different weapons
  - Boss battles with unique attack patterns
  - Save/load system for progress
  - In-game currency or resources
