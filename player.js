@@ -58,6 +58,9 @@ class Player {
         this.lastTimeGotDamage = 0;
 
         this.coins = 0;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     move() {
@@ -309,6 +312,9 @@ class DarkKnight extends Player {
         super(x, y, speed, size);
         this.secondWeaponImage = null;  
         this.dualWieldActive = false;  
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -329,9 +335,11 @@ class DarkKnight extends Player {
         } 
     }
 
-    executeUniqueAbility() {
+    executeUniqueAbility() { 
         if (!this.usingUniqueAbility) return;
 
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
+        
         let auraDurationMillis = this.auraDuration * 1000;
 
         if (this.auraStartTime === 0) {
@@ -349,6 +357,7 @@ class DarkKnight extends Player {
             this.usingUniqueAbility = false;
             this.auraStartTime = 0;
             this.dualWieldActive = false;
+            this.lastTimeUsedUA = millis();
             console.log("Использование уникальной способности {Dual Wield} ЗАВЕРШЕНО");
         }
     }
@@ -487,6 +496,9 @@ class Priestess extends Player {
 
         this.damagedLastTime = 1;
         this.timeBetweenDamage = 1000;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -495,11 +507,14 @@ class Priestess extends Player {
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
+        
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
 
         console.log("Spawn healig zone at x:" + this.x + "y:" + this.y);
         this.zoneBuffPosition = {x: this.x - this.size, y: this.y - this.size};
         this.usingUniqueAbility = false;
         this.zoneBuffActive = true;
+        this.lastTimeUsedUA = millis();
     }
 
     displayZoneBuff() {
@@ -564,6 +579,9 @@ class Rogue extends Player {
         this.dodgeStartTime = 0;
         this.dodgeSpeedMultiplier = 10;
         this.dodged = false;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -573,6 +591,8 @@ class Rogue extends Player {
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
+
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
 
         let dodgeDurationMillis = this.dodgeDuration * 1000;
     
@@ -596,6 +616,7 @@ class Rogue extends Player {
             this.dodgeStartTime = 0; 
             this.image = this.originalImage;
             this.dodged = false;
+            this.lastTimeUsedUA = millis();
             console.log("Using unique ability {DODGE} ENDED");
         }
     }
@@ -625,6 +646,9 @@ class Witch extends Player {
         this.spikes = [];
         this.shootedSpikes = false;
         this.usingUniqueAbility = false;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -633,6 +657,8 @@ class Witch extends Player {
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
+
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
 
         let auraDurationMillis = this.auraDuration * 1000;
     
@@ -657,6 +683,7 @@ class Witch extends Player {
             this.shootedSpikes = false;
             this.spikes = [];
             this.speed = this.defaultSpeed;
+            this.lastTimeUsedUA = millis();
             console.log("Using unique ability {SUPER MAJIC CAST} ENDED");
         }
     }
@@ -739,6 +766,9 @@ class Assasin extends Player {
         this.spikes = [];
         this.shootedSpikes = false;
         this.usingUniqueAbility = false;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -747,6 +777,8 @@ class Assasin extends Player {
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
+
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
 
         let auraDurationMillis = this.auraDuration * 1000;
     
@@ -771,6 +803,7 @@ class Assasin extends Player {
             this.shootedSpikes = false;
             this.spikes = [];
             this.speed = this.defaultSpeed;
+            this.lastTimeUsedUA = millis();
             console.log("Using unique ability {DARK BLADE} ENDED");
         }
     }
@@ -855,6 +888,9 @@ class Alchemist extends Player {
         this.damagedLastTime = 1;
         this.timeBetweenDamage = 1000; 
         this.zoneDamage = 20;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -864,10 +900,13 @@ class Alchemist extends Player {
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
 
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
+
         console.log("Spawn healig zone at x:" + this.x + "y:" + this.y);
         this.zoneBuffPosition = {x: this.x - this.size, y: this.y - this.size};
         this.usingUniqueAbility = false;
         this.zoneBuffActive = true;
+        this.lastTimeUsedUA = millis();
     }
 
     displayZoneBuff() {
@@ -907,6 +946,9 @@ class Berserk extends Player {
         super(x, y, speed, size);
 
         this.rageAttackSpeed = this.defaulTimeBetweenShots / 2;
+
+        this.timeBetweenUsingUA = 10000;
+        this.lastTimeUsedUA = 0;
     }
 
     attack() {
@@ -915,6 +957,8 @@ class Berserk extends Player {
 
     executeUniqueAbility() {
         if (!this.usingUniqueAbility) return;
+
+        if (this.lastTimeUsedUA + this.timeBetweenUsingUA > millis()) { return; }
 
         let auraDurationMillis = this.auraDuration * 1000;
     
@@ -933,6 +977,7 @@ class Berserk extends Player {
             this.usingUniqueAbility = false;
             this.auraStartTime = 0; 
             this.timeBetweenShots = this.defaulTimeBetweenShots;
+            this.lastTimeUsedUA = millis();
             console.log("Using unique ability {RAGE} ENDED");
         }
     }
