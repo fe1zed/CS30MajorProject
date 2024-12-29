@@ -22,6 +22,8 @@ let enemiesDataJson;
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let charactersName = "DarkKnight"; 
 let weaponName = "default";
+let weaponIndex = 0;
+let inventory = []; // "Wooden Cross", "Jack", "Bad Pistol", "The Code", "Blood Blade", "Dormant Bubble Machine", "Boxing Gloves"
 let player = new window[charactersName](200, 200, 5, 100);
 
 let bgImage = null;
@@ -34,6 +36,7 @@ let coinImage = null;
 
 let bullets = [];
 let enemies = [];
+let drop = [];
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
@@ -55,18 +58,14 @@ function setup() {
   player.setPlayerValues();
   player.loadAdditionalData();
 
-  // If not found such weapon, showing default
-  if (!weaponsDataJson[WEAPONSPATH].hasOwnProperty(weaponName)) {
-    weaponName = "default";
-  }
-
-  if (weaponName === "default") { // set to default weapon used by player if not assigned special
-    weaponName = charactersDataJson[CHARACTERSPATH][charactersName]["enhanceStartingWeapon"];
-  }
-
-  player.laodPlayerWeapon();
+  loadPlayerWeapon();
   
-  createEnemy("Boss", "Varkolyn Leader"); // 
+  // createEnemy("Boss", "Varkolyn Leader"); // 
+
+  inventory.push(weaponName);
+
+  createDrop(300, 300, "Blood Blade");
+  createDrop(500, 500, "Jack");
 }
 
 function draw() {
@@ -126,6 +125,9 @@ function draw() {
       }
     }
   }
+
+  // ----- DROP -----
+  displayDrop();
 
   // ----- PLAYER -----
   player.render();
@@ -217,7 +219,7 @@ function mouseClicked(event) {
 }
 
 function keyPressed() {
-  if (key === "e" || key === "E" || key === "У" || key === "у") {
+  if (key === "q" || key === "Q" || key === "й" || key === "Й") {
     if (!player.usingUniqueAbility)  {
       player.usingUniqueAbility = true;
     }
@@ -227,6 +229,102 @@ function keyPressed() {
   }
 }
 
+function keyTyped() {
+  if (key === '1') {
+    weaponName = "Blood Blade";
+    loadPlayerWeapon();
+  }
+  if (key === '2') {
+    weaponName = "default";
+    loadPlayerWeapon();
+  }
+
+  if (key === "e" || key === "E" || key === "у" || key === "У") {
+    // take laying weapon
+    for (let dropItem of drop) {
+      if (dropItem.x > player.x && dropItem.x < player.x + player.size && dropItem.y > player.y && dropItem.y < player.y + player.size) {
+        let weaponToTake = dropItem.name;
+        inventory.push(weaponToTake);
+        drop.splice(drop.indexOf(dropItem), 1);
+        console.log("Weapon taken", weaponToTake);
+        break;
+      }
+    }
+  }
+  if (key === "x" || key === "X") {
+    dropPlayerItem();
+  }
+}
+
+function loadPlayerWeapon() {
+  if (!weaponsDataJson[WEAPONSPATH].hasOwnProperty(weaponName)) {
+    weaponName = "default";
+  }
+
+  if (weaponName === "default") { // set to default weapon used by player if not assigned special
+    weaponName = charactersDataJson[CHARACTERSPATH][charactersName]["enhanceStartingWeapon"];
+  }
+
+  player.laodPlayerWeapon();
+}
+
+function mouseWheel(event) {
+  if (inventory.length < 2) return;
+
+  if (event.delta > 0) {
+    weaponIndex--;
+    if (weaponIndex < 0) {
+      weaponIndex = inventory.length - 1;
+    }
+    weaponName = inventory[weaponIndex];
+    loadPlayerWeapon();
+  } 
+  else if (event.delta < 0) {
+    weaponIndex++;
+    if (weaponIndex > inventory.length - 1) {
+      weaponIndex = 0;
+    }
+    weaponName = inventory[weaponIndex];
+    loadPlayerWeapon();
+  }
+}
+
+function displayDrop() {
+  if (drop.length < 1) return;
+
+  for (let dropItem of drop) { 
+    image(dropItem.dropImage, dropItem.x, dropItem.y, dropItem.dropWidth / player.size * 30, dropItem.dropHeight / player.size * 30);
+  }
+}
+
+function createDrop(_x, _y, dropName) {
+  let dropData = weaponsDataJson[WEAPONSPATH][dropName];
+  let dropImage = loadImage(dropData['image']);
+  drop.push({
+    x: _x,
+    y: _y,
+    dropImage: dropImage,
+    dropWidth: dropData["pixelWidth"],
+    dropHeight: dropData["pixelHeight"],
+    name: dropName,
+  });
+}
+
+function dropPlayerItem() {
+  if (inventory.length - 1 === 0) {
+    console.log("Unable to drop. U have last weapon!");
+    return;
+  }
+
+  createDrop(player.x + player.size / 2, player.y + player.size / 2, inventory[weaponIndex]);
+  inventory.splice(weaponIndex, 1);
+  // console.log("Inventory:", inventory);
+  weaponIndex = random(0, inventory.length - 1 === 1? 0: inventory.length - 1);
+  // console.log("Weapon Index:", weaponIndex);
+  weaponName = inventory[weaponIndex];
+  // console.log("Choosed weapon:", weaponName);
+  loadPlayerWeapon();
+}
 
 // ---------------- UI Render ---------------- 
 function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, barColor, type) {
