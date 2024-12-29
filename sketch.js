@@ -24,12 +24,14 @@ let charactersName = "DarkKnight";
 let weaponName = "default";
 let weaponIndex = 0;
 let inventory = []; // "Wooden Cross", "Jack", "Bad Pistol", "The Code", "Blood Blade", "Dormant Bubble Machine", "Boxing Gloves"
+let inventoryMaxSize = 2;
 let player = new window[charactersName](200, 200, 5, 100);
 
 let bgImage = null;
 let heartImage = null;
 let armorImage = null;
 let energyImage = null;
+let skillChargeImage = null;
 
 let logoImage = null;
 let coinImage = null;
@@ -48,6 +50,7 @@ function preload() {
   armorImage = loadImage('UI/Armor.png');
   energyImage = loadImage('UI/Energy.png');
   coinImage = loadImage('UI/Coin.png');
+  skillChargeImage = loadImage('UI/SkillCharge.png');
 
   logoImage = loadImage('UI/logo.png');
 }
@@ -221,6 +224,7 @@ function mouseClicked(event) {
 function keyPressed() {
   if (key === "q" || key === "Q" || key === "й" || key === "Й") {
     if (!player.usingUniqueAbility)  {
+      if (player.lastTimeUsedUA + player.timeBetweenUsingUA > millis()) { return; }
       player.usingUniqueAbility = true;
     }
     else {
@@ -243,11 +247,14 @@ function keyTyped() {
     // take laying weapon
     for (let dropItem of drop) {
       if (dropItem.x > player.x && dropItem.x < player.x + player.size && dropItem.y > player.y && dropItem.y < player.y + player.size) {
-        let weaponToTake = dropItem.name;
-        inventory.push(weaponToTake);
-        drop.splice(drop.indexOf(dropItem), 1);
-        console.log("Weapon taken", weaponToTake);
-        break;
+        if (inventory.length < inventoryMaxSize) {
+          let weaponToTake = dropItem.name;
+          inventory.push(weaponToTake);
+          drop.splice(drop.indexOf(dropItem), 1);
+          console.log("Weapon taken", weaponToTake);
+          break;
+        }
+        else console.log("Unable to take. Overflow amount of items. Drop something to take other item!");
       }
     }
   }
@@ -372,18 +379,33 @@ function drawCoins() {
   text(player.coins, coinsBarX + barHeight, coinsBarY + 27);
 }
 
+function drawSkillCharge(skillChargeImage, lastTimeUsed, cooldown, x, y, iconSize, barWidth, barHeight, r, g, b) {
+  let currentTime = millis();
+  let elapsedTime = currentTime - lastTimeUsed;
+  let progress = player.usingUniqueAbility? 0: constrain(elapsedTime / cooldown, 0, 1);
+
+  image(skillChargeImage, x, y, iconSize, iconSize);
+
+  fill(0, 0, 0);
+  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
+
+  fill(r, g, b, progress === 1? 255: 180);
+  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth * progress, barHeight);
+}
+
 function drawHUD() {
   let x = 20;
   let y = 20;
-  let iconSize = 30;
-  let spacing = 50;
+  let iconSize = 20;
+  let spacing = 30;
   let barWidth = 150;
   let barHeight = 20;
 
   drawBar(heartImage, player.health, player.maxHealth, x, y, iconSize, barWidth, barHeight, color(255, 0, 0), "h"); 
   drawBar(armorImage, player.armor, player.maxArmor, x, y + spacing, iconSize, barWidth, barHeight, color(180), "a"); 
   drawBar(energyImage, player.energy, player.maxEnergy, x, y + spacing * 2, iconSize, barWidth, barHeight, color(0, 0, 255), "m"); 
-
+  
+  drawSkillCharge(skillChargeImage, player.lastTimeUsedUA, player.timeBetweenUsingUA, x, y + spacing * 3, iconSize, barWidth, barHeight, 255, 165, 0); // Not showing remaining time
   drawCoins();
 }
 
@@ -402,9 +424,6 @@ function drawLobby() {
 // https://ezgif.com/webp-to-gif/ezgif-3-d32a219e48.webp 
 // convert here to .gif .png
 
-
-
 // 2nd floor
 // Knight:
 // https://soul-knight.fandom.com/wiki/Knight_Kingdom#Wizard
-

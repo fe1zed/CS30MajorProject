@@ -1,7 +1,4 @@
 Список того что надо сделать по приоритету
 
 1. Check UA delay
-2. Change Weapon
-3. Make camera offset
-4. Connect Oleg' script to mine
-5. Make slider to show time to UA charge
+2. 
