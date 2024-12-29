@@ -21,7 +21,8 @@ let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let charactersName = "DarkKnight"; 
-let weaponName = "default";
+let charactersList = ["DarkKnight", "Priestess", "Rogue", "Witch", "Assasin", "Alchemist", "Berserk"];
+let weaponName = "default"; 
 let weaponIndex = 0;
 let inventory = []; // "Wooden Cross", "Jack", "Bad Pistol", "The Code", "Blood Blade", "Dormant Bubble Machine", "Boxing Gloves"
 let inventoryMaxSize = 2;
@@ -69,6 +70,7 @@ function setup() {
 
   createDrop(300, 300, "Blood Blade");
   createDrop(500, 500, "Jack");
+  createDrop(300, 450, "Wooden Cross");
 }
 
 function draw() {
@@ -136,7 +138,7 @@ function draw() {
   player.render();
 
   // ----- AMMO -----
-  if (player.weaponType === "Gun") {
+  if (player.weaponType === "Gun" || player.weaponType === "Staff") {
     displayBullets(); 
   }
   else if (player.weaponType === "ColdWeapon") {

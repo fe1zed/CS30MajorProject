@@ -10,7 +10,14 @@
             "followCursor": false,
             "pixelWidth": 42,
             "pixelHeight": 186,
-            "type": "Staff"
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
         },
 
         "Jack": {

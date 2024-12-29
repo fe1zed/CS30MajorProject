@@ -313,7 +313,7 @@ class DarkKnight extends Player {
         this.secondWeaponImage = null;  
         this.dualWieldActive = false;  
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 25000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -344,7 +344,7 @@ class DarkKnight extends Player {
 
         if (this.auraStartTime === 0) {
             this.auraStartTime = millis();
-            console.log("Использование уникальной способности {Dual Wield} НАЧАЛОСЬ");
+            console.log("Using unique ability {Dual Wield} STARTED");
         }
 
         let elapsedTime = millis() - this.auraStartTime;
@@ -358,7 +358,7 @@ class DarkKnight extends Player {
             this.auraStartTime = 0;
             this.dualWieldActive = false;
             this.lastTimeUsedUA = millis();
-            console.log("Использование уникальной способности {Dual Wield} ЗАВЕРШЕНО");
+            console.log("Using unique ability {Dual Wield} ENDED");
         }
     }
 
@@ -497,7 +497,7 @@ class Priestess extends Player {
         this.damagedLastTime = 1;
         this.timeBetweenDamage = 1000;
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 30000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -554,7 +554,7 @@ class Priestess extends Player {
     }
 
     attack() {
-
+        if(this.alive) super.shootBullet();
     }
 
     render() {
@@ -580,7 +580,7 @@ class Rogue extends Player {
         this.dodgeSpeedMultiplier = 10;
         this.dodged = false;
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 1000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -647,7 +647,7 @@ class Witch extends Player {
         this.shootedSpikes = false;
         this.usingUniqueAbility = false;
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 15000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -767,7 +767,7 @@ class Assasin extends Player {
         this.shootedSpikes = false;
         this.usingUniqueAbility = false;
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 15000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -889,7 +889,7 @@ class Alchemist extends Player {
         this.timeBetweenDamage = 1000; 
         this.zoneDamage = 20;
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 15000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -947,7 +947,7 @@ class Berserk extends Player {
 
         this.rageAttackSpeed = this.defaulTimeBetweenShots / 2;
 
-        this.timeBetweenUsingUA = 10000;
+        this.timeBetweenUsingUA = 250000;
         this.lastTimeUsedUA = 0;
     }
 
