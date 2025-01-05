@@ -472,6 +472,25 @@ class DarkKnight extends Player {
         player.weaponPropelling = player.weaponType === "ColdWeapon" ? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"] : false;
     }
 
+    healthPot()  {
+        if (this.health < this.maxHealth) {
+            this.health = this.health + 1 > this.maxHealth? this.maxHealth: this.health + 1;
+            console.log("New health:", this.health);
+        }
+    }
+
+    energyPot() {
+        if (this.energy < this.maxEnergy) {
+            this.energy = this.energy + 100 > this.maxEnergy? this.maxEnergy: this.energy + 100;
+            console.log("New energy:", this.energy);
+        }
+    }
+
+    restorationPot() {
+        this.healthPot(); 
+        this.energyPot();
+    }
+
     render() {
         this.move();
         this.executeUniqueAbility();

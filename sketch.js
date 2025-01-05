@@ -40,6 +40,8 @@ let coinImage = null;
 let bullets = [];
 let enemies = [];
 let drop = [];
+let chests = [];
+let rewards = [];
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
@@ -47,9 +49,9 @@ function preload() {
   enemiesDataJson = loadJSON(ENEMIESPATH + '/EnemiesData.json');
 
   bgImage = loadImage('UI/BgNEW2.png');
-  heartImage = loadImage('UI/Heart.png');
+  heartImage = loadImage('UI/Heart1.png');
   armorImage = loadImage('UI/Armor.png');
-  energyImage = loadImage('UI/Energy.png');
+  energyImage = loadImage('UI/Energy1.png');
   coinImage = loadImage('UI/Coin.png');
   skillChargeImage = loadImage('UI/SkillCharge.png');
 
@@ -132,7 +134,9 @@ function draw() {
   }
 
   // ----- DROP -----
+  displayChests();
   displayDrop();
+  displayRewards();
 
   // ----- PLAYER -----
   player.render();
@@ -244,6 +248,9 @@ function keyTyped() {
     weaponName = "default";
     loadPlayerWeapon();
   }
+  if (key === '3') {
+    createChest(chests);
+  }
 
   if (key === "e" || key === "E" || key === "у" || key === "У") {
     // take laying weapon
@@ -254,9 +261,25 @@ function keyTyped() {
           inventory.push(weaponToTake);
           drop.splice(drop.indexOf(dropItem), 1);
           console.log("Weapon taken", weaponToTake);
-          break;
+          return;
         }
         else console.log("Unable to take. Overflow amount of items. Drop something to take other item!");
+      }
+    }
+
+    for (let chest of chests) {
+      if (chest.x > player.x && chest.x < player.x + player.size && chest.y > player.y && chest.y < player.y + player.size) {
+        chests.splice(chests.indexOf(chest), 1);
+        createReward(rewards, chest);
+        return;
+      }
+    }
+
+    for (let reward of rewards) {
+      if (reward.x > player.x && reward.x < player.x + player.size && reward.y > player.y && reward.y < player.y + player.size) {
+        giveReward(reward.rewardType);
+        rewards.splice(rewards.indexOf(reward), 1);
+        return;
       }
     }
   }
@@ -327,12 +350,21 @@ function dropPlayerItem() {
 
   createDrop(player.x + player.size / 2, player.y + player.size / 2, inventory[weaponIndex]);
   inventory.splice(weaponIndex, 1);
-  // console.log("Inventory:", inventory);
   weaponIndex = random(0, inventory.length - 1 === 1? 0: inventory.length - 1);
-  // console.log("Weapon Index:", weaponIndex);
   weaponName = inventory[weaponIndex];
-  // console.log("Choosed weapon:", weaponName);
   loadPlayerWeapon();
+}
+
+function displayChests() {
+  for (let chest of chests) {
+    image(chest.image, chest.x, chest.y, chest.width, chest.height);
+  }
+}
+
+function displayRewards() {
+  for (let reward of rewards) {
+    image(reward.image, reward.x, reward.y, reward.width, reward.height);
+  }
 }
 
 // ---------------- UI Render ---------------- 
