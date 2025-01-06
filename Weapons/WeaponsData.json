@@ -674,7 +674,244 @@
                 "pixelWidth": 20,
                 "pixelHeight": 20 
             }
+        },  
+
+        "Willowblade": {
+            "image": "Weapons/Willowblade.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 228,
+            "pixelHeight": 48,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "LaserSwordBlue": {
+            "image": "Weapons/LaserSwordBlue.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 30,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
         },
+
+        "LaserSwordRed": {
+            "image": "Weapons/LaserSwordRed.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 30,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        },
+
+        "LaserSwordGreen": {
+            "image": "Weapons/LaserSwordGreen.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 30,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        },
+
+        "LaserSwordGold": {
+            "image": "Weapons/LaserSwordGold.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 30,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "VoidSword": {
+            "image": "Weapons/VoidSword.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 204,
+            "pixelHeight": 66,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "SwordOfKingHero": {
+            "image": "Weapons/SwordOfKingHero.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 204,
+            "pixelHeight": 66,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "MidnightSickle": {
+            "image": "Weapons/MidnightSickle.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 234,
+            "pixelHeight": 120,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "FrostBattleAxe": {
+            "image": "Weapons/FrostBattleAxe.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 216,
+            "pixelHeight": 112,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "FrostSword": {
+            "image": "Weapons/FrostSword.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 54,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        },  
+
+        "FlameSword": {
+            "image": "Weapons/FlameSword.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 222,
+            "pixelHeight": 54,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        },
+
+
+
+
+
+
         
 
         "NinjaStars": {
@@ -841,6 +1078,278 @@
                 "pixelWidth": 40,
                 "pixelHeight": 40 
             }
+        },
+
+        "Wrench": {
+            "image": "Weapons/Wrench.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 114,
+            "pixelHeight": 48,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "MonsterCuisine": {
+            "image": "Weapons/MonsterCuisine.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 84,
+            "pixelHeight": 72,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "ElectricNinjaStar": {
+            "image": "Weapons/ElectricNinjaStar.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 150,
+            "pixelHeight": 150,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "DamagedBlade": {
+            "image": "Weapons/DamagedBlade.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 126,
+            "pixelHeight": 48,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+
+        "ChannelingMonkey": {
+            "image": "Weapons/ChannelingMonkey.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 96,
+            "pixelHeight": 24,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "WhisperOfDark": {
+            "image": "Weapons/WhisperOfDark.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 100,
+            "pixelHeight": 33,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "RocketFireworks": {
+            "image": "Weapons/RocketFireworks.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 138,
+            "pixelHeight": 48,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "PaperBombKunai": {
+            "image": "Weapons/PaperBombKunai.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 120,
+            "pixelHeight": 45,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "PokerCards": {
+            "image": "Weapons/PokerCards.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 80,
+            "pixelHeight": 110,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "FlyingDaggerMissNoDoubter": {
+            "image": "Weapons/FlyingDaggerMissNoDoubter.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 96,
+            "pixelHeight": 36,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "Banana": {
+            "image": "Weapons/Banana.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 42,
+            "pixelHeight": 72,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+
+        "Javelin": {
+            "image": "Weapons/Javelin.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 204,
+            "pixelHeight": 30,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "ThrowingAxe": {
+            "image": "Weapons/ThrowingAxe.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 126,
+            "pixelHeight": 66,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "HeavyHunterAxe": {
+            "image": "Weapons/HeavyHunterAxe.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 180,
+            "pixelHeight": 84,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "FrostSpear": {
+            "image": "Weapons/FrostSpear.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 210,
+            "pixelHeight": 30,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "Bamboo": {
+            "image": "Weapons/Bamboo.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 192,
+            "pixelHeight": 24,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "GiantAxe": {
+            "image": "Weapons/GiantAxe.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 288,
+            "pixelHeight": 84,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+
+        "ZeusThunderblot": {
+            "image": "Weapons/ZeusThunderblot.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 200,
+            "pixelHeight": 60,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
         }
     }
 }

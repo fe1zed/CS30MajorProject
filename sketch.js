@@ -22,7 +22,7 @@ let enemiesDataJson;
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
 let charactersName = "DarkKnight"; 
 let charactersList = ["DarkKnight", "Priestess", "Rogue", "Witch", "Assasin", "Alchemist", "Berserk"];
-let weaponName = "SnowmanEagle"; 
+let weaponName = "ZeusThunderblot"; 
 let weaponIndex = 0;
 let inventory = []; // "Wooden Cross", "Jack", "Bad Pistol", "The Code", "Blood Blade", "Dormant Bubble Machine", "Boxing Gloves"
 let inventoryMaxSize = 2;
