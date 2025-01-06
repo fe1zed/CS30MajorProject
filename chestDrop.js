@@ -18,13 +18,104 @@ let potWidth = 14;
 let potHeight = 23;
 
 
+let commonWeaponsList = [
+    "Wooden Cross",
+    "Jack",
+    "Bad Pistol",
+    "The Code",
+    "Blood Blade",
+    "Dormant Bubble Machine",
+    "Boxing Gloves",
+    "Aurora",
+    "NextGenSMG",
+    "SMGM1",
+    "SMGM4",
+    "SniperRifleGold",
+    "Firebolt",
+    "SnowFoxL",
+    "FineMachineGun",
+    "Glacier",
+    "H2O",
+    "ImprovedSMG",
+    "M14",
+    "MiniUZI",
+    "MP5",
+    "YellowTurbanRifle",
+    "SMGHelix",
+    "SoulCalibre",
+    "P250",
+    "FantasticGun",
+    "FlameEagle",
+    "FrostEagle",
+    "RevolverGold",
+    "NemesisOfVillains",
+    "SnowmanEagle",
+    "Willowblade",
+    "LaserSwordBlue",
+    "LaserSwordRed",
+    "LaserSwordGreen",
+    "LaserSwordGold",
+    "SwordOfKingHero",
+    "MidnightSickle",
+    "FrostBattleAxe",
+    "FrostSword",
+    "FlameSword",
+    "FlameAxe",
+    "Caliburn",
+    "Bladefish",
+    "AgitatedTrunk",
+    "NinjaStars",
+    "Wrench",
+    "MonsterCuisine",
+    "DamagedBlade",
+    "ChannelingMonkey",
+    "WhisperOfDark",
+    "RocketFireworks",
+    "PaperBombKunai",
+    "PokerCards",
+    "FlyingDaggerMissNoDoubter",
+    "Javelin",
+    "ThrowingAxe",
+    "FrostSpear",
+    "Bamboo",
+    "AstroWand",
+    "BanishingStaff",
+    "CyanDragonStaff",
+    "FineMagicStaff",
+    "ForgottenStaffOfWizardGuard",
+    "GrandWizardOldStaff",
+    "StaffOfFlame",
+    "StaffOfFrost",
+    "StaffOfNature",
+    "StaffOfWizard",
+    "StaffOfWizard2"
+];
+
+let bossWeaponsList = [
+    "VarkolynAssaultRifle",
+    "Banana",
+    "AkGold",
+    "GiantAxe",
+    "ZeusThunderblot",
+    "HeavyHunterAxe",
+    "CrystalCrabKatana",
+    "VoidSword",
+    "RangerRevolver",
+    "ElectricNinjaStar",
+    "StaffOfIllusion",
+    "StaffOfSkeleton",
+    "BreathOfHades",
+    "StaffOfShootingStars",
+    "DeepDarkBlade",
+]
+
 function createChest(chestsPlaceholder, chestType="Common") { // creates chest to display
     let chestName = "";
 
     switch (chestType) {
         case "Common": chestName = "WhiteChest"; break;
         case "Gold": chestName = "GoldChest"; break;
-        case "Gold": chestName = "BossChest"; break;
+        case "Boss": chestName = "BossChest"; break;
         default: console.log("Wrong chest type on creation chest!");
     }
 
@@ -65,12 +156,12 @@ function createReward(rewardPlaceholder, chestData) {
 
         case "Gold": 
             console.log("Giving gold reward!");
-            // Drops weapon
+            createDrop(chestData.x, chestData.y, random(commonWeaponsList));
             break;
 
         case "Boss":
             console.log("Giving boss reward!");
-            // Grops boss weapon
+            createDrop(chestData.x, chestData.y, random(bossWeaponsList));
             break;
 
         default: console.log("Wrong reward type on creation reward!"); break;
