@@ -136,6 +136,342 @@
             }
         }, 
 
+        "AkGold": {
+            "image": "Weapons/AkGold.png",
+            "damage": 2,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 204,
+            "pixelHeight": 66,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BadPistolBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 12 
+            }
+        },
+
+        "Aurora": {
+            "image": "Weapons/Aurora.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 174,
+            "pixelHeight": 54,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BadPistolBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 12 
+            }
+        }, 
+
+        "NextGenSMG": {
+            "image": "Weapons/NextGenSMG.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 162,
+            "pixelHeight": 72,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BadPistolBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 12 
+            }
+        },
+
+        "SMGM1": {
+            "image": "Weapons/SMGM1.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 72,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        },
+
+        "SMGM4": {
+            "image": "Weapons/SMGM4.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 135,
+            "pixelHeight": 85,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        }, 
+
+        "SniperRifleGold": {
+            "image": "Weapons/SniperRifleGold.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 174,
+            "pixelHeight": 66,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        }, 
+
+        "Firebolt": {
+            "image": "Weapons/Firebolt.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 150,
+            "pixelHeight": 60,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        }, 
+
+        "SnowFoxL": {
+            "image": "Weapons/SnowFoxL.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 144,
+            "pixelHeight": 66,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        }, 
+
+        "FineMachineGun": {
+            "image": "Weapons/FineMachineGun.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 78,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        },
+
+        "Glacier": {
+            "image": "Weapons/Glacier.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 174,
+            "pixelHeight": 54,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        },
+
+        "H2O": {
+            "image": "Weapons/H2O.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 90,
+            "pixelHeight": 60,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        }, 
+
+        "ImprovedSMG": {
+            "image": "Weapons/ImprovedSMG.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 174,
+            "pixelHeight": 78,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        },
+
+        "M14": {
+            "image": "Weapons/M14.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 72,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        }, 
+
+        "MiniUZI": {
+            "image": "Weapons/MiniUZI.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 90,
+            "pixelHeight": 72,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        },
+
+        "MP5": {
+            "image": "Weapons/MP5.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 120,
+            "pixelHeight": 66,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 20,
+                "pixelHeight": 20 
+            }
+        },
+
+        "VarkolynAssaultRifle": {
+            "image": "Weapons/VarkolynAssaultRifle.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 120,
+            "pixelHeight": 66,
+            "type": "Gun",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/VarkolynAssaultRifleBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 15 
+            }
+        }, 
+
+        "NinjaStars": {
+            "image": "Weapons/NinjaStars.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 72,
+            "pixelHeight": 72,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
+        
+
         "Alien Gun" : {
             "image": "Enemies/ThirdFloor/Guns/AlienGun.png",
             "damage": 1,

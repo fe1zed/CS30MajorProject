@@ -1,51 +1,90 @@
-// This scpirt manages all data with chest's drop
-// To give common reward invoke: giveReward();
-// To give reward after defeating boss invoke: giveBossReward();
+// This scpirt manages all data with chest's drop, exept display and player interaction (sketch.js)
+// To spawn chest use createChest(chestsPlaceholder, chestType);
+//
+// Path in values of <<chestsPlaceholder: Array>> (to manage chest behaviour (sketch.js)), <<chestType: string>> (to auto manage of chest's drop (chestDrop.js))
+// There is 3 types of chests: Common, Gold, Boss
 
-// get random spot on map
-// display chest
-// if player interact -> don't display
-// give reward with animation
 
-let margin = 100; // min distance away from spawning chests
+
+let margin = 100; // min distance away from border of spawning chests
 let chestWidth = 50;
 let chestHeight = 50;
 
-function createChest(chestPlaceholder) { // creates chest to display
-    chestPlaceholder.push({
+let healthRewardAmount = 1;
+let energyRewardAmount = 80;
+let coinsRewardAmount = 10;
+
+let potWidth = 14;
+let potHeight = 23;
+
+
+function createChest(chestsPlaceholder, chestType="Common") { // creates chest to display
+    let chestName = "";
+
+    switch (chestType) {
+        case "Common": chestName = "WhiteChest"; break;
+        case "Gold": chestName = "GoldChest"; break;
+        case "Gold": chestName = "BossChest"; break;
+        default: console.log("Wrong chest type on creation chest!");
+    }
+
+    chestsPlaceholder.push({
         x: Math.round(random(margin, width - margin)),
         y: Math.round(random(margin, height - margin)),
-        image: loadImage('Sprites/Chests/WhiteChest.png'),
+        image: loadImage(`Sprites/Chests/${chestName}.png`),
         width: chestWidth,
         height: chestHeight,
+        chestType: chestType,
     });
 }
 
 function createReward(rewardPlaceholder, chestData) {
-    let rewardType = random(["Health", "Energy", "Restoration", "Coins"]);
-    let pathToImg = "";
 
-    if (rewardType === "Health")            { pathToImg = "Sprites/Pots/HealthPotL.png"; }
-    else if (rewardType === "Energy")       { pathToImg = "Sprites/Pots/EnergyPotL.png"; }
-    else if (rewardType === "Restoration")  { pathToImg = "Sprites/Pots/RestorationPotL.png"; }
-    else if (rewardType === "Coins")        { pathToImg = "UI/Coin.png"; }
-    else { console.log("Wrong reward type:", rewardType); }
+    switch (chestData.chestType) {
+        case "Common": 
+            let rewardType = random(["Health", "Energy", "Restoration", "Coins"]);
+            let pathToImg = "";
+        
+            switch (rewardType) {
+                case "Health": pathToImg = "Sprites/Pots/HealthPotL.png"; break;
+                case "Energy": pathToImg = "Sprites/Pots/EnergyPotL.png"; break;
+                case "Restoration": pathToImg = "Sprites/Pots/RestorationPotL.png"; break;
+                case "Coins": pathToImg = "UI/Coin.png"; break;
+                default: console.log("Wrong reward type on creation reward!");
+            }
+        
+            rewardPlaceholder.push({
+                x: chestData.x + chestData.width / 2 - potWidth / 2,
+                y: chestData.y + chestData.height / 2 - potHeight / 2,
+                image: loadImage(pathToImg),
+                width: potWidth,
+                height: potHeight,
+                rewardType: rewardType,
+            });
+            break;
 
-    rewardPlaceholder.push({
-        x: chestData.x + chestData.width / 2 - 7,
-        y: chestData.y + chestData.height / 2 - 11.5,
-        image: loadImage(pathToImg),
-        width: 14,
-        height: 23,
-        rewardType: rewardType,
-    });
+        case "Gold": 
+            console.log("Giving gold reward!");
+            // Drops weapon
+            break;
+
+        case "Boss":
+            console.log("Giving boss reward!");
+            // Grops boss weapon
+            break;
+
+        default: console.log("Wrong reward type on creation reward!"); break;
+    }
 }
 
 function giveReward(rewardType) {
     console.log("Giving reward:", rewardType);
-    if (rewardType === "Health")            { player.healthPot(); }
-    else if (rewardType === "Energy")       { player.energyPot(); }
-    else if (rewardType === "Restoration")  { player.restorationPot(); }
-    else if (rewardType === "Coins")        { player.coins += 10; }
-    else { console.log("Wrong reward type:", rewardType); }
+
+    switch (rewardType) {
+        case "Health": player.healthPot(); break;
+        case "Energy": player.energyPot(); break;
+        case "Restoration": player.restorationPot(); break;
+        case "Coins": player.coins += coinsRewardAmount; break;
+        default: console.log("Wrong reward type on creation reward!");
+    }
 }

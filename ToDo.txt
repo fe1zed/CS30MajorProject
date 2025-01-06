@@ -1,4 +1,4 @@
 Список того что надо сделать по приоритету
 
-1. Check UA delay
+1. Finish Chests Drop [Gold, Boss Chests]
 2. 
