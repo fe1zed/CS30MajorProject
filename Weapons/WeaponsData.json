@@ -907,7 +907,6 @@
             }
         },
 
-        
         "FlameAxe": {
             "image": "Weapons/FlameAxe.png",
             "damage": 3,
@@ -1034,6 +1033,20 @@
             }
         },
 
+        "AgitatedTrunk": {
+            "image": "Weapons/AgitatedTrunk.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 0,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 186,
+            "pixelHeight": 90,
+            "type": "ColdWeapon",
+            "propelling": true,
+            "speed": 10
+        },
 
         "NinjaStars": {
             "image": "Weapons/NinjaStars.png",
@@ -1050,7 +1063,6 @@
             "speed": 10
         },
         
-
         "Alien Gun" : {
             "image": "Enemies/ThirdFloor/Guns/AlienGun.png",
             "damage": 1,
@@ -1261,7 +1273,6 @@
             "speed": 10
         },
 
-
         "ChannelingMonkey": {
             "image": "Weapons/ChannelingMonkey.png",
             "damage": 4,
@@ -1367,7 +1378,6 @@
             "speed": 10
         },
 
-
         "Javelin": {
             "image": "Weapons/Javelin.png",
             "damage": 4,
@@ -1471,6 +1481,286 @@
             "type": "ColdWeapon",
             "propelling": true,
             "speed": 10
+        },
+
+        "AstroWand": {
+            "image": "Weapons/AstroWand.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 66,
+            "pixelHeight": 174,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "BanishingStaff": {
+            "image": "Weapons/BanishingStaff.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 48,
+            "pixelHeight": 156,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "CyanDragonStaff": {
+            "image": "Weapons/CyanDragonStaff.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 60,
+            "pixelHeight": 170,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "FineMagicStaff": {
+            "image": "Weapons/FineMagicStaff.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 54,
+            "pixelHeight": 168,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "ForgottenStaffOfWizardGuard": {
+            "image": "Weapons/ForgottenStaffOfWizardGuard.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 50,
+            "pixelHeight": 170,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "GrandWizardOldStaff": {
+            "image": "Weapons/GrandWizardOldStaff.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 42,
+            "pixelHeight": 168,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfFlame": {
+            "image": "Weapons/StaffOfFlame.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 42,
+            "pixelHeight": 168,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfFrost": {
+            "image": "Weapons/StaffOfFrost.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 54,
+            "pixelHeight": 174,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfIllusion": {
+            "image": "Weapons/StaffOfIllusion.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 66,
+            "pixelHeight": 170,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfNature": {
+            "image": "Weapons/StaffOfNature.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 42,
+            "pixelHeight": 168,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfShootingStars": {
+            "image": "Weapons/StaffOfShootingStars.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 108,
+            "pixelHeight": 186,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfSkeleton": {
+            "image": "Weapons/StaffOfSkeleton.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 54,
+            "pixelHeight": 174,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfWizard": {
+            "image": "Weapons/StaffOfWizard.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 60,
+            "pixelHeight": 180,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
+        },
+
+        "StaffOfWizard2": {
+            "image": "Weapons/StaffOfWizard2.png",
+            "damage": 4,
+            "criticalDamage": 6,
+            "criticalChance": 10,
+            "inaccuracy": 0,
+            "energyCost": 0,
+            "followCursor": false,
+            "pixelWidth": 66,
+            "pixelHeight": 170,
+            "type": "Staff",
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "speed": 10,
+                "pixelWidth": 25,
+                "pixelHeight": 25 
+            }
         }
     }
 }
