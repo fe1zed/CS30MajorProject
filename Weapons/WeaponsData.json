@@ -907,12 +907,133 @@
             }
         },
 
-
-
-
-
-
         
+        "FlameAxe": {
+            "image": "Weapons/FlameAxe.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 138,
+            "pixelHeight": 78,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "DeepDarkBlade": {
+            "image": "Weapons/DeepDarkBlade.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 264,
+            "pixelHeight": 90,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "CrystalCrabKatana": {
+            "image": "Weapons/CrystalCrabKatana.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 246,
+            "pixelHeight": 54,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "Caliburn": {
+            "image": "Weapons/Caliburn.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 174,
+            "pixelHeight": 54,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "BreathOfHades": {
+            "image": "Weapons/BreathOfHades.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 280,
+            "pixelHeight": 240,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        }, 
+
+        "Bladefish": {
+            "image": "Weapons/Bladefish.png",
+            "damage": 3,
+            "criticalDamage": 4,
+            "criticalChance": 5,
+            "inaccuracy": 0,
+            "energyCost": 1,
+            "followCursor": true,
+            "pixelWidth": 168,
+            "pixelHeight": 36,
+            "type": "Gun",
+            "propelling": false,
+
+            "Bullet" : {
+                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "speed": 10,
+                "pixelWidth": 80,
+                "pixelHeight": 80 
+            }
+        },
+
 
         "NinjaStars": {
             "image": "Weapons/NinjaStars.png",
