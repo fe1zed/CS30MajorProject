@@ -43,6 +43,8 @@ let drop = [];
 let chests = [];
 let rewards = [];
 
+let scene = "Game";
+
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
   weaponsDataJson = loadJSON(WEAPONSPATH + '/WeaponsData.json');  
@@ -76,6 +78,15 @@ function setup() {
 }
 
 function draw() {
+  if (scene === "Menu") {
+    drawMenu();
+  }
+  else if (scene === "Game") {
+    drawGame();
+  }
+}
+
+function drawGame() {
   background(53, 80, 96);
   drawCoolImage(1000, 200, 256, logoImage);
 
@@ -152,6 +163,14 @@ function draw() {
   }
 
   drawHUD();
+}
+
+function drawMenu() {
+  background(220);
+  circle(200, 200, 35);
+
+  drawButton(300, 300, 300, 60);
+  drawButton(300, 400, 300, 60);
 }
 
 // ----- CODE -----
@@ -441,6 +460,18 @@ function drawHUD() {
   
   drawSkillCharge(skillChargeImage, player.lastTimeUsedUA, player.timeBetweenUsingUA, x, y + spacing * 3, iconSize, barWidth, barHeight, 255, 165, 0); // Not showing remaining time
   drawCoins();
+}
+// ------------------------------------------
+
+function drawButton(x, y, width, height) {
+  let color = "red";
+  let hColor = "green";
+  let hMargin = 20;
+  let isHilighted = mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
+
+  fill(isHilighted? hColor: color);
+  rect(isHilighted? x + hMargin: x, y, width, height);
+  noFill();
 }
 
 // ------------------------------------------

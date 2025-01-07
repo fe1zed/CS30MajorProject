@@ -26,6 +26,29 @@
   </head>
 
   <body>
+    <!-- <script>
+      let scene = "Menu"; 
+      let currentScript = null;
+  
+      function loadScene(newScene) {
+        if (currentScript) {
+          document.body.removeChild(currentScript);
+        }
+        
+        scene = newScene;
+        currentScript = document.createElement('script');
+        currentScript.src = scene === "Game" ? "sketch.js" : "menu.js";
+        document.body.appendChild(currentScript); 
+      }
+  
+      loadScene(scene);
+  
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'm') {
+          loadScene(scene === "Game" ? "Menu" : "Game");
+        }
+      });
+    </script>-->
     <script src="sketch.js"></script>
   </body>
 </html>

@@ -169,7 +169,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BadPistolBullet.png",
+                "image": "Weapons/Bullets/SniperBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 12 
@@ -549,9 +549,9 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
-                "speed": 10,
-                "pixelWidth": 20,
+                "image": "Weapons/RocketFireworks.png",
+                "speed": 15,
+                "pixelWidth": 60,
                 "pixelHeight": 20 
             }
         }, 
@@ -1496,7 +1496,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/AstroWandBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1516,7 +1516,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/BanishingStaffBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1536,7 +1536,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/CyanDragonStaffBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
