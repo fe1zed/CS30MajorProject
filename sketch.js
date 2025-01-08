@@ -43,7 +43,10 @@ let drop = [];
 let chests = [];
 let rewards = [];
 
-let scene = "Game";
+let scene = "Menu";
+
+let clickSound;
+
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
@@ -58,6 +61,7 @@ function preload() {
   skillChargeImage = loadImage('UI/SkillCharge.png');
 
   logoImage = loadImage('UI/logo.png');
+  clickSound = loadSound('Sounds/menu_click_08.ogg');
 }
 
 function setup() {
@@ -162,6 +166,7 @@ function drawGame() {
     }
   }
 
+  // ----- UI -----
   drawHUD();
 }
 
@@ -169,8 +174,11 @@ function drawMenu() {
   background(220);
   circle(200, 200, 35);
 
-  drawButton(300, 300, 300, 60);
-  drawButton(300, 400, 300, 60);
+  drawButton(300, 300, 300, 60, "Play", "green", "green", "white", () => { console.log("Play!"); scene = "Game"; playSound(clickSound)});
+  drawButton(300, 400, 300, 60, "Exit", "red", "red", "white", () => { console.log("Exit!"); playSound(clickSound) });
+
+  drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); }, false)
+  drawButton(1000, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); }, false)
 }
 
 // ----- CODE -----
@@ -243,10 +251,14 @@ function windowResized() {
 }
 
 function mouseClicked(event) {
+  if (scene === "Menu") return;
+
   player.attack();
 }
 
 function keyPressed() {
+  if (scene === "Menu") return;
+
   if (key === "q" || key === "Q" || key === "й" || key === "Й") {
     if (!player.usingUniqueAbility)  {
       if (player.lastTimeUsedUA + player.timeBetweenUsingUA > millis()) { return; }
@@ -259,6 +271,8 @@ function keyPressed() {
 }
 
 function keyTyped() {
+  if (scene === "Menu") return;
+
   if (key === '1') {
     weaponName = "Blood Blade";
     loadPlayerWeapon();
@@ -269,6 +283,9 @@ function keyTyped() {
   }
   if (key === '3') {
     createChest(chests, "Gold");
+  } 
+  if (key === '4') {
+    playSound(clickSound);
   }
 
   if (key === "e" || key === "E" || key === "у" || key === "У") {
@@ -320,6 +337,8 @@ function loadPlayerWeapon() {
 }
 
 function mouseWheel(event) {
+  if (scene === "Menu") return;
+
   if (inventory.length < 2) return;
 
   if (event.delta > 0) {
@@ -386,95 +405,6 @@ function displayRewards() {
   }
 }
 
-// ---------------- UI Render ---------------- 
-function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, barColor, type) {
-  image(icon, x, y, iconSize, iconSize); 
-  let currentWidth = barWidth * (value / maxValue);
-  let takenWidth;
-
-  if (type === "h") takenWidth = player.takenHealthWidth;
-  else if (type === "a") takenWidth = player.takenArmorWidth;
-  else if (type === "m") takenWidth = player.takenManaWidth;
-
-
-  if (takenWidth > currentWidth) {
-    takenWidth -= (takenWidth - currentWidth) / 10;
-  }
-
-  if (type === "h") player.takenHealthWidth = takenWidth;
-  else if (type === "a") player.takenArmorWidth = takenWidth;
-  else if (type === "m") player.takenManaWidth = takenWidth;
-
-  fill(0, 0, 0);
-  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
-
-  fill(255);
-  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, takenWidth, barHeight);
-
-  fill(barColor);
-  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, currentWidth, barHeight);
-  
-  noFill();
-}
-
-function drawCoins() {
-  let coinsBarX = width - 100;
-  let coinsBarY = 15;
-  let barWidth = 100;
-  let barHeight = 30;
-
-  fill("black");
-  rect(coinsBarX, coinsBarY, barWidth, barHeight); 
-
-  image(coinImage, coinsBarX + 5, coinsBarY + 2, 15, 25);
-  textSize(32);
-  fill("white");
-  text(player.coins, coinsBarX + barHeight, coinsBarY + 27);
-}
-
-function drawSkillCharge(skillChargeImage, lastTimeUsed, cooldown, x, y, iconSize, barWidth, barHeight, r, g, b) {
-  let currentTime = millis();
-  let elapsedTime = currentTime - lastTimeUsed;
-  let progress = player.usingUniqueAbility? 0: constrain(elapsedTime / cooldown, 0, 1);
-
-  image(skillChargeImage, x, y, iconSize, iconSize);
-
-  fill(0, 0, 0);
-  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth, barHeight);
-
-  fill(r, g, b, progress === 1? 255: 180);
-  rect(x + iconSize + 10, y + iconSize / 2 - barHeight / 2, barWidth * progress, barHeight);
-}
-
-function drawHUD() {
-  let x = 20;
-  let y = 20;
-  let iconSize = 20;
-  let spacing = 30;
-  let barWidth = 150;
-  let barHeight = 20;
-
-  drawBar(heartImage, player.health, player.maxHealth, x, y, iconSize, barWidth, barHeight, color(255, 0, 0), "h"); 
-  drawBar(armorImage, player.armor, player.maxArmor, x, y + spacing, iconSize, barWidth, barHeight, color(180), "a"); 
-  drawBar(energyImage, player.energy, player.maxEnergy, x, y + spacing * 2, iconSize, barWidth, barHeight, color(0, 0, 255), "m"); 
-  
-  drawSkillCharge(skillChargeImage, player.lastTimeUsedUA, player.timeBetweenUsingUA, x, y + spacing * 3, iconSize, barWidth, barHeight, 255, 165, 0); // Not showing remaining time
-  drawCoins();
-}
-// ------------------------------------------
-
-function drawButton(x, y, width, height) {
-  let color = "red";
-  let hColor = "green";
-  let hMargin = 20;
-  let isHilighted = mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
-
-  fill(isHilighted? hColor: color);
-  rect(isHilighted? x + hMargin: x, y, width, height);
-  noFill();
-}
-
-// ------------------------------------------
 
 function drawCoolImage(x, y, size, choosenImage) {
   image(choosenImage, x, y, size, size);
