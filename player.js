@@ -15,6 +15,9 @@
 //         --  +------------+---------------+---------+-----------+-------------+-------------------------+---------------+
 
 /* eslint-disable indent */
+/* eslint-disable curly */
+/* eslint-disable brace-style */
+
 class Player {
     constructor(x, y, speed, size) {
         this.x = x;
@@ -966,7 +969,7 @@ class Berserk extends Player {
 
         this.rageAttackSpeed = this.defaulTimeBetweenShots / 2;
 
-        this.timeBetweenUsingUA = 250000;
+        this.timeBetweenUsingUA = 25000;
         this.lastTimeUsedUA = 0;
     }
 

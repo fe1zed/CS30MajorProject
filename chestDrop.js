@@ -5,7 +5,7 @@
 // There is 3 types of chests: Common, Gold, Boss
 
 
-
+/* eslint-disable indent */
 let margin = 100; // min distance away from border of spawning chests
 let chestWidth = 50;
 let chestHeight = 50;
@@ -107,7 +107,7 @@ let bossWeaponsList = [
     "BreathOfHades",
     "StaffOfShootingStars",
     "DeepDarkBlade",
-]
+];
 
 function createChest(chestsPlaceholder, chestType="Common") { // creates chest to display
     let chestName = "";

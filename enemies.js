@@ -22,6 +22,9 @@
 //         --  +----------------------+---------------+---------------+---------------+---------------+
 
 /* eslint-disable indent */
+/* eslint-disable curly */
+/* eslint-disable brace-style */
+
 class EnemyBoss {
     constructor(x, y, pixelWidth, pixelHeight, health) {
         this.x = x;

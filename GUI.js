@@ -1,3 +1,8 @@
+/* eslint-disable no-extra-parens */
+/* eslint-disable indent */
+/* eslint-disable curly */
+/* eslint-disable brace-style */
+
 /**
  * Draws a button on the screen.
  * 
@@ -138,7 +143,7 @@ function drawHUD() {
   drawSkillCharge(skillChargeImage, player.lastTimeUsedUA, player.timeBetweenUsingUA, x, y + spacing * 3, iconSize, barWidth, barHeight, 255, 165, 0); // Not showing remaining time
   drawCoins();
 
-  drawButton(width - 100, 10, 100, 50, "Exit", "black", "red", "white", () => {scene = "Menu"; }, false, cancelSound);
+  drawButton(width - 100, 10, 100, 50, "Exit", "black", "red", "white", () => {scene = "Menu"; onGameExit(); }, false, cancelSound);
 }
 
 function drawCoolImage(x, y, size, choosenImage) {

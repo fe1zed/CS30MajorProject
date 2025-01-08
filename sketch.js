@@ -5,6 +5,10 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+/* eslint-disable curly */
+/* eslint-disable brace-style */
+
+
 const CHARACTERSPATH = "Characters";
 const WEAPONSPATH = "Weapons";
 const ENEMIESPATH = "Enemies";
@@ -27,6 +31,7 @@ let weaponIndex = 0;
 let inventory = []; // "Wooden Cross", "Jack", "Bad Pistol", "The Code", "Blood Blade", "Dormant Bubble Machine", "Boxing Gloves"
 let inventoryMaxSize = 2;
 let player = new window[charactersName](200, 200, 5, 100);
+let startChargeUAFrom = -Infinity; // made for not allowing to charge UA in menu
 
 let bgImage = null;
 let heartImage = null;
@@ -81,15 +86,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  player.setPlayerValues();
-  player.loadAdditionalData();
-
-  loadPlayerWeapon();
-  
   // createEnemy("Boss", "Varkolyn Leader"); // 
-
-  inventory.push(weaponName);
-
   createDrop(300, 300, "Blood Blade");
   createDrop(500, 500, "Jack");
   createDrop(300, 450, "Wooden Cross");
@@ -192,11 +189,12 @@ function drawMenu() {
   image(menuBg, 0, 0, width, height);
   //background(220);
 
-  drawButton(300, 300, 300, 60, "Play", "green", "green", "white", () => { console.log("Play!"); scene = "Game"; }, true, clickSound);
-  drawButton(300, 400, 300, 60, "Exit", "red", "red", "white", () => { console.log("Exit!"); }, true, cancelSound);
+  drawButton(300, 300, 300, 60, "Play", color(152, 207, 1), color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
+  drawButton(300, 380, 300, 60, "Settings", color(198, 204, 180), color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
+  drawButton(300, 460, 300, 60, "Exit", color(255, 37, 3), color(207, 29, 1), "white", () => { console.log("Exit!"); }, true, cancelSound);
 
-  drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); }, false)
-  drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); }, false)
+  drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); }, false);
+  drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); }, false);
 }
 
 // ----- CODE -----
@@ -424,6 +422,23 @@ function displayRewards() {
   for (let reward of rewards) {
     image(reward.image, reward.x, reward.y, reward.width, reward.height);
   }
+}
+
+function onGameExit() {
+  bullets = [];
+  enemies = [];
+  drop = [];
+  chests = [];
+  rewards = [];
+  inventory = [];
+}
+
+function onGameStart() {
+  player.setPlayerValues();
+  player.loadAdditionalData();
+  player.lastTimeUsedUA = startChargeUAFrom;
+  loadPlayerWeapon();
+  inventory.push(weaponName);
 }
 
 // https://soul-knight.fandom.com/wiki/Knight
