@@ -33,6 +33,7 @@ let heartImage = null;
 let armorImage = null;
 let energyImage = null;
 let skillChargeImage = null;
+let menuBg = null;
 
 let logoImage = null;
 let coinImage = null;
@@ -45,7 +46,13 @@ let rewards = [];
 
 let scene = "Menu";
 
+// Sounds
 let clickSound;
+let cancelSound;
+let menuMusic;
+let gameMusic;
+let takeGunSound;
+let uniqueAbilitySound;
 
 
 function preload() {
@@ -61,7 +68,14 @@ function preload() {
   skillChargeImage = loadImage('UI/SkillCharge.png');
 
   logoImage = loadImage('UI/logo.png');
+  menuBg = loadImage('UI/MenuBg5.jpg');
+
   clickSound = loadSound('Sounds/menu_click_08.ogg');
+  cancelSound = loadSound('Sounds/menu_go_back_01.ogg');
+  menuMusic = loadSound('Sounds/medieval-background-196571.mp3');
+  gameMusic = loadSound('Sounds/medieval-adventure-270566.mp3');
+  takeGunSound = loadSound('Sounds/takeGun.ogg');
+  uniqueAbilitySound = loadSound('Sounds/uniqueAbility.mp3');
 }
 
 function setup() {
@@ -84,9 +98,13 @@ function setup() {
 function draw() {
   if (scene === "Menu") {
     drawMenu();
+    playSound(menuMusic);
+    stopSound(gameMusic);
   }
   else if (scene === "Game") {
     drawGame();
+    playSound(gameMusic);
+    stopSound(menuMusic);
   }
 }
 
@@ -171,14 +189,14 @@ function drawGame() {
 }
 
 function drawMenu() {
-  background(220);
-  circle(200, 200, 35);
+  image(menuBg, 0, 0, width, height);
+  //background(220);
 
-  drawButton(300, 300, 300, 60, "Play", "green", "green", "white", () => { console.log("Play!"); scene = "Game"; playSound(clickSound)});
-  drawButton(300, 400, 300, 60, "Exit", "red", "red", "white", () => { console.log("Exit!"); playSound(clickSound) });
+  drawButton(300, 300, 300, 60, "Play", "green", "green", "white", () => { console.log("Play!"); scene = "Game"; }, true, clickSound);
+  drawButton(300, 400, 300, 60, "Exit", "red", "red", "white", () => { console.log("Exit!"); }, true, cancelSound);
 
   drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); }, false)
-  drawButton(1000, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); }, false)
+  drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); }, false)
 }
 
 // ----- CODE -----
@@ -263,6 +281,7 @@ function keyPressed() {
     if (!player.usingUniqueAbility)  {
       if (player.lastTimeUsedUA + player.timeBetweenUsingUA > millis()) { return; }
       player.usingUniqueAbility = true;
+      playSound(uniqueAbilitySound);
     }
     else {
       console.warn("Already using unique ability");
@@ -297,6 +316,7 @@ function keyTyped() {
           inventory.push(weaponToTake);
           drop.splice(drop.indexOf(dropItem), 1);
           console.log("Weapon taken", weaponToTake);
+          playSound(takeGunSound);
           return;
         }
         else console.log("Unable to take. Overflow amount of items. Drop something to take other item!");
@@ -321,6 +341,7 @@ function keyTyped() {
   }
   if (key === "x" || key === "X") {
     dropPlayerItem();
+    playSound(cancelSound);
   }
 }
 
@@ -403,15 +424,6 @@ function displayRewards() {
   for (let reward of rewards) {
     image(reward.image, reward.x, reward.y, reward.width, reward.height);
   }
-}
-
-
-function drawCoolImage(x, y, size, choosenImage) {
-  image(choosenImage, x, y, size, size);
-}
-
-function drawLobby() {
-  image(bgImage, 0, 0, width, height);
 }
 
 // https://soul-knight.fandom.com/wiki/Knight

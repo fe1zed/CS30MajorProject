@@ -11,21 +11,22 @@
  * @param {color} textColor - Color of text.
  * @param {Function} onClick - Triggers passed function.
  * @param {boolean} [animate=true] - Use button animation.
+ * @param {sound} [soundOnClick=clickSound] - The sound played on click.
  */
-function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHighlight, textColor=0, onClick, animate=true) {
-    let hMargin = 20;
+function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHighlight, textColor=0, onClick, animate=true, soundOnClick=clickSound) {
+    let xOffset = 20;
     let isHighlighted = mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
 
     // Button
     strokeWeight(2);
     fill(isHighlighted ? colorHighlight : color);
-    rect(isHighlighted && animate? x + hMargin : x, y, width, height);
+    rect(isHighlighted && animate? x + xOffset : x, y, width, height);
 
     // Button text
     textSize(32);
     fill(textColor);
     let textWidthValue = textWidth(textToDisplay);
-    let textX = (isHighlighted && animate? x + hMargin : x) + (width / 2) - (textWidthValue / 2);
+    let textX = (isHighlighted && animate? x + xOffset : x) + (width / 2) - (textWidthValue / 2);
 
     let textHeight = textAscent() + textDescent();
     let textY = y + (height / 2) + (textHeight / 4);
@@ -36,6 +37,7 @@ function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHig
     // Handle button click
     if (isHighlighted && mouseIsPressed && typeof onClick === 'function') {
         onClick();
+        playSound(soundOnClick);
     }
 }
 
@@ -88,7 +90,7 @@ function drawBar(icon, value, maxValue, x, y, iconSize, barWidth, barHeight, bar
 */
 function drawCoins() {
   let coinsBarX = width - 100;
-  let coinsBarY = 15;
+  let coinsBarY = 70;
   let barWidth = 100;
   let barHeight = 30;
   
@@ -135,4 +137,14 @@ function drawHUD() {
   
   drawSkillCharge(skillChargeImage, player.lastTimeUsedUA, player.timeBetweenUsingUA, x, y + spacing * 3, iconSize, barWidth, barHeight, 255, 165, 0); // Not showing remaining time
   drawCoins();
+
+  drawButton(width - 100, 10, 100, 50, "Exit", "black", "red", "white", () => {scene = "Menu"; }, false, cancelSound);
+}
+
+function drawCoolImage(x, y, size, choosenImage) {
+  image(choosenImage, x, y, size, size);
+}
+
+function drawLobby() {
+  image(bgImage, 0, 0, width, height);
 }

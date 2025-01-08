@@ -596,10 +596,10 @@ class Rogue extends Player {
         this.abilityStartTime = 0;     
         this.dodgeDuration = 0.3;      
         this.dodgeStartTime = 0;
-        this.dodgeSpeedMultiplier = 10;
+        this.dodgeSpeedMultiplier = 20;
         this.dodged = false;
 
-        this.timeBetweenUsingUA = 1000;
+        this.timeBetweenUsingUA = 3000;
         this.lastTimeUsedUA = 0;
     }
 
