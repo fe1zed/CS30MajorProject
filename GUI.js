@@ -3,6 +3,8 @@
 /* eslint-disable curly */
 /* eslint-disable brace-style */
 
+let lastClickTime = 0;
+
 /**
  * Draws a button on the screen.
  * 
@@ -21,6 +23,8 @@
 function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHighlight, textColor=0, onClick, animate=true, soundOnClick=clickSound) {
     let xOffset = 20;
     let isHighlighted = mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
+    let timeBetweenClicks = 200; // 1 second
+    let isAbleToClick = millis() > timeBetweenClicks + lastClickTime;
 
     // Button
     strokeWeight(2);
@@ -40,9 +44,10 @@ function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHig
     noFill();
 
     // Handle button click
-    if (isHighlighted && mouseIsPressed && typeof onClick === 'function') {
+    if (isAbleToClick && isHighlighted && mouseIsPressed && typeof onClick === 'function') {
         onClick();
         playSound(soundOnClick);
+        lastClickTime = millis();
     }
 }
 

@@ -17,6 +17,9 @@ const KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83 };
 const BULLET_DEFAULT_SIZE = 10;
 const BULLET_SPEED_SCALE = 30;
 const WEAPON_SIZE_SCALE = 30;
+const INTERACT_KEY = "e";
+const UNIQUE_ABILITY_KEY = "q";
+const DROP_ITEM_KEY = "x";
 
 // Data containers
 let charactersDataJson;
@@ -24,13 +27,13 @@ let weaponsDataJson;
 let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
-let charactersName = "DarkKnight"; 
+let charactersName = "Rogue"; 
 let charactersList = ["DarkKnight", "Priestess", "Rogue", "Witch", "Assasin", "Alchemist", "Berserk"];
 let weaponName = "default";  //
 let weaponIndex = 0;
 let inventory = []; // "Wooden Cross", "Jack", "Bad Pistol", "The Code", "Blood Blade", "Dormant Bubble Machine", "Boxing Gloves"
 let inventoryMaxSize = 2;
-let player = new window[charactersName](200, 200, 5, 100);
+let player;
 let startChargeUAFrom = -Infinity; // made for not allowing to charge UA in menu
 
 let bgImage = null;
@@ -193,8 +196,8 @@ function drawMenu() {
   drawButton(300, 380, 300, 60, "Settings", color(198, 204, 180), color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
   drawButton(300, 460, 300, 60, "Exit", color(255, 37, 3), color(207, 29, 1), "white", () => { console.log("Exit!"); }, true, cancelSound);
 
-  drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); }, false);
-  drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); }, false);
+  drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); prevCharacter(); }, false);
+  drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); nextCharacter(); }, false);
 }
 
 // ----- CODE -----
@@ -275,7 +278,7 @@ function mouseClicked(event) {
 function keyPressed() {
   if (scene === "Menu") return;
 
-  if (key === "q" || key === "Q" || key === "й" || key === "Й") {
+  if (key.toLowerCase() === UNIQUE_ABILITY_KEY || key === "й" || key === "Й") {
     if (!player.usingUniqueAbility)  {
       if (player.lastTimeUsedUA + player.timeBetweenUsingUA > millis()) { return; }
       player.usingUniqueAbility = true;
@@ -290,22 +293,24 @@ function keyPressed() {
 function keyTyped() {
   if (scene === "Menu") return;
 
-  if (key === '1') {
-    weaponName = "Blood Blade";
-    loadPlayerWeapon();
-  }
-  if (key === '2') {
-    weaponName = "default";
-    loadPlayerWeapon();
-  }
-  if (key === '3') {
-    createChest(chests, "Gold");
-  } 
-  if (key === '4') {
-    playSound(clickSound);
-  }
+  // TEST KEYS DELETE ON BUILD ------------------->               
+  if (key === '1') {                
+    weaponName = "Blood Blade";               
+    loadPlayerWeapon();               
+  }               
+  if (key === '2') {                
+    weaponName = "default";               
+    loadPlayerWeapon();               
+  }               
+  if (key === '3') {                
+    createChest(chests, "Gold");                
+  }                 
+  if (key === '4') {                
+    playSound(clickSound);                
+  }               
+  // <---------------------------------------------               
 
-  if (key === "e" || key === "E" || key === "у" || key === "У") {
+  if (key.toLowerCase() === INTERACT_KEY || key === "у" || key === "У") {
     // take laying weapon
     for (let dropItem of drop) {
       if (dropItem.x > player.x && dropItem.x < player.x + player.size && dropItem.y > player.y && dropItem.y < player.y + player.size) {
@@ -337,7 +342,7 @@ function keyTyped() {
       }
     }
   }
-  if (key === "x" || key === "X") {
+  if (key.toLowerCase() === DROP_ITEM_KEY) {
     dropPlayerItem();
     playSound(cancelSound);
   }
@@ -431,14 +436,40 @@ function onGameExit() {
   chests = [];
   rewards = [];
   inventory = [];
+  weaponName = "default";
 }
 
 function onGameStart() {
+  player = new window[charactersName](200, 200, 5, 100);
   player.setPlayerValues();
   player.loadAdditionalData();
   player.lastTimeUsedUA = startChargeUAFrom;
   loadPlayerWeapon();
   inventory.push(weaponName);
+}
+
+function prevCharacter() {
+  let currentCharacterIndex = charactersList.indexOf(charactersName);
+
+  if (currentCharacterIndex - 1 < 0) { // set to last character
+    charactersName = charactersList[charactersList.length - 1];
+  }
+  else {
+    charactersName = charactersList[currentCharacterIndex - 1];
+  }
+  console.log(charactersName, "choosed!");
+}
+
+function nextCharacter() {
+  let currentCharacterIndex = charactersList.indexOf(charactersName);
+
+  if (currentCharacterIndex + 1 > charactersList.length - 1) { // set to last character
+    charactersName = charactersList[0];
+  }
+  else {
+    charactersName = charactersList[currentCharacterIndex + 1];
+  }
+  console.log(charactersName, "choosed!");
 }
 
 // https://soul-knight.fandom.com/wiki/Knight
