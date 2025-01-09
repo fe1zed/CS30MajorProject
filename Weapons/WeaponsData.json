@@ -169,7 +169,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/SniperBullet.png",
+                "image": "Weapons/Bullets/AuroraBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 12 
@@ -189,7 +189,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BadPistolBullet.png",
+                "image": "Weapons/Bullets/NeonBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 12 
@@ -229,7 +229,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/OrangeBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -269,7 +269,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/PurpleBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -289,7 +289,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/BlueBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -329,7 +329,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/BlueBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -349,7 +349,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/H2OBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -369,7 +369,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -389,7 +389,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -429,7 +429,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -469,7 +469,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -509,7 +509,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -529,7 +529,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/BadPistolBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -569,7 +569,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/FlameEagleBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -589,7 +589,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/BlueBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -609,7 +609,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -629,7 +629,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -669,7 +669,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/SnowmanEagleBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -690,7 +690,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/BlueBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -711,7 +711,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/BlueBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -753,7 +753,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/GreenBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -774,7 +774,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/YellowBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -795,7 +795,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/DarkBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -816,7 +816,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/YellowBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -837,7 +837,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/DarkBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -858,7 +858,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/TurquoiseBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -879,7 +879,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/TurquoiseBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -900,7 +900,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/OrangeBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -921,7 +921,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/OrangeBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -942,7 +942,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/RedBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -963,7 +963,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/BlueBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -984,7 +984,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/YellowBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
