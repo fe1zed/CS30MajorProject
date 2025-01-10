@@ -32,13 +32,13 @@ function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHig
     rect(isHighlighted && animate? x + xOffset : x, y, width, height);
 
     // Button text
-    textSize(32);
+    textSize(30);
     fill(textColor);
     let textWidthValue = textWidth(textToDisplay);
     let textX = (isHighlighted && animate? x + xOffset : x) + (width / 2) - (textWidthValue / 2);
 
     let textHeight = textAscent() + textDescent();
-    let textY = y + (height / 2) + (textHeight / 4);
+    let textY = y + (height / 2) + (textHeight / 4) + 5;
 
     text(textToDisplay, textX, textY);
     noFill();
@@ -151,7 +151,13 @@ function drawHUD() {
   drawButton(width - 100, 10, 100, 50, "Exit", "black", "red", "white", () => {scene = "Menu"; onGameExit(); }, false, cancelSound);
 }
 
-function drawCoolImage(x, y, size, choosenImage) {
+/** 
+* @param {number} x - The x pos.
+* @param {number} x - The y pos.
+* @param {number} x - The size of image.
+* @param {image} choosenImage - The image to show.
+*/
+function drawImage(x, y, size, choosenImage) {
   image(choosenImage, x, y, size, size);
 }
 
