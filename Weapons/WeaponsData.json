@@ -249,7 +249,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -649,7 +649,7 @@
             "type": "Gun",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
                 "pixelWidth": 20,
                 "pixelHeight": 20 
@@ -1005,7 +1005,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/RedBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -1026,7 +1026,7 @@
             "propelling": false,
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BloodBladeWave.png",
+                "image": "Weapons/Bullets/DarkBloodBladeWave.png",
                 "speed": 10,
                 "pixelWidth": 80,
                 "pixelHeight": 80 
@@ -1556,7 +1556,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/FineMagicStaffBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1576,7 +1576,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/ForgottenStaffOfWizardGuardBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1596,7 +1596,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/GrandWizardOldStaffBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1616,7 +1616,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfFlameBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1636,7 +1636,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfFrostBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1656,7 +1656,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfIllusionBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1676,7 +1676,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfNatureBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1696,7 +1696,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfShootingStarsBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1716,7 +1716,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfSkeletonBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1736,7 +1736,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfWizardBullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
@@ -1756,7 +1756,7 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/WoodenCrossBullet.png",
+                "image": "Weapons/Bullets/StaffOfWizard2Bullet.png",
                 "speed": 10,
                 "pixelWidth": 25,
                 "pixelHeight": 25 
