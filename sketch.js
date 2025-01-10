@@ -27,7 +27,7 @@ let weaponsDataJson;
 let enemiesDataJson;
 
 // Adjust <<charactersName>> and <<weaponName>> to see ur character
-let charactersName = "Rogue"; 
+let charactersName = "DarkKnight"; 
 let charactersList = ["DarkKnight", "Priestess", "Rogue", "Witch", "Assasin", "Alchemist", "Berserk"];
 let weaponName = "default";  //
 let weaponIndex = 0;
@@ -53,6 +53,7 @@ let chests = [];
 let rewards = [];
 
 let scene = "Menu";
+let characterImageToShowInMenu = null;
 
 // Sounds
 let clickSound;
@@ -61,6 +62,9 @@ let menuMusic;
 let gameMusic;
 let takeGunSound;
 let uniqueAbilitySound;
+
+// Font
+let gameTextFont;
 
 
 function preload() {
@@ -84,10 +88,15 @@ function preload() {
   gameMusic = loadSound('Sounds/medieval-adventure-270566.mp3');
   takeGunSound = loadSound('Sounds/takeGun.ogg');
   uniqueAbilitySound = loadSound('Sounds/uniqueAbility.mp3');
+
+  gameTextFont = loadFont('Font/PixelatedEleganceRegular-ovyAA.ttf');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  textFont(gameTextFont);
+
+  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
 
   // createEnemy("Boss", "Varkolyn Leader"); // 
   createDrop(300, 300, "Blood Blade");
@@ -110,7 +119,7 @@ function draw() {
 
 function drawGame() {
   background(53, 80, 96);
-  drawCoolImage(1000, 200, 256, logoImage);
+  drawImage(1000, 200, 256, logoImage);
 
   if (charactersName === "Witch" || charactersName === "Assasin") {
     for (let spike of player.spikes) {
@@ -198,6 +207,10 @@ function drawMenu() {
 
   drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); prevCharacter(); }, false);
   drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); nextCharacter(); }, false);
+
+  let nameToDisplay = charactersName === "DarkKnight"? "Dark Knight": charactersName;
+  drawButton(900, 100, 300, 50, nameToDisplay, "white", "white", "black", () => { console.log(nameToDisplay); }, false);
+  drawImage(925, 175, 250, characterImageToShowInMenu);
 }
 
 // ----- CODE -----
@@ -225,7 +238,7 @@ function createEnemy(enemyType, enemyName) {
   if (typeof window[className] === 'function') {
     let newEnemy = null;
     if (enemyType === "Boss") {
-      newEnemy = new window[className](400, 100, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
+      newEnemy = new window[className](width / 2, height / 2, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
     }
     else {
       newEnemy = new window[className](random(100, width - 100), random(100, height - 100), enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
@@ -457,6 +470,8 @@ function prevCharacter() {
   else {
     charactersName = charactersList[currentCharacterIndex - 1];
   }
+
+  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
   console.log(charactersName, "choosed!");
 }
 
@@ -469,6 +484,8 @@ function nextCharacter() {
   else {
     charactersName = charactersList[currentCharacterIndex + 1];
   }
+
+  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
   console.log(charactersName, "choosed!");
 }
 
