@@ -201,9 +201,11 @@ function drawMenu() {
   image(menuBg, 0, 0, width, height);
   //background(220);
 
-  drawButton(300, 300, 300, 60, "Play", color(152, 207, 1), color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
-  drawButton(300, 380, 300, 60, "Settings", color(198, 204, 180), color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
-  drawButton(300, 460, 300, 60, "Exit", color(255, 37, 3), color(207, 29, 1), "white", () => { console.log("Exit!"); }, true, cancelSound);
+  drawMenuCharacterStats();
+
+  drawButton(200, 300, 300, 60, "Play", /*color(152, 207, 1)*/ "black", color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
+  drawButton(200, 380, 300, 60, "Settings", /*color(198, 204, 180)*/ "black", color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
+  drawButton(200, 460, 300, 60, "Help?", /* color(255, 37, 3)*/ "black", color(207, 29, 1), "white", () => { console.log("Help?!"); }, true, cancelSound);
 
   drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); prevCharacter(); }, false);
   drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); nextCharacter(); }, false);

@@ -164,3 +164,18 @@ function drawImage(x, y, size, choosenImage) {
 function drawLobby() {
   image(bgImage, 0, 0, width, height);
 }
+
+function drawMenuCharacterStats() {
+  // bg 
+  push();
+  translate(width / 2, height / 2);
+  angleMode(DEGREES);
+  rotate(-70);
+  fill("black");
+  rect(0 - width / 2, -100, 1920, 1080);
+
+  angleMode(RADIANS);
+  noFill();
+
+  pop();
+} 
