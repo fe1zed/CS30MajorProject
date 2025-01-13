@@ -91,6 +91,14 @@ class Player {
                 directions[key]();
             }
         }
+
+        // colision with screen X
+        if (this.x < 0) {this.x = width - this.size; }
+        else if (this.x + this.size > width) { this.x = 0; }
+
+        // colision with screen Y
+        if (this.y < 0) { this.y = height - this.size; }
+        else if (this.y + this.size > height) { this.y = 0; }
     }
 
     display() {

@@ -99,9 +99,9 @@ function setup() {
   characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
 
   // createEnemy("Boss", "Varkolyn Leader"); // 
-  createDrop(300, 300, "Blood Blade");
-  createDrop(500, 500, "Jack");
-  createDrop(300, 450, "Wooden Cross");
+//   createDrop(300, 300, "Blood Blade");
+//   createDrop(500, 500, "Jack");
+//   createDrop(300, 450, "Wooden Cross"); // no info of player on start -> avoid writing this
 }
 
 function draw() {
@@ -195,6 +195,41 @@ function drawGame() {
 
   // ----- UI -----
   drawHUD();
+
+
+  //locked room
+  // line(100, 100, 100, height - 100);                    // left line
+  // line(100, 100, width - 100, 100);                     // top line
+  // line(100, height - 100, width - 100, height - 100);   // bottom line
+  // line(width - 100, 100, width - 100, height - 100);    // right line
+
+  // full opened rooom
+  let openWidth = 150;
+  // left top cor
+  line(100, 100, width / 2 - openWidth, 100); 
+  line(width / 2 - openWidth, 100, width / 2 - openWidth, 0);
+  line(100, 100, 100, height / 2 - openWidth);
+  line(0, height / 2 - openWidth, 100, height / 2 - openWidth);
+
+
+  // right top cor
+  line(width / 2 + openWidth, 100, width - 100, 100);
+  line(width / 2 + openWidth, 100, width / 2 + openWidth, 0);
+  line(width - 100, 100, width - 100, height / 2 - openWidth);
+  line(width - 100, height / 2 - openWidth, width, height / 2 - openWidth);
+
+  // left bot 
+  line(100, height - 100, width / 2 - openWidth, height - 100);
+  line(100, height / 2 + openWidth, 100, height - 100);
+  line(0, height / 2 + openWidth, 100, height / 2 + openWidth);
+  line(width / 2 - openWidth, height - 100, width / 2 - openWidth, height);
+
+
+  // right bot
+  line(width / 2 + openWidth, height - 100, width - 100, height - 100);
+  line(width - 100, height / 2 + openWidth, width - 100, height - 100);
+  line(width - 100, height / 2 + openWidth, width, height / 2 + openWidth);
+  line(width / 2 + openWidth, height - 100, width / 2 + openWidth, height);
 }
 
 function drawMenu() {
@@ -310,8 +345,7 @@ function keyTyped() {
 
   // TEST KEYS DELETE ON BUILD ------------------->               
   if (key === '1') {                
-    weaponName = "Blood Blade";               
-    loadPlayerWeapon();               
+    createEnemy("Boss", "Varkolyn Leader");               
   }               
   if (key === '2') {                
     weaponName = "default";               

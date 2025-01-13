@@ -146,8 +146,8 @@ class EnemyBoss {
             let newX, newY;
 
             do {
-                newX = random(0 + this.pixelWidth, width - this.pixelWidth);
-                newY = random(0 + this.pixelHeight, height - this.pixelHeight);
+                newX = random(0 + this.pixelWidth + 100, width - this.pixelWidth - 100);
+                newY = random(0 + this.pixelHeight + 100, height - this.pixelHeight - 100);
             }
             while (dist(this.x, this.y, newX, newY) < minDistance);
 
@@ -217,7 +217,6 @@ class EnemyBoss {
         else {
             this.executeUniqueAbility2();
         }
-        
     }
 
     loadAdditionalData() {
@@ -542,8 +541,8 @@ class Enemy {
             let newX, newY;
 
             do {
-                newX = random(0 + this.pixelWidth, width - this.pixelWidth);
-                newY = random(0 + this.pixelHeight, height - this.pixelHeight);
+                newX = random(0 + this.pixelWidth + 100, width - this.pixelWidth - 100);
+                newY = random(0 + this.pixelHeight + 100, height - this.pixelHeight - 100);
             }
             while (dist(this.x, this.y, newX, newY) < minDistance);
 

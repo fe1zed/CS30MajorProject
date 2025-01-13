@@ -120,8 +120,8 @@ function createChest(chestsPlaceholder, chestType="Common") { // creates chest t
     }
 
     chestsPlaceholder.push({
-        x: Math.round(random(margin, width - margin)),
-        y: Math.round(random(margin, height - margin)),
+        x: Math.round(random(margin, width - margin - chestWidth)),
+        y: Math.round(random(margin, height - margin - chestHeight)),
         image: loadImage(`Sprites/Chests/${chestName}.png`),
         width: chestWidth,
         height: chestHeight,

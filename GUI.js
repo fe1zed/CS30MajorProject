@@ -32,7 +32,7 @@ function drawButton(x, y, width, height, textToDisplay = "Play", color, colorHig
     rect(isHighlighted && animate? x + xOffset : x, y, width, height);
 
     // Button text
-    textSize(30);
+    textSize(textToDisplay.length < 2? 64: 30);
     fill(textColor);
     let textWidthValue = textWidth(textToDisplay);
     let textX = (isHighlighted && animate? x + xOffset : x) + (width / 2) - (textWidthValue / 2);
