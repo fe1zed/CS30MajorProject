@@ -19,7 +19,7 @@
 /* eslint-disable brace-style */
 
 class Player {
-    constructor(x, y, speed, size) {
+    constructor(x, y, speed, size, room) {
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -71,18 +71,76 @@ class Player {
 
         const directions = {
             [KEYS.LEFT]: () => {
-                this.x -= this.speed;
+                if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge === 1) { // if bridge on left is open ->
+                    if (this.x > 100) {
+                        this.x -= this.speed;
+                    }
+                    else {
+                        if (this.y > height / 2 - 150 && this.y + this.size + 10 < height / 2 + 150) {
+                            this.x -= this.speed;
+                        }
+                    }
+                }
+                else {
+                    if (this.x > 100) {
+                        this.x -= this.speed;
+                    }
+                }
+
                 this.MoveDirection = "left";
             },
             [KEYS.RIGHT]: () => {
-                this.x += this.speed;
+                if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge === 1) { // if bridge on right is open -> 
+                    if (this.x + this.size < width - 100) {
+                        this.x += this.speed; 
+                    }
+                    else {
+                        if (this.y > height / 2 - 150 && this.y + this.size + 10 < height / 2 + 150) {
+                            this.x += this.speed;
+                        }
+                    }   
+                }
+                else {
+                    if (this.x + this.size < width - 100) {
+                        this.x += this.speed; 
+                    }
+                }
                 this.MoveDirection = "right";
             },
             [KEYS.UP]: () => {
-                this.y -= this.speed;
+                if (gameMap[curentGameRoomY][curentGameRoomX].topBridge === 1) { // if bridge on top is open ->  
+                    if (this.y > 100) {
+                        this.y -= this.speed;
+                    }
+                    else {
+                        if (this.x > width / 2 - 150 && this.x + this.size < width / 2 + 150) {
+                            this.y -= this.speed;
+                        }
+                    }
+                }
+                else {
+                    if (this.y > 100) {
+                        this.y -= this.speed;
+                    }
+                }
             },
             [KEYS.DOWN]: () => {
-                this.y += this.speed;
+                if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge === 1) { // if bridge on top is open ->  
+                    if (this.y + this.size + 10< height - 100) {
+                        this.y += this.speed;
+                    }
+                    else {
+                        if (this.x > width / 2 - 150 && this.x + this.size < width / 2 + 150) {
+                            this.y += this.speed;
+                        }
+                    }
+                }
+                else {
+                    if (this.y + this.size + 10< height - 100) {
+                        this.y += this.speed;
+                    }
+                }
+
             }
         };
 
@@ -93,12 +151,12 @@ class Player {
         }
 
         // colision with screen X
-        if (this.x < 0) {this.x = width - this.size; }
-        else if (this.x + this.size > width) { this.x = 0; }
+        if (this.x < 0) {this.x = width - this.size; curentGameRoomX -= 1}
+        else if (this.x + this.size > width) { this.x = 0; curentGameRoomX += 1}
 
         // colision with screen Y
-        if (this.y < 0) { this.y = height - this.size; }
-        else if (this.y + this.size > height) { this.y = 0; }
+        if (this.y < 0) { this.y = height - this.size; curentGameRoomY -= 1}
+        else if (this.y + this.size > height) { this.y = 0; curentGameRoomY += 1}
     }
 
     display() {

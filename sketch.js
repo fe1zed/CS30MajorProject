@@ -66,7 +66,6 @@ let uniqueAbilitySound;
 // Font
 let gameTextFont;
 
-
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
   weaponsDataJson = loadJSON(WEAPONSPATH + '/WeaponsData.json');  
@@ -119,6 +118,13 @@ function draw() {
 
 function drawGame() {
   background(53, 80, 96);
+
+  drawRoomBg();
+  drawTopWalls();
+  drawLeftWalls();
+  drawRightWalls();
+  drawBottomWalls();
+
   drawImage(1000, 200, 256, logoImage);
 
   if (charactersName === "Witch" || charactersName === "Assasin") {
@@ -195,41 +201,48 @@ function drawGame() {
 
   // ----- UI -----
   drawHUD();
+}
 
-
-  //locked room
-  // line(100, 100, 100, height - 100);                    // left line
-  // line(100, 100, width - 100, 100);                     // top line
-  // line(100, height - 100, width - 100, height - 100);   // bottom line
-  // line(width - 100, 100, width - 100, height - 100);    // right line
-
-  // full opened rooom
+function drawTopWalls(margin=100) {
   let openWidth = 150;
-  // left top cor
-  line(100, 100, width / 2 - openWidth, 100); 
-  line(width / 2 - openWidth, 100, width / 2 - openWidth, 0);
-  line(100, 100, 100, height / 2 - openWidth);
-  line(0, height / 2 - openWidth, 100, height / 2 - openWidth);
+  if (gameMap[curentGameRoomY][curentGameRoomX].topBridge !== 1) { line(margin, margin, width - margin, margin); return; }
+  line(margin, margin, width / 2 - openWidth, margin); 
+  line(width / 2 - openWidth, margin, width / 2 - openWidth, 0);
+  line(width / 2 + openWidth, margin, width - margin, margin);
+  line(width / 2 + openWidth, margin, width / 2 + openWidth, 0);
+}
 
+function drawLeftWalls(margin=100) {
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge !== 1) { line(margin, margin, margin, height - margin); return; }
+  line(margin, margin, margin, height / 2 - openWidth);
+  line(0, height / 2 - openWidth, margin, height / 2 - openWidth);
+  line(margin, height / 2 + openWidth, margin, height - margin);
+  line(0, height / 2 + openWidth, margin, height / 2 + openWidth);
+}
 
-  // right top cor
-  line(width / 2 + openWidth, 100, width - 100, 100);
-  line(width / 2 + openWidth, 100, width / 2 + openWidth, 0);
-  line(width - 100, 100, width - 100, height / 2 - openWidth);
-  line(width - 100, height / 2 - openWidth, width, height / 2 - openWidth);
+function drawRightWalls(margin=100) {
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge !== 1) { line(width - margin, margin, width - margin, height - margin); return; }
+  line(width - margin, margin, width - margin, height / 2 - openWidth);
+  line(width - margin, height / 2 - openWidth, width, height / 2 - openWidth);
+  line(width - margin, height / 2 + openWidth, width - margin, height - margin);
+  line(width - margin, height / 2 + openWidth, width, height / 2 + openWidth);
+}
 
-  // left bot 
-  line(100, height - 100, width / 2 - openWidth, height - 100);
-  line(100, height / 2 + openWidth, 100, height - 100);
-  line(0, height / 2 + openWidth, 100, height / 2 + openWidth);
-  line(width / 2 - openWidth, height - 100, width / 2 - openWidth, height);
+function drawBottomWalls(margin=100) {
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge !== 1) { line(margin, height - margin, width - margin, height - margin); return; }
+  line(margin, height - margin, width / 2 - openWidth, height - margin);
+  line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
+  line(width / 2 + openWidth, height - margin, width - margin, height - margin);
+  line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
+}
 
-
-  // right bot
-  line(width / 2 + openWidth, height - 100, width - 100, height - 100);
-  line(width - 100, height / 2 + openWidth, width - 100, height - 100);
-  line(width - 100, height / 2 + openWidth, width, height / 2 + openWidth);
-  line(width / 2 + openWidth, height - 100, width / 2 + openWidth, height);
+function drawRoomBg() {
+  fill("gray");
+  rect(100, 100, width - 200, height - 200);
+  noFill();
 }
 
 function drawMenu() {
@@ -238,9 +251,9 @@ function drawMenu() {
 
   drawMenuCharacterStats();
 
-  drawButton(200, 300, 300, 60, "Play", /*color(152, 207, 1)*/ "black", color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
-  drawButton(200, 380, 300, 60, "Settings", /*color(198, 204, 180)*/ "black", color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
-  drawButton(200, 460, 300, 60, "Help?", /* color(255, 37, 3)*/ "black", color(207, 29, 1), "white", () => { console.log("Help?!"); }, true, cancelSound);
+  drawButton(200, 300, 300, 60, "Play", "black", color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
+  drawButton(200, 380, 300, 60, "Settings", "black", color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
+  drawButton(200, 460, 300, 60, "Help?", "black", color(207, 29, 1), "white", () => { console.log("Help?!"); }, true, cancelSound);
 
   drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); prevCharacter(); }, false);
   drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); nextCharacter(); }, false);
