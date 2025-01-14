@@ -71,6 +71,16 @@ class Player {
 
         const directions = {
             [KEYS.LEFT]: () => {
+                if (this.y < 100) {
+                    if (!(this.x > width / 2 - 150)) {
+                        return;
+                    }
+                }
+                if (this.y + this.size > height - 100) {
+                    if (!(this.x > width / 2 - 150)) {
+                        return;
+                    }
+                }
                 if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge === 1) { // if bridge on left is open ->
                     if (this.x > 100) {
                         this.x -= this.speed;
@@ -89,7 +99,18 @@ class Player {
 
                 this.MoveDirection = "left";
             },
-            [KEYS.RIGHT]: () => {
+            [KEYS.RIGHT]: () => {  
+                if (this.y < 100) {
+                    if (!(this.x + this.size < width / 2 + 150)) {
+                        return;
+                    }
+                }
+                if (this.y + this.size > height - 100) {
+                    if (!(this.x + this.size < width / 2 + 150)) {
+                        return;
+                    }
+                }
+                
                 if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge === 1) { // if bridge on right is open -> 
                     if (this.x + this.size < width - 100) {
                         this.x += this.speed; 
@@ -108,6 +129,18 @@ class Player {
                 this.MoveDirection = "right";
             },
             [KEYS.UP]: () => {
+                if (this.x < 100) {
+                    if (this.y < height / 2 - 150) {
+                        return;
+                    }
+                }
+
+                if (this.x + this.size> width - 100) {
+                    if (this.y < height / 2 - 150) {
+                        return;
+                    }
+                }
+
                 if (gameMap[curentGameRoomY][curentGameRoomX].topBridge === 1) { // if bridge on top is open ->  
                     if (this.y > 100) {
                         this.y -= this.speed;
@@ -125,6 +158,18 @@ class Player {
                 }
             },
             [KEYS.DOWN]: () => {
+                if (this.x < 100) {
+                    if (this.y + this.size > height / 2 + 150) {
+                        return;
+                    }
+                }
+
+                if (this.x + this.size> width - 100) {
+                    if (this.y + this.size > height / 2 + 150) {
+                        return;
+                    }
+                }
+                
                 if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge === 1) { // if bridge on top is open ->  
                     if (this.y + this.size + 10< height - 100) {
                         this.y += this.speed;
