@@ -119,7 +119,7 @@ function draw() {
 function drawGame() {
   background(53, 80, 96);
 
-  //drawRoomBg();
+  drawRoomBg();
   drawTopWalls();
   drawLeftWalls();
   drawRightWalls();
@@ -261,6 +261,12 @@ function drawMenu() {
   let nameToDisplay = charactersName === "DarkKnight"? "Dark Knight": charactersName;
   drawButton(900, 100, 300, 50, nameToDisplay, "white", "white", "black", () => { console.log(nameToDisplay); }, false);
   drawImage(925, 175, 250, characterImageToShowInMenu);
+
+  // Text under the character with data
+
+  charterMenuDescription(900, 500, heartImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["health"]);
+  charterMenuDescription(900, 550, armorImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["armor"]);
+  charterMenuDescription(900, 600, energyImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["energy"]);
 }
 
 // ----- CODE -----
@@ -378,7 +384,7 @@ function keyTyped() {
         if (inventory.length < inventoryMaxSize) {
           let weaponToTake = dropItem.name;
           inventory.push(weaponToTake);
-          gameMap[curentGameRoomY][curentGameRoomX].drop.splice(drop.indexOf(dropItem), 1);
+          gameMap[curentGameRoomY][curentGameRoomX].drop.splice(gameMap[curentGameRoomY][curentGameRoomX].drop.indexOf(dropItem), 1);
           console.log("Weapon taken", weaponToTake);
           playSound(takeGunSound);
           return;
@@ -496,7 +502,13 @@ function onGameExit() {
   drop = [];
   chests = [];
   rewards = [];
-  inventory = [];
+  inventory = []; // change an all levels to ->
+
+  // gameMap[curentGameRoomY][curentGameRoomX].bullets = [];
+  // gameMap[curentGameRoomY][curentGameRoomX].enemies = [];
+  // gameMap[curentGameRoomY][curentGameRoomX].drop = [];
+  // gameMap[curentGameRoomY][curentGameRoomX].chests = [];
+  // gameMap[curentGameRoomY][curentGameRoomX].rewards = [];
   weaponName = "default";
 }
 
@@ -536,12 +548,3 @@ function nextCharacter() {
   characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
   console.log(charactersName, "choosed!");
 }
-
-// https://soul-knight.fandom.com/wiki/Knight
-// Take characters from here
-// https://ezgif.com/webp-to-gif/ezgif-3-d32a219e48.webp 
-// convert here to .gif .png
-
-// 2nd floor
-// Knight:
-// https://soul-knight.fandom.com/wiki/Knight_Kingdom#Wizard

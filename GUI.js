@@ -179,3 +179,19 @@ function drawMenuCharacterStats() {
 
   pop();
 } 
+
+/** 
+* @param {number} x - The x pos.
+* @param {number} x - The y pos.
+* @param {Image} icon - The Icon to display.
+* @param {number} iconSize - The image size.
+* @param {string} textToDisplay - The text to display.
+*/
+function charterMenuDescription(x, y, icon, iconSize, textToDisplay) {
+  let textOffset = 50;
+  image(icon, x, y, iconSize, iconSize);
+
+  fill("white");
+  text(textToDisplay, x + textOffset, y + iconSize - 5, 300, 60);
+  noFill();
+}
