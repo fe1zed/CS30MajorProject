@@ -119,7 +119,7 @@ function draw() {
 function drawGame() {
   background(53, 80, 96);
 
-  drawRoomBg();
+  //drawRoomBg();
   drawTopWalls();
   drawLeftWalls();
   drawRightWalls();
@@ -361,11 +361,10 @@ function keyTyped() {
     createEnemy("Boss", "Varkolyn Leader");               
   }               
   if (key === '2') {                
-    weaponName = "default";               
-    loadPlayerWeapon();               
+    createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Common");               
   }               
   if (key === '3') {                
-    createChest(chests, "Gold");                
+    createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Gold");                
   }                 
   if (key === '4') {                
     playSound(clickSound);                
@@ -388,18 +387,18 @@ function keyTyped() {
       }
     }
 
-    for (let chest of chests) {
+    for (let chest of gameMap[curentGameRoomY][curentGameRoomX].chests) {
       if (chest.x > player.x && chest.x < player.x + player.size && chest.y > player.y && chest.y < player.y + player.size) {
-        chests.splice(chests.indexOf(chest), 1);
-        createReward(rewards, chest);
+        gameMap[curentGameRoomY][curentGameRoomX].chests.splice(gameMap[curentGameRoomY][curentGameRoomX].chests.indexOf(chest), 1);
+        createReward(gameMap[curentGameRoomY][curentGameRoomX].rewards, chest);
         return;
       }
     }
 
-    for (let reward of rewards) {
+    for (let reward of gameMap[curentGameRoomY][curentGameRoomX].rewards) {
       if (reward.x > player.x && reward.x < player.x + player.size && reward.y > player.y && reward.y < player.y + player.size) {
         giveReward(reward.rewardType);
-        rewards.splice(rewards.indexOf(reward), 1);
+        gameMap[curentGameRoomY][curentGameRoomX].rewards.splice(gameMap[curentGameRoomY][curentGameRoomX].rewards.indexOf(reward), 1);
         return;
       }
     }
@@ -480,13 +479,13 @@ function dropPlayerItem() {
 }
 
 function displayChests() {
-  for (let chest of chests) {
+  for (let chest of gameMap[curentGameRoomY][curentGameRoomX].chests) {
     image(chest.image, chest.x, chest.y, chest.width, chest.height);
   }
 }
 
 function displayRewards() {
-  for (let reward of rewards) {
+  for (let reward of gameMap[curentGameRoomY][curentGameRoomX].rewards) {
     image(reward.image, reward.x, reward.y, reward.width, reward.height);
   }
 }

@@ -72,6 +72,8 @@ function fillMapWithDefaultData(map) {
                     topBridge: 0,
                     bottomBridge: 0,
                     drop: [],
+                    chests: [],
+                    rewards: [],
                 };
 
                 if (x + 1 < map[y].length && map[y][x + 1] !== 0) {

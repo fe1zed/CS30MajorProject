@@ -196,12 +196,12 @@ class Player {
         }
 
         // colision with screen X
-        if (this.x < 0) {this.x = width - this.size; curentGameRoomX -= 1; }
-        else if (this.x + this.size > width) { this.x = 0; curentGameRoomX += 1; }
+        if (this.x < 0) {this.x = width - this.size; curentGameRoomX -= 1; bullets = []; }
+        else if (this.x + this.size > width) { this.x = 0; curentGameRoomX += 1; bullets = []; }
 
         // colision with screen Y
-        if (this.y < 0) { this.y = height - this.size; curentGameRoomY -= 1;}
-        else if (this.y + this.size > height) { this.y = 0; curentGameRoomY += 1; }
+        if (this.y < 0) { this.y = height - this.size; curentGameRoomY -= 1; bullets = []; }
+        else if (this.y + this.size > height) { this.y = 0; curentGameRoomY += 1; bullets = []; }
     }
 
     display() {
