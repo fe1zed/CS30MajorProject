@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const MAP_SIZE_HORIZONTAL = 9;
 const MAP_SIZE_VERTICAL = 9;
 const roomsAmount = 9;
@@ -69,7 +70,8 @@ function fillMapWithDefaultData(map) {
                     rightBridge: 0,
                     leftBridge: 0,
                     topBridge: 0,
-                    bottomBridge: 0
+                    bottomBridge: 0,
+                    drop: [],
                 };
 
                 if (x + 1 < map[y].length && map[y][x + 1] !== 0) {

@@ -374,12 +374,12 @@ function keyTyped() {
 
   if (key.toLowerCase() === INTERACT_KEY || key === "у" || key === "У") {
     // take laying weapon
-    for (let dropItem of drop) {
+    for (let dropItem of gameMap[curentGameRoomY][curentGameRoomX].drop) {
       if (dropItem.x > player.x && dropItem.x < player.x + player.size && dropItem.y > player.y && dropItem.y < player.y + player.size) {
         if (inventory.length < inventoryMaxSize) {
           let weaponToTake = dropItem.name;
           inventory.push(weaponToTake);
-          drop.splice(drop.indexOf(dropItem), 1);
+          gameMap[curentGameRoomY][curentGameRoomX].drop.splice(drop.indexOf(dropItem), 1);
           console.log("Weapon taken", weaponToTake);
           playSound(takeGunSound);
           return;
@@ -446,9 +446,9 @@ function mouseWheel(event) {
 }
 
 function displayDrop() {
-  if (drop.length < 1) return;
+  if (gameMap[curentGameRoomY][curentGameRoomX].drop.length < 1) return;
 
-  for (let dropItem of drop) { 
+  for (let dropItem of gameMap[curentGameRoomY][curentGameRoomX].drop) { 
     image(dropItem.dropImage, dropItem.x, dropItem.y, dropItem.dropWidth / player.size * 30, dropItem.dropHeight / player.size * 30);
   }
 }
@@ -456,7 +456,7 @@ function displayDrop() {
 function createDrop(_x, _y, dropName) {
   let dropData = weaponsDataJson[WEAPONSPATH][dropName];
   let dropImage = loadImage(dropData['image']);
-  drop.push({
+  gameMap[curentGameRoomY][curentGameRoomX].drop.push({
     x: _x,
     y: _y,
     dropImage: dropImage,
