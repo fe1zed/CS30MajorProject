@@ -195,3 +195,58 @@ function charterMenuDescription(x, y, icon, iconSize, textToDisplay) {
   text(textToDisplay, x + textOffset, y + iconSize - 5, 300, 60);
   noFill();
 }
+
+function displayTextAboveGameObject(gameObject, boxWidth, boxHeight, textToDisplay, type) {
+  let gameObjectDisplayedWidth;
+  if (type === "Weapons") {
+    gameObjectDisplayedWidth = gameObject.dropWidth / player.size * 30;
+  }
+  else if ("Chests" || "Rewards") {
+    gameObjectDisplayedWidth = gameObject.width;
+  }
+  
+
+  let offsetY = -50;
+  fill("black");
+  rect(gameObject.x - boxWidth / 2 + gameObjectDisplayedWidth / 2, gameObject.y + offsetY, boxWidth, boxHeight);
+  fill("white");
+  textSize(32);
+  text(textToDisplay, gameObject.x - boxWidth / 2 + gameObjectDisplayedWidth / 2 + 2, gameObject.y - 23, boxWidth, boxHeight);
+  noFill();
+}
+
+function prevCharacter() {
+  let currentCharacterIndex = charactersList.indexOf(charactersName);
+
+  if (currentCharacterIndex - 1 < 0) { // set to last character
+    charactersName = charactersList[charactersList.length - 1];
+  }
+  else {
+    charactersName = charactersList[currentCharacterIndex - 1];
+  }
+
+  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
+  console.log(charactersName, "choosed!");
+}
+
+function nextCharacter() {
+  let currentCharacterIndex = charactersList.indexOf(charactersName);
+
+  if (currentCharacterIndex + 1 > charactersList.length - 1) { // set to last character
+    charactersName = charactersList[0];
+  }
+  else {
+    charactersName = charactersList[currentCharacterIndex + 1];
+  }
+
+  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
+  console.log(charactersName, "choosed!");
+}
+
+function textUIAboveGameObject(gameObjArray, text, type) {
+  for (let gameObject of gameObjArray) {
+    if (gameObject.x > player.x && gameObject.x < player.x + player.size && gameObject.y > player.y && gameObject.y < player.y + player.size) {
+      displayTextAboveGameObject(gameObject, 100, 30, text, type);
+    }
+  }
+}

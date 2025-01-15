@@ -106,3 +106,46 @@ function fillMapWithDefaultData(map) {
 // Вызов функций в нужном порядке
 let mapWithRooms = setUpPlaceForRooms(emptyMap);
 let gameMap = fillMapWithDefaultData(mapWithRooms);
+
+
+function drawTopWalls(margin=100) {
+    let openWidth = 150;
+    if (gameMap[curentGameRoomY][curentGameRoomX].topBridge !== 1) { line(margin, margin, width - margin, margin); return; }
+    line(margin, margin, width / 2 - openWidth, margin); 
+    line(width / 2 - openWidth, margin, width / 2 - openWidth, 0);
+    line(width / 2 + openWidth, margin, width - margin, margin);
+    line(width / 2 + openWidth, margin, width / 2 + openWidth, 0);
+  }
+  
+  function drawLeftWalls(margin=100) {
+    let openWidth = 150;
+    if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge !== 1) { line(margin, margin, margin, height - margin); return; }
+    line(margin, margin, margin, height / 2 - openWidth);
+    line(0, height / 2 - openWidth, margin, height / 2 - openWidth);
+    line(margin, height / 2 + openWidth, margin, height - margin);
+    line(0, height / 2 + openWidth, margin, height / 2 + openWidth);
+  }
+  
+  function drawRightWalls(margin=100) {
+    let openWidth = 150;
+    if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge !== 1) { line(width - margin, margin, width - margin, height - margin); return; }
+    line(width - margin, margin, width - margin, height / 2 - openWidth);
+    line(width - margin, height / 2 - openWidth, width, height / 2 - openWidth);
+    line(width - margin, height / 2 + openWidth, width - margin, height - margin);
+    line(width - margin, height / 2 + openWidth, width, height / 2 + openWidth);
+  }
+  
+  function drawBottomWalls(margin=100) {
+    let openWidth = 150;
+    if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge !== 1) { line(margin, height - margin, width - margin, height - margin); return; }
+    line(margin, height - margin, width / 2 - openWidth, height - margin);
+    line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
+    line(width / 2 + openWidth, height - margin, width - margin, height - margin);
+    line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
+  }
+  
+  function drawRoomBg() {
+    fill("gray");
+    rect(100, 100, width - 200, height - 200);
+    noFill();
+  }

@@ -181,6 +181,10 @@ function drawGame() {
     }
   }
 
+  textUIAboveGameObject(gameMap[curentGameRoomY][curentGameRoomX].drop, `Take`, "Weapons"); // [${INTERACT_KEY}]
+  textUIAboveGameObject(gameMap[curentGameRoomY][curentGameRoomX].chests, `Open`, "Chests"); // [${INTERACT_KEY}]
+  textUIAboveGameObject(gameMap[curentGameRoomY][curentGameRoomX].rewards, `Take`, "Rewards"); // [${INTERACT_KEY}]
+
   // ----- DROP -----
   displayChests();
   displayDrop();
@@ -203,51 +207,8 @@ function drawGame() {
   drawHUD();
 }
 
-function drawTopWalls(margin=100) {
-  let openWidth = 150;
-  if (gameMap[curentGameRoomY][curentGameRoomX].topBridge !== 1) { line(margin, margin, width - margin, margin); return; }
-  line(margin, margin, width / 2 - openWidth, margin); 
-  line(width / 2 - openWidth, margin, width / 2 - openWidth, 0);
-  line(width / 2 + openWidth, margin, width - margin, margin);
-  line(width / 2 + openWidth, margin, width / 2 + openWidth, 0);
-}
-
-function drawLeftWalls(margin=100) {
-  let openWidth = 150;
-  if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge !== 1) { line(margin, margin, margin, height - margin); return; }
-  line(margin, margin, margin, height / 2 - openWidth);
-  line(0, height / 2 - openWidth, margin, height / 2 - openWidth);
-  line(margin, height / 2 + openWidth, margin, height - margin);
-  line(0, height / 2 + openWidth, margin, height / 2 + openWidth);
-}
-
-function drawRightWalls(margin=100) {
-  let openWidth = 150;
-  if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge !== 1) { line(width - margin, margin, width - margin, height - margin); return; }
-  line(width - margin, margin, width - margin, height / 2 - openWidth);
-  line(width - margin, height / 2 - openWidth, width, height / 2 - openWidth);
-  line(width - margin, height / 2 + openWidth, width - margin, height - margin);
-  line(width - margin, height / 2 + openWidth, width, height / 2 + openWidth);
-}
-
-function drawBottomWalls(margin=100) {
-  let openWidth = 150;
-  if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge !== 1) { line(margin, height - margin, width - margin, height - margin); return; }
-  line(margin, height - margin, width / 2 - openWidth, height - margin);
-  line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
-  line(width / 2 + openWidth, height - margin, width - margin, height - margin);
-  line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
-}
-
-function drawRoomBg() {
-  fill("gray");
-  rect(100, 100, width - 200, height - 200);
-  noFill();
-}
-
 function drawMenu() {
   image(menuBg, 0, 0, width, height);
-  //background(220);
 
   drawMenuCharacterStats();
 
@@ -262,30 +223,12 @@ function drawMenu() {
   drawButton(900, 100, 300, 50, nameToDisplay, "white", "white", "black", () => { console.log(nameToDisplay); }, false);
   drawImage(925, 175, 250, characterImageToShowInMenu);
 
-  // Text under the character with data
-
   charterMenuDescription(900, 500, heartImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["health"]);
   charterMenuDescription(900, 550, armorImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["armor"]);
   charterMenuDescription(900, 600, energyImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["energy"]);
 }
 
 // ----- CODE -----
-
-function displayBullets() {
-  for (let bullet of bullets) {
-    let angle = atan2(bullet.dy, bullet.dx);
-
-    push();
-    translate(bullet.x, bullet.y);
-    rotate(angle);
-    imageMode(CENTER);
-    image(bullet.image, 0, 0, bullet.pixelWidth, bullet.pixelHeight);
-    pop();
-
-    bullet.x += bullet.dx;
-    bullet.y += bullet.dy;
-  }
-}
 
 function createEnemy(enemyType, enemyName) {
   let enemyData = getEnemieDataFromJSONByTypeAndName(enemyType, enemyName);
@@ -329,92 +272,6 @@ function getEnemieDataFromJSONByTypeAndName(enemyType, enemieName) {
   };
 }
 
-function windowResized() {
-  if (windowWidth < windowHeight) {
-    resizeCanvas(windowWidth, windowWidth);
-  }
-  else {
-    resizeCanvas(windowHeight, windowHeight);
-  }
-}
-
-function mouseClicked(event) {
-  if (scene === "Menu") return;
-
-  player.attack();
-}
-
-function keyPressed() {
-  if (scene === "Menu") return;
-
-  if (key.toLowerCase() === UNIQUE_ABILITY_KEY || key === "й" || key === "Й") {
-    if (!player.usingUniqueAbility)  {
-      if (player.lastTimeUsedUA + player.timeBetweenUsingUA > millis()) { return; }
-      player.usingUniqueAbility = true;
-      playSound(uniqueAbilitySound);
-    }
-    else {
-      console.warn("Already using unique ability");
-    }
-  }
-}
-
-function keyTyped() {
-  if (scene === "Menu") return;
-
-  // TEST KEYS DELETE ON BUILD ------------------->               
-  if (key === '1') {                
-    createEnemy("Boss", "Varkolyn Leader");               
-  }               
-  if (key === '2') {                
-    createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Common");               
-  }               
-  if (key === '3') {                
-    createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Gold");                
-  }                 
-  if (key === '4') {                
-    playSound(clickSound);                
-  }               
-  // <---------------------------------------------               
-
-  if (key.toLowerCase() === INTERACT_KEY || key === "у" || key === "У") {
-    // take laying weapon
-    for (let dropItem of gameMap[curentGameRoomY][curentGameRoomX].drop) {
-      if (dropItem.x > player.x && dropItem.x < player.x + player.size && dropItem.y > player.y && dropItem.y < player.y + player.size) {
-        if (inventory.length < inventoryMaxSize) {
-          let weaponToTake = dropItem.name;
-          inventory.push(weaponToTake);
-          gameMap[curentGameRoomY][curentGameRoomX].drop.splice(gameMap[curentGameRoomY][curentGameRoomX].drop.indexOf(dropItem), 1);
-          console.log("Weapon taken", weaponToTake);
-          playSound(takeGunSound);
-          return;
-        }
-        else console.log("Unable to take. Overflow amount of items. Drop something to take other item!");
-      }
-    }
-
-    for (let chest of gameMap[curentGameRoomY][curentGameRoomX].chests) {
-      if (chest.x > player.x && chest.x < player.x + player.size && chest.y > player.y && chest.y < player.y + player.size) {
-        gameMap[curentGameRoomY][curentGameRoomX].chests.splice(gameMap[curentGameRoomY][curentGameRoomX].chests.indexOf(chest), 1);
-        createReward(gameMap[curentGameRoomY][curentGameRoomX].rewards, chest);
-        return;
-      }
-    }
-
-    for (let reward of gameMap[curentGameRoomY][curentGameRoomX].rewards) {
-      if (reward.x > player.x && reward.x < player.x + player.size && reward.y > player.y && reward.y < player.y + player.size) {
-        giveReward(reward.rewardType);
-        gameMap[curentGameRoomY][curentGameRoomX].rewards.splice(gameMap[curentGameRoomY][curentGameRoomX].rewards.indexOf(reward), 1);
-        return;
-      }
-    }
-  }
-  if (key.toLowerCase() === DROP_ITEM_KEY) {
-    dropPlayerItem();
-    playSound(cancelSound);
-  }
-}
-
 function loadPlayerWeapon() {
   if (!weaponsDataJson[WEAPONSPATH].hasOwnProperty(weaponName)) {
     weaponName = "default";
@@ -425,37 +282,6 @@ function loadPlayerWeapon() {
   }
 
   player.laodPlayerWeapon();
-}
-
-function mouseWheel(event) {
-  if (scene === "Menu") return;
-
-  if (inventory.length < 2) return;
-
-  if (event.delta > 0) {
-    weaponIndex--;
-    if (weaponIndex < 0) {
-      weaponIndex = inventory.length - 1;
-    }
-    weaponName = inventory[weaponIndex];
-    loadPlayerWeapon();
-  } 
-  else if (event.delta < 0) {
-    weaponIndex++;
-    if (weaponIndex > inventory.length - 1) {
-      weaponIndex = 0;
-    }
-    weaponName = inventory[weaponIndex];
-    loadPlayerWeapon();
-  }
-}
-
-function displayDrop() {
-  if (gameMap[curentGameRoomY][curentGameRoomX].drop.length < 1) return;
-
-  for (let dropItem of gameMap[curentGameRoomY][curentGameRoomX].drop) { 
-    image(dropItem.dropImage, dropItem.x, dropItem.y, dropItem.dropWidth / player.size * 30, dropItem.dropHeight / player.size * 30);
-  }
 }
 
 function createDrop(_x, _y, dropName) {
@@ -484,6 +310,31 @@ function dropPlayerItem() {
   loadPlayerWeapon();
 }
 
+// ----- DISPLAYING -----
+function displayBullets() {
+  for (let bullet of bullets) {
+    let angle = atan2(bullet.dy, bullet.dx);
+
+    push();
+    translate(bullet.x, bullet.y);
+    rotate(angle);
+    imageMode(CENTER);
+    image(bullet.image, 0, 0, bullet.pixelWidth, bullet.pixelHeight);
+    pop();
+
+    bullet.x += bullet.dx;
+    bullet.y += bullet.dy;
+  }
+}
+
+function displayDrop() {
+  if (gameMap[curentGameRoomY][curentGameRoomX].drop.length < 1) return;
+
+  for (let dropItem of gameMap[curentGameRoomY][curentGameRoomX].drop) { 
+    image(dropItem.dropImage, dropItem.x, dropItem.y, dropItem.dropWidth / player.size * 30, dropItem.dropHeight / player.size * 30);
+  }
+}
+
 function displayChests() {
   for (let chest of gameMap[curentGameRoomY][curentGameRoomX].chests) {
     image(chest.image, chest.x, chest.y, chest.width, chest.height);
@@ -496,6 +347,7 @@ function displayRewards() {
   }
 }
 
+// ----- EVENTS -----
 function onGameExit() {
   bullets = [];
   enemies = [];
@@ -519,32 +371,4 @@ function onGameStart() {
   player.lastTimeUsedUA = startChargeUAFrom;
   loadPlayerWeapon();
   inventory.push(weaponName);
-}
-
-function prevCharacter() {
-  let currentCharacterIndex = charactersList.indexOf(charactersName);
-
-  if (currentCharacterIndex - 1 < 0) { // set to last character
-    charactersName = charactersList[charactersList.length - 1];
-  }
-  else {
-    charactersName = charactersList[currentCharacterIndex - 1];
-  }
-
-  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
-  console.log(charactersName, "choosed!");
-}
-
-function nextCharacter() {
-  let currentCharacterIndex = charactersList.indexOf(charactersName);
-
-  if (currentCharacterIndex + 1 > charactersList.length - 1) { // set to last character
-    charactersName = charactersList[0];
-  }
-  else {
-    charactersName = charactersList[currentCharacterIndex + 1];
-  }
-
-  characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
-  console.log(charactersName, "choosed!");
 }
