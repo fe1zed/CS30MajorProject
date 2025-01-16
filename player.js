@@ -196,12 +196,12 @@ class Player {
         }
 
         // colision with screen X
-        if (this.x < 0) {this.x = width - this.size - 120; curentGameRoomX -= 1; bullets = []; onRoomEnter(); }
-        else if (this.x + this.size > width) { this.x = 120; curentGameRoomX += 1; bullets = []; onRoomEnter(); }
+        if (this.x < 0) {this.x = width - this.size - 120; curentGameRoomX -= 1; bullets = []; onRoomEnter(); this.onChangeRoom(); }
+        else if (this.x + this.size > width) { this.x = 120; curentGameRoomX += 1; bullets = []; onRoomEnter(); this.onChangeRoom(); }
 
         // colision with screen Y
-        if (this.y < 0) { this.y = height - this.size - 120; curentGameRoomY -= 1; bullets = []; onRoomEnter(); }
-        else if (this.y + this.size > height) { this.y = 120; curentGameRoomY += 1; bullets = []; onRoomEnter(); }
+        if (this.y < 0) { this.y = height - this.size - 120; curentGameRoomY -= 1; bullets = []; onRoomEnter(); this.onChangeRoom(); }
+        else if (this.y + this.size > height) { this.y = 120; curentGameRoomY += 1; bullets = []; onRoomEnter(); this.onChangeRoom(); }
     }
 
     display() {
@@ -419,6 +419,29 @@ class Player {
     receiveCoins(coins) {
         this.coins += coins;
     }
+
+    onChangeRoom() {
+
+    }
+
+    healthPot()  {
+        if (this.health < this.maxHealth) {
+            this.health = this.health + 1 > this.maxHealth? this.maxHealth: this.health + 1;
+            console.log("New health:", this.health);
+        }
+    }
+
+    energyPot() {
+        if (this.energy < this.maxEnergy) {
+            this.energy = this.energy + 100 > this.maxEnergy? this.maxEnergy: this.energy + 100;
+            console.log("New energy:", this.energy);
+        }
+    }
+
+    restorationPot() {
+        this.healthPot(); 
+        this.energyPot();
+    }
 }
 
 class DarkKnight extends Player {
@@ -586,25 +609,6 @@ class DarkKnight extends Player {
         player.weaponPropelling = player.weaponType === "ColdWeapon" ? weaponsDataJson[WEAPONSPATH][weaponName]["propelling"] : false;
     }
 
-    healthPot()  {
-        if (this.health < this.maxHealth) {
-            this.health = this.health + 1 > this.maxHealth? this.maxHealth: this.health + 1;
-            console.log("New health:", this.health);
-        }
-    }
-
-    energyPot() {
-        if (this.energy < this.maxEnergy) {
-            this.energy = this.energy + 100 > this.maxEnergy? this.maxEnergy: this.energy + 100;
-            console.log("New energy:", this.energy);
-        }
-    }
-
-    restorationPot() {
-        this.healthPot(); 
-        this.energyPot();
-    }
-
     render() {
         this.move();
         this.executeUniqueAbility();
@@ -700,6 +704,13 @@ class Priestess extends Player {
         this.display();
         this.displayWeapon();
     }
+
+    onChangeRoom() {
+        this.zoneBuffActive = false;
+        this.zoneBuffStartTime = 0; 
+        this.zoneBuffActive = false;
+        console.log("Using unique ability {Regeneration Pact} ENDED");
+    } 
 }
 
 class Rogue extends Player {
@@ -887,6 +898,10 @@ class Witch extends Player {
         this.display();
         this.displayWeapon();
     }
+
+    onChangeRoom() {
+        this.spikes = [];
+    }
 }
 
 class Assasin extends Player {
@@ -900,7 +915,7 @@ class Assasin extends Player {
         this.shootedSpikes = false;
         this.usingUniqueAbility = false;
 
-        this.timeBetweenUsingUA = 15000;
+        this.timeBetweenUsingUA = 10000;
         this.lastTimeUsedUA = 0;
     }
 
@@ -1006,6 +1021,10 @@ class Assasin extends Player {
         this.display();
         this.displayWeapon();
     }
+
+    onChangeRoom() {
+        this.spikes = [];
+    }
 }
 
 class Alchemist extends Player {
@@ -1071,6 +1090,11 @@ class Alchemist extends Player {
         this.executeUniqueAbility();
         this.display();
         this.displayWeapon();
+    }
+
+    onChangeRoom() {
+        this.zoneBuffStartTime = 0; 
+        this.zoneBuffActive = false;
     }
 }
 

@@ -532,6 +532,10 @@ class Enemy {
         let index = enemies.indexOf(this);
         enemies.splice(index, 1);
         gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel -= 1;
+        if (gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel === 0) {
+            if (random(100) < 10) { createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Gold"); }
+            else { createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Common"); }
+        }
     }
 
     move() {

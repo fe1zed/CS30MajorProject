@@ -151,8 +151,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/BadPistolBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 12 
+                "pixelWidth": 40,
+                "pixelHeight": 24 
             }
         },
 
@@ -171,8 +171,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/AuroraBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 12 
+                "pixelWidth": 40,
+                "pixelHeight": 24 
             }
         }, 
 
@@ -191,8 +191,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/NeonBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 12 
+                "pixelWidth": 40,
+                "pixelHeight": 24 
             }
         },
 
@@ -211,8 +211,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/WoodenCrossBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         },
 
@@ -231,8 +231,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/OrangeBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         }, 
 
@@ -251,8 +251,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         }, 
 
@@ -271,8 +271,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/PurpleBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         }, 
 
@@ -291,8 +291,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/BlueBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         }, 
 
@@ -311,8 +311,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/WoodenCrossBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         },
 
@@ -331,8 +331,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/BlueBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         },
 
@@ -351,8 +351,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/H2OBullet.png",
                 "speed": 10,
-                "pixelWidth": 20,
-                "pixelHeight": 20 
+                "pixelWidth": 40,
+                "pixelHeight": 40 
             }
         }, 
 
@@ -1498,8 +1498,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/AstroWandBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1516,10 +1516,10 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/BanishingStaffBullet.png",
+                "image": "Weapons/Bullets/YellowBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1536,10 +1536,10 @@
             "type": "Staff",
 
             "Bullet" : {
-                "image": "Weapons/Bullets/CyanDragonStaffBullet.png",
+                "image": "Weapons/Bullets/BlueBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1558,8 +1558,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/FineMagicStaffBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1578,8 +1578,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/ForgottenStaffOfWizardGuardBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1598,8 +1598,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/GrandWizardOldStaffBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1618,8 +1618,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfFlameBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1638,8 +1638,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfFrostBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1658,8 +1658,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfIllusionBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1678,8 +1678,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfNatureBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1698,8 +1698,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfShootingStarsBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1718,8 +1718,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfSkeletonBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1738,8 +1738,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfWizardBullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         },
 
@@ -1758,8 +1758,8 @@
             "Bullet" : {
                 "image": "Weapons/Bullets/StaffOfWizard2Bullet.png",
                 "speed": 10,
-                "pixelWidth": 25,
-                "pixelHeight": 25 
+                "pixelWidth": 45,
+                "pixelHeight": 45 
             }
         }
     }

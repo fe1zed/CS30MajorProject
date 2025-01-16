@@ -19,12 +19,12 @@ const roomCounts = {
 };
 
 const maxRoomsByType = {
-  fight: 3,
+  fight: 4,
   shop: 1,
   bonus: 1,
   boss: 1,
   portal: 1,
-  statue : 1,
+  statue : 0,
 };
 
 let leftRoomsAmount = 8;
@@ -187,7 +187,7 @@ function setUpFightRoom() {
 
         for (let i = 0; i < emeniesAmountPerRoom; i++) {
             createEnemy("Common", random(possibleEnemies));
-        }
+        } 
     }
     else if (stage === 2) {
         let possibleEnemies = ["Elite Knight Enemy", "Knight Enemy", "Slime", "Wizard"];
@@ -255,4 +255,16 @@ function drawRoomBg() {
   fill("gray");
   rect(100, 100, width - 200, height - 200);
   noFill();
+}
+
+function drawPortal() {
+    let portalWidth = 200;
+    let portalHeight = 250;
+
+    let portalX = width / 2 - portalWidth / 2;
+    let portalY = height / 2 - portalHeight / 2;
+
+    if (gameMap[curentGameRoomY][curentGameRoomX].roomType === "portal") {
+        image(portalImage, portalX, portalY, portalWidth, portalHeight);
+    }
 }

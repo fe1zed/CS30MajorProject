@@ -1,9 +1,6 @@
 Список того что надо сделать по приоритету
 
-1. Add description in menu for characters. Small about. Health, armor, energy.                                  | +
-2. Make ownDropPlace for each room -> room[y][x].drop -> displayDrop(room[y][x]) // smth like this              | +
 3. Draw textures for map                                                                                        | -
 4. Make Shop on map                                                                                             | -
-5. When player is too close -> make text above items with data                                                  | +
 6. Make types for rooms on enter: shop, fight, bonus, boss [if level x-5], portal                               | -
-7. Saving system                                                                                                | -
+7. Finish portal stuff

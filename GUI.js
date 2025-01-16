@@ -204,6 +204,7 @@ function displayTextAboveGameObject(gameObject, boxWidth, boxHeight, textToDispl
   else if ("Chests" || "Rewards") {
     gameObjectDisplayedWidth = gameObject.width;
   }
+  else { gameObjectDisplayedWidth = gameObject.width; }
   
 
   let offsetY = -50;
@@ -226,6 +227,7 @@ function prevCharacter() {
   }
 
   characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
+  localStorage.setItem("CharactersName", charactersName);
   console.log(charactersName, "choosed!");
 }
 
@@ -240,6 +242,7 @@ function nextCharacter() {
   }
 
   characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
+  localStorage.setItem("CharactersName", charactersName);
   console.log(charactersName, "choosed!");
 }
 

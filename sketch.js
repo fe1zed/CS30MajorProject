@@ -42,6 +42,7 @@ let armorImage = null;
 let energyImage = null;
 let skillChargeImage = null;
 let menuBg = null;
+let portalImage = null;
 
 let logoImage = null;
 let coinImage = null;
@@ -81,6 +82,8 @@ function preload() {
   logoImage = loadImage('UI/logo.png');
   menuBg = loadImage('UI/MenuBg5.jpg');
 
+  portalImage = loadImage("Sprites/Portal.png");
+
   clickSound = loadSound('Sounds/menu_click_08.ogg');
   cancelSound = loadSound('Sounds/menu_go_back_01.ogg');
   menuMusic = loadSound('Sounds/medieval-background-196571.mp3');
@@ -89,6 +92,8 @@ function preload() {
   uniqueAbilitySound = loadSound('Sounds/uniqueAbility.mp3');
 
   gameTextFont = loadFont('Font/PixelatedEleganceRegular-ovyAA.ttf');
+
+  charactersName = localStorage.getItem("CharactersName") !== null? localStorage.getItem("CharactersName"): "DarkKnight";
 }
 
 function setup() {
@@ -184,6 +189,8 @@ function drawGame() {
   textUIAboveGameObject(gameMap[curentGameRoomY][curentGameRoomX].drop, `Take`, "Weapons"); // [${INTERACT_KEY}]
   textUIAboveGameObject(gameMap[curentGameRoomY][curentGameRoomX].chests, `Open`, "Chests"); // [${INTERACT_KEY}]
   textUIAboveGameObject(gameMap[curentGameRoomY][curentGameRoomX].rewards, `Take`, "Rewards"); // [${INTERACT_KEY}]
+
+  drawPortal();
 
   // ----- DROP -----
   displayChests();
