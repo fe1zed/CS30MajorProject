@@ -531,6 +531,7 @@ class Enemy {
         this.bullets = [];
         let index = enemies.indexOf(this);
         enemies.splice(index, 1);
+        gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel -= 1;
     }
 
     move() {

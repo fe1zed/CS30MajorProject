@@ -8,6 +8,30 @@ let emptyMap = createEmpty2dArray(MAP_SIZE_HORIZONTAL, MAP_SIZE_VERTICAL);
 let curentGameRoomX = Math.floor(MAP_SIZE_HORIZONTAL / 2);
 let curentGameRoomY = Math.floor(MAP_SIZE_VERTICAL / 2);
 
+const roomCounts = {
+  fight: 0,
+  shop: 0,
+  bonus: 0,
+  boss: 0,
+  portal: 0,
+  main: 1,
+  statue : 0,
+};
+
+const maxRoomsByType = {
+  fight: 3,
+  shop: 1,
+  bonus: 1,
+  boss: 1,
+  portal: 1,
+  statue : 1,
+};
+
+let leftRoomsAmount = 8;
+
+let level = 1;
+let stage = 2;
+
 function createEmpty2dArray(cols, rows) {
     let emptyGrid = [];
     for (let y = 0; y < rows; y++) {
@@ -74,6 +98,9 @@ function fillMapWithDefaultData(map) {
                     drop: [],
                     chests: [],
                     rewards: [],
+                    roomType: "fight",
+                    visited: false,
+                    currentAmountOfEnemiesOnLevel: 0,
                 };
 
                 if (x + 1 < map[y].length && map[y][x + 1] !== 0) {
@@ -100,6 +127,9 @@ function fillMapWithDefaultData(map) {
         }
     }
 
+    map[Math.floor(MAP_SIZE_HORIZONTAL / 2)][Math.floor(MAP_SIZE_VERTICAL / 2)].roomType = "main";
+    map[Math.floor(MAP_SIZE_HORIZONTAL / 2)][Math.floor(MAP_SIZE_VERTICAL / 2)].visited = true;
+
     return map;
 }
 
@@ -107,45 +137,122 @@ function fillMapWithDefaultData(map) {
 let mapWithRooms = setUpPlaceForRooms(emptyMap);
 let gameMap = fillMapWithDefaultData(mapWithRooms);
 
+function onRoomEnter() {
+    if (gameMap[curentGameRoomY][curentGameRoomX].visited) { return; }
+    let availableTypes = [];
+
+    if (roomCounts["fight"] < maxRoomsByType["fight"]) {
+      availableTypes.push("fight");
+    }
+    if (roomCounts["shop"] < maxRoomsByType["shop"]) {
+      availableTypes.push("shop");
+    }
+    if (roomCounts["bonus"] < maxRoomsByType["bonus"]) {
+      availableTypes.push("bonus");
+    }
+    if (roomCounts["statue"] < maxRoomsByType["statue"]) {
+      availableTypes.push("statue");
+    }
+
+    if (leftRoomsAmount === 2) {
+        availableTypes.push("boss");
+    }
+    if (leftRoomsAmount === 1) {
+        availableTypes.push("portal");
+    }
+
+    let newRoomType = random(availableTypes);
+    gameMap[curentGameRoomY][curentGameRoomX].roomType = newRoomType;
+    gameMap[curentGameRoomY][curentGameRoomX].visited = true;
+
+    roomCounts[newRoomType] += 1;
+    leftRoomsAmount -= 1;
+
+    console.log("You have entered room with type:", newRoomType);
+
+    switch (newRoomType) {
+        case "fight": setUpFightRoom(); break;
+        case "bonus": setUpBonusRoom(); break;
+        case "shop": setUpShopRoom(); break;
+        case "statue": setUpStatueRoom(); break;
+    }
+}
+
+function setUpFightRoom() {
+    console.log("Setting up Fight Room!");
+    let emeniesAmountPerRoom = 5;
+    
+    if (stage === 1) {
+        let possibleEnemies = ["Boar", "Bazinga", "BazingaFire", "BazingaIce", "BazingaToxic", "BazingaTrap"];
+
+        for (let i = 0; i < emeniesAmountPerRoom; i++) {
+            createEnemy("Common", random(possibleEnemies));
+        }
+    }
+    else if (stage === 2) {
+        let possibleEnemies = ["Elite Knight Enemy", "Knight Enemy", "Slime", "Wizard"];
+
+        for (let i = 0; i < emeniesAmountPerRoom; i++) {
+            createEnemy("Common", random(possibleEnemies));
+        }
+    }
+
+    gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel = emeniesAmountPerRoom;
+}
+
+function setUpShopRoom() {
+    console.log("Setting up Shop Room!");
+}
+
+function setUpBonusRoom() {
+    console.log("Setting up Bonus Room!");
+    createChest(gameMap[curentGameRoomY][curentGameRoomX].chests, "Gold");
+}
+
+function setUpStatueRoom() {
+    console.log("Setting up Statue Room!");
+}
+
+
 
 function drawTopWalls(margin=100) {
-    let openWidth = 150;
-    if (gameMap[curentGameRoomY][curentGameRoomX].topBridge !== 1) { line(margin, margin, width - margin, margin); return; }
-    line(margin, margin, width / 2 - openWidth, margin); 
-    line(width / 2 - openWidth, margin, width / 2 - openWidth, 0);
-    line(width / 2 + openWidth, margin, width - margin, margin);
-    line(width / 2 + openWidth, margin, width / 2 + openWidth, 0);
-  }
-  
-  function drawLeftWalls(margin=100) {
-    let openWidth = 150;
-    if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge !== 1) { line(margin, margin, margin, height - margin); return; }
-    line(margin, margin, margin, height / 2 - openWidth);
-    line(0, height / 2 - openWidth, margin, height / 2 - openWidth);
-    line(margin, height / 2 + openWidth, margin, height - margin);
-    line(0, height / 2 + openWidth, margin, height / 2 + openWidth);
-  }
-  
-  function drawRightWalls(margin=100) {
-    let openWidth = 150;
-    if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge !== 1) { line(width - margin, margin, width - margin, height - margin); return; }
-    line(width - margin, margin, width - margin, height / 2 - openWidth);
-    line(width - margin, height / 2 - openWidth, width, height / 2 - openWidth);
-    line(width - margin, height / 2 + openWidth, width - margin, height - margin);
-    line(width - margin, height / 2 + openWidth, width, height / 2 + openWidth);
-  }
-  
-  function drawBottomWalls(margin=100) {
-    let openWidth = 150;
-    if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge !== 1) { line(margin, height - margin, width - margin, height - margin); return; }
-    line(margin, height - margin, width / 2 - openWidth, height - margin);
-    line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
-    line(width / 2 + openWidth, height - margin, width - margin, height - margin);
-    line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
-  }
-  
-  function drawRoomBg() {
-    fill("gray");
-    rect(100, 100, width - 200, height - 200);
-    noFill();
-  }
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].topBridge !== 1) { line(margin, margin, width - margin, margin); return; }
+  line(margin, margin, width / 2 - openWidth, margin); 
+  line(width / 2 - openWidth, margin, width / 2 - openWidth, 0);
+  line(width / 2 + openWidth, margin, width - margin, margin);
+  line(width / 2 + openWidth, margin, width / 2 + openWidth, 0);
+}
+
+function drawLeftWalls(margin=100) {
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge !== 1) { line(margin, margin, margin, height - margin); return; }
+  line(margin, margin, margin, height / 2 - openWidth);
+  line(0, height / 2 - openWidth, margin, height / 2 - openWidth);
+  line(margin, height / 2 + openWidth, margin, height - margin);
+  line(0, height / 2 + openWidth, margin, height / 2 + openWidth);
+}
+
+function drawRightWalls(margin=100) {
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge !== 1) { line(width - margin, margin, width - margin, height - margin); return; }
+  line(width - margin, margin, width - margin, height / 2 - openWidth);
+  line(width - margin, height / 2 - openWidth, width, height / 2 - openWidth);
+  line(width - margin, height / 2 + openWidth, width - margin, height - margin);
+  line(width - margin, height / 2 + openWidth, width, height / 2 + openWidth);
+}
+
+function drawBottomWalls(margin=100) {
+  let openWidth = 150;
+  if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge !== 1) { line(margin, height - margin, width - margin, height - margin); return; }
+  line(margin, height - margin, width / 2 - openWidth, height - margin);
+  line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
+  line(width / 2 + openWidth, height - margin, width - margin, height - margin);
+  line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
+}
+
+function drawRoomBg() {
+  fill("gray");
+  rect(100, 100, width - 200, height - 200);
+  noFill();
+}

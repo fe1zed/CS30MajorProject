@@ -240,7 +240,7 @@ function createEnemy(enemyType, enemyName) {
       newEnemy = new window[className](width / 2, height / 2, enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
     }
     else {
-      newEnemy = new window[className](random(100, width - 100), random(100, height - 100), enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
+      newEnemy = new window[className](random(200, width - 200), random(200, height - 200), enemyData.pixelWidth, enemyData.pixelHeight, enemyData.health); 
     }
     
     newEnemy.image = loadImage(enemyData.image);

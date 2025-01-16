@@ -81,7 +81,7 @@ class Player {
                         return;
                     }
                 }
-                if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge === 1) { // if bridge on left is open ->
+                if (gameMap[curentGameRoomY][curentGameRoomX].leftBridge === 1 && gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel === 0) { // if bridge on left is open ->
                     if (this.x > 100) {
                         this.x -= this.speed;
                     }
@@ -111,7 +111,7 @@ class Player {
                     }
                 }
                 
-                if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge === 1) { // if bridge on right is open -> 
+                if (gameMap[curentGameRoomY][curentGameRoomX].rightBridge === 1 && gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel === 0) { // if bridge on right is open -> 
                     if (this.x + this.size < width - 100) {
                         this.x += this.speed; 
                     }
@@ -141,7 +141,7 @@ class Player {
                     }
                 }
 
-                if (gameMap[curentGameRoomY][curentGameRoomX].topBridge === 1) { // if bridge on top is open ->  
+                if (gameMap[curentGameRoomY][curentGameRoomX].topBridge === 1 && gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel === 0) { // if bridge on top is open ->  
                     if (this.y > 100) {
                         this.y -= this.speed;
                     }
@@ -170,7 +170,7 @@ class Player {
                     }
                 }
                 
-                if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge === 1) { // if bridge on top is open ->  
+                if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge === 1 && gameMap[curentGameRoomY][curentGameRoomX].currentAmountOfEnemiesOnLevel === 0) { // if bridge on top is open ->  
                     if (this.y + this.size + 10< height - 100) {
                         this.y += this.speed;
                     }
@@ -196,12 +196,12 @@ class Player {
         }
 
         // colision with screen X
-        if (this.x < 0) {this.x = width - this.size; curentGameRoomX -= 1; bullets = []; }
-        else if (this.x + this.size > width) { this.x = 0; curentGameRoomX += 1; bullets = []; }
+        if (this.x < 0) {this.x = width - this.size - 120; curentGameRoomX -= 1; bullets = []; onRoomEnter(); }
+        else if (this.x + this.size > width) { this.x = 120; curentGameRoomX += 1; bullets = []; onRoomEnter(); }
 
         // colision with screen Y
-        if (this.y < 0) { this.y = height - this.size; curentGameRoomY -= 1; bullets = []; }
-        else if (this.y + this.size > height) { this.y = 0; curentGameRoomY += 1; bullets = []; }
+        if (this.y < 0) { this.y = height - this.size - 120; curentGameRoomY -= 1; bullets = []; onRoomEnter(); }
+        else if (this.y + this.size > height) { this.y = 120; curentGameRoomY += 1; bullets = []; onRoomEnter(); }
     }
 
     display() {
