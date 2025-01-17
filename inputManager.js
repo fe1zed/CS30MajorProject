@@ -65,6 +65,16 @@ function keyTyped() {
         return;
       }
     }
+
+    if (player.x > portalX && player.x + player.size < portalX + portalWidth && player.y > portalY && player.y + player.size < portalY + portalHeight && 
+      gameMap[curentGameRoomY][curentGameRoomX].roomType === "portal"
+    ) {
+      level++;
+      if (level % 6 === 0) { stage += 1; level = 1; console.log("New Stage", stage); } 
+      console.log("New Level", level);
+
+      onGameStart();
+    }
   }
   if (key.toLowerCase() === DROP_ITEM_KEY) {
     dropPlayerItem();
@@ -76,6 +86,8 @@ function mouseWheel(event) {
   if (scene === "Menu") return;
 
   if (inventory.length < 2) return;
+
+  playSound(changeWeaponSound, true);
 
   if (event.delta > 0) {
     weaponIndex--;

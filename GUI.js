@@ -149,6 +149,8 @@ function drawHUD() {
   drawCoins();
 
   drawButton(width - 100, 10, 100, 50, "Exit", "black", "red", "white", () => {scene = "Menu"; onGameExit(); }, false, cancelSound);
+
+  displayLevelAndStage(250, 60);
 }
 
 /** 
@@ -252,4 +254,10 @@ function textUIAboveGameObject(gameObjArray, text, type) {
       displayTextAboveGameObject(gameObject, 100, 30, text, type);
     }
   }
+}
+
+function displayLevelAndStage(x, y) {
+  fill("white");
+  text(`${stage}-${level}`, x, y, 100, 30);
+  noFill();
 }

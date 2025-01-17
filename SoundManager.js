@@ -4,9 +4,15 @@
  * 
  * @param {sound} sound - The sound to play.
 */
-function playSound(sound) {
-  if (sound.isPlaying()) return;
-  sound.play();
+function playSound(sound, playImmideately=false) {
+  if (!playImmideately) {
+    if (sound.isPlaying()) return;
+    sound.play();
+  }
+  else {
+    if (sound.isPlaying()) sound.stopSound();
+    sound.play();
+  }
 }
 
 /**

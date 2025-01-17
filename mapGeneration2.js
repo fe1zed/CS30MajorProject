@@ -3,7 +3,8 @@ const MAP_SIZE_HORIZONTAL = 9;
 const MAP_SIZE_VERTICAL = 9;
 const roomsAmount = 9;
 
-let emptyMap = createEmpty2dArray(MAP_SIZE_HORIZONTAL, MAP_SIZE_VERTICAL);
+
+let gameMap;
 
 let curentGameRoomX = Math.floor(MAP_SIZE_HORIZONTAL / 2);
 let curentGameRoomY = Math.floor(MAP_SIZE_VERTICAL / 2);
@@ -19,18 +20,23 @@ const roomCounts = {
 };
 
 const maxRoomsByType = {
-  fight: 4,
-  shop: 1,
-  bonus: 1,
-  boss: 1,
-  portal: 1,
-  statue : 0,
+  fight: 5, // 4
+  shop: 0, // 1
+  bonus: 1, // 1
+  boss: 1, // 1
+  portal: 1, // 1
+  statue : 0, // 0
 };
 
 let leftRoomsAmount = 8;
 
 let level = 1;
-let stage = 2;
+let stage = 1;
+
+let portalWidth = 200;
+let portalHeight = 250;
+let portalX;
+let portalY;
 
 function createEmpty2dArray(cols, rows) {
     let emptyGrid = [];
@@ -114,13 +120,13 @@ function fillMapWithDefaultData(map) {
                 if (x - 1 >= 0 && map[y][x - 1] !== 0) {
                     room.leftBridge = 1;
                 }
-                else { console.log(map[y][x - 1]); }
+                //else { console.log(map[y][x - 1]); }
                 
                 if (y - 1 >= 0 && map[y - 1][x] !== 0) {
                     room.topBridge = 1;
                 }              
 
-                console.log(`Room at (${x}, ${y}):`, room);
+                // console.log(`Room at (${x}, ${y}):`, room);
 
                 map[y][x] = room;
             }
@@ -132,10 +138,6 @@ function fillMapWithDefaultData(map) {
 
     return map;
 }
-
-// Вызов функций в нужном порядке
-let mapWithRooms = setUpPlaceForRooms(emptyMap);
-let gameMap = fillMapWithDefaultData(mapWithRooms);
 
 function onRoomEnter() {
     if (gameMap[curentGameRoomY][curentGameRoomX].visited) { return; }
@@ -213,8 +215,6 @@ function setUpStatueRoom() {
     console.log("Setting up Statue Room!");
 }
 
-
-
 function drawTopWalls(margin=100) {
   let openWidth = 150;
   if (gameMap[curentGameRoomY][curentGameRoomX].topBridge !== 1) { line(margin, margin, width - margin, margin); return; }
@@ -258,13 +258,29 @@ function drawRoomBg() {
 }
 
 function drawPortal() {
-    let portalWidth = 200;
-    let portalHeight = 250;
-
-    let portalX = width / 2 - portalWidth / 2;
-    let portalY = height / 2 - portalHeight / 2;
-
     if (gameMap[curentGameRoomY][curentGameRoomX].roomType === "portal") {
         image(portalImage, portalX, portalY, portalWidth, portalHeight);
+
+        if (player.x > portalX && player.x + player.size < portalX + portalWidth && player.y > portalY && player.y + player.size < portalY + portalHeight) {
+            let offsetY = -50;
+            fill("black");
+            rect(portalX - 130 / 2 + portalWidth / 2, portalY + offsetY, 130, 30);
+            fill("white");
+            textSize(32);
+            text("Enter", portalX - 130 / 2 + portalWidth / 2 + 2, portalY - 23, 130, 30);
+            noFill();
+        }
     }
+}
+
+function generateLevel() {
+    curentGameRoomX = Math.floor(MAP_SIZE_HORIZONTAL / 2)
+    curentGameRoomY = Math.floor(MAP_SIZE_VERTICAL / 2)
+    
+    let emptyMap = createEmpty2dArray(MAP_SIZE_HORIZONTAL, MAP_SIZE_VERTICAL);
+    let mapWithRooms = setUpPlaceForRooms(emptyMap);
+    gameMap = fillMapWithDefaultData(mapWithRooms);
+
+    portalX = width / 2 - portalWidth / 2;
+    portalY = height / 2 - portalHeight / 2;
 }

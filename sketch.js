@@ -63,6 +63,8 @@ let menuMusic;
 let gameMusic;
 let takeGunSound;
 let uniqueAbilitySound;
+let changeWeaponSound;
+let swordSound;
 
 // Font
 let gameTextFont;
@@ -90,6 +92,7 @@ function preload() {
   gameMusic = loadSound('Sounds/medieval-adventure-270566.mp3');
   takeGunSound = loadSound('Sounds/takeGun.ogg');
   uniqueAbilitySound = loadSound('Sounds/uniqueAbility.mp3');
+  changeWeaponSound = loadSound('Sounds/changeWeaponSound.mp3');
 
   gameTextFont = loadFont('Font/PixelatedEleganceRegular-ovyAA.ttf');
 
@@ -101,11 +104,6 @@ function setup() {
   textFont(gameTextFont);
 
   characterImageToShowInMenu = loadImage(charactersDataJson[CHARACTERSPATH][charactersName]["image"]);
-
-  // createEnemy("Boss", "Varkolyn Leader"); // 
-//   createDrop(300, 300, "Blood Blade");
-//   createDrop(500, 500, "Jack");
-//   createDrop(300, 450, "Wooden Cross"); // no info of player on start -> avoid writing this
 }
 
 function draw() {
@@ -361,21 +359,21 @@ function onGameExit() {
   drop = [];
   chests = [];
   rewards = [];
-  inventory = []; // change an all levels to ->
-
-  // gameMap[curentGameRoomY][curentGameRoomX].bullets = [];
-  // gameMap[curentGameRoomY][curentGameRoomX].enemies = [];
-  // gameMap[curentGameRoomY][curentGameRoomX].drop = [];
-  // gameMap[curentGameRoomY][curentGameRoomX].chests = [];
-  // gameMap[curentGameRoomY][curentGameRoomX].rewards = [];
+  inventory = []; 
   weaponName = "default";
+  gameMap = null;
+
+  level = 1;
+  stage = 1;
 }
 
 function onGameStart() {
+  generateLevel();
   player = new window[charactersName](200, 200, 5, 100);
   player.setPlayerValues();
   player.loadAdditionalData();
   player.lastTimeUsedUA = startChargeUAFrom;
   loadPlayerWeapon();
   inventory.push(weaponName);
+  setTimeout(() => { bullets = []; }, 100); // clear 1st bullet
 }
