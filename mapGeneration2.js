@@ -9,7 +9,7 @@ let gameMap;
 let curentGameRoomX = Math.floor(MAP_SIZE_HORIZONTAL / 2);
 let curentGameRoomY = Math.floor(MAP_SIZE_VERTICAL / 2);
 
-const roomCounts = {
+let roomCounts = {
   fight: 0,
   shop: 0,
   bonus: 0,
@@ -276,8 +276,20 @@ function drawPortal() {
 }
 
 function generateLevel() {
-    curentGameRoomX = Math.floor(MAP_SIZE_HORIZONTAL / 2)
-    curentGameRoomY = Math.floor(MAP_SIZE_VERTICAL / 2)
+    leftRoomsAmount = 8;
+    
+    roomCounts = {
+        fight: 0,
+        shop: 0,
+        bonus: 0,
+        boss: 0,
+        portal: 0,
+        main: 1,
+        statue : 0,
+      };
+
+    curentGameRoomX = Math.floor(MAP_SIZE_HORIZONTAL / 2);
+    curentGameRoomY = Math.floor(MAP_SIZE_VERTICAL / 2);
     
     let emptyMap = createEmpty2dArray(MAP_SIZE_HORIZONTAL, MAP_SIZE_VERTICAL);
     let mapWithRooms = setUpPlaceForRooms(emptyMap);

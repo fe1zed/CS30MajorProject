@@ -376,11 +376,13 @@ function onGameExit() {
 
 function onGameStart() {
   generateLevel();
-  player = new window[charactersName](200, 200, 5, 100);
-  player.setPlayerValues();
-  player.loadAdditionalData();
-  player.lastTimeUsedUA = startChargeUAFrom;
-  loadPlayerWeapon();
-  inventory.push(weaponName);
+  if (level === 1) { 
+    inventory.push(weaponName); 
+    player = new window[charactersName](200, 200, 5, 100);
+    player.setPlayerValues();
+    player.loadAdditionalData();
+    player.lastTimeUsedUA = startChargeUAFrom;
+    loadPlayerWeapon();
+  }
   setTimeout(() => { bullets = []; }, 100); // clear 1st bullet
 }
