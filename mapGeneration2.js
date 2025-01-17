@@ -157,7 +157,7 @@ function onRoomEnter() {
     }
 
     if (leftRoomsAmount === 2) {
-        availableTypes.push("boss");
+        availableTypes.push(level === 5? "boss": "fight");
     }
     if (leftRoomsAmount === 1) {
         availableTypes.push("portal");
@@ -245,16 +245,18 @@ function drawRightWalls(margin=100) {
 function drawBottomWalls(margin=100) {
   let openWidth = 150;
   if (gameMap[curentGameRoomY][curentGameRoomX].bottomBridge !== 1) { line(margin, height - margin, width - margin, height - margin); return; }
-  line(margin, height - margin, width / 2 - openWidth, height - margin);
-  line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
-  line(width / 2 + openWidth, height - margin, width - margin, height - margin);
-  line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
+    line(margin, height - margin, width / 2 - openWidth, height - margin);
+    line(width / 2 - openWidth, height - margin, width / 2 - openWidth, height);
+    line(width / 2 + openWidth, height - margin, width - margin, height - margin);
+    line(width / 2 + openWidth, height - margin, width / 2 + openWidth, height);
+    //image(bottomOpenBridgeImage, width / 2 - openWidth, height - 200, openWidth * 2, 150);
 }
 
 function drawRoomBg() {
   fill("gray");
   rect(100, 100, width - 200, height - 200);
   noFill();
+  image(closedLevelImage, 65, 100, width - 125, height - 140);
 }
 
 function drawPortal() {

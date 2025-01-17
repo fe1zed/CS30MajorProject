@@ -47,6 +47,9 @@ let portalImage = null;
 let logoImage = null;
 let coinImage = null;
 
+let closedLevelImage;
+let bottomOpenBridgeImage;
+
 let bullets = [];
 let enemies = [];
 let drop = [];
@@ -94,6 +97,10 @@ function preload() {
   uniqueAbilitySound = loadSound('Sounds/uniqueAbility.mp3');
   changeWeaponSound = loadSound('Sounds/changeWeaponSound.mp3');
 
+  closedLevelImage = loadImage('Sprites/GameBg/GameBgTextures/ClosedLevelImproved.png');
+  bottomOpenBridgeImage = loadImage('Sprites/GameBg/GameBgTextures/BottomOpenBridge.png');
+
+
   gameTextFont = loadFont('Font/PixelatedEleganceRegular-ovyAA.ttf');
 
   charactersName = localStorage.getItem("CharactersName") !== null? localStorage.getItem("CharactersName"): "DarkKnight";
@@ -128,7 +135,7 @@ function drawGame() {
   drawRightWalls();
   drawBottomWalls();
 
-  drawImage(1000, 200, 256, logoImage);
+  // drawImage(1000, 200, 256, logoImage);
 
   if (charactersName === "Witch" || charactersName === "Assasin") {
     for (let spike of player.spikes) {
