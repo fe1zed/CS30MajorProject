@@ -10,7 +10,7 @@ function playSound(sound, playImmideately=false) {
     sound.play();
   }
   else {
-    if (sound.isPlaying()) sound.stopSound();
+    if (sound.isPlaying()) stopSound(sound);
     sound.play();
   }
 }
