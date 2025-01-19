@@ -2,5 +2,3 @@
 
 3. Draw textures for map                                                                                        | -
 4. Make Shop on map                                                                                             | -
-6. Make types for rooms on enter: shop, fight, bonus, boss [if level x-5], portal                               | -
-7. Finish portal stuff

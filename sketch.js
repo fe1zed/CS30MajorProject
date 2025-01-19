@@ -124,10 +124,17 @@ function draw() {
     playSound(gameMusic);
     stopSound(menuMusic);
   }
+  else if (scene === "Settings") {
+
+  }
+  else if (scene === "Help") {
+    drawHelp();
+  }
 }
 
 function drawGame() {
-  background(53, 80, 96);
+  //background(53, 80, 96);
+  background(0);
 
   drawRoomBg();
   drawTopWalls();
@@ -226,7 +233,7 @@ function drawMenu() {
 
   drawButton(200, 300, 300, 60, "Play", "black", color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
   drawButton(200, 380, 300, 60, "Settings", "black", color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
-  drawButton(200, 460, 300, 60, "Help?", "black", color(207, 29, 1), "white", () => { console.log("Help?!"); }, true, cancelSound);
+  drawButton(200, 460, 300, 60, "Help?", "black", color(207, 29, 1), "white", () => { console.log("Help?!"); scene = "Help"; }, true, cancelSound);
 
   drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); prevCharacter(); }, false);
   drawButton(1200, 300, 100, 100, ">", "white", "white", "black", () => { console.log("Change character to next!"); nextCharacter(); }, false);
@@ -238,6 +245,28 @@ function drawMenu() {
   charterMenuDescription(900, 500, heartImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["health"]);
   charterMenuDescription(900, 550, armorImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["armor"]);
   charterMenuDescription(900, 600, energyImage, 30, charactersDataJson[CHARACTERSPATH][charactersName]["energy"]);
+}
+
+function drawHelp() {
+  background(0);
+  fill("white");
+
+  text("Go as far into the dungeon as you can!", 100, 200, width - 100, 250);
+  text("At every 5th level a Boss will be waiting for you!", 100, 250, width - 100, 300);
+  text("Reach level 3-5 and kill the Final Boss to complete the game!", 100, 300, width - 100, 350);
+  text("Use portals to move between levels!", 100, 350, width - 100, 400);
+  text("Shield refills every 5 seconds if not damaged.", 100, 400, width - 100, 450);
+  text("Health is replenished only by potions.", 100, 450, width - 100, 500);
+
+  fill("red");
+  text("[WASD] -> movement.", 100, 600, width - 100, 650);
+  text(`[${INTERACT_KEY}] -> take/drink.`, 100, 650, width - 100, 700);
+  text(`[${DROP_ITEM_KEY}] -> drop item.`, 100, 700, width - 100, 750);
+  text(`[${UNIQUE_ABILITY_KEY}] -> unique ability.`, 100, 750, width - 100, 800);
+  noFill();
+
+  drawButton(width / 2 - 150, 50, 300, 60, "HELP?", "black", "black", "white", () => {}, false, cancelSound);
+  drawButton(width / 2 - 150, height - 100, 300, 60, "GOT IT!", "black", color(129, 176, 0), "white", () => { console.log("Got it!"); scene = "Menu"; }, false, cancelSound);
 }
 
 // ----- CODE -----

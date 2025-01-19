@@ -617,7 +617,6 @@ class DarkKnight extends Player {
         if(this.dualWieldActive) {
             this.displaySecondWeapon();
         }
-        this.rapairArmor();
     }
 }
 

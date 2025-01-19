@@ -1176,7 +1176,7 @@
             "pixelHeight": 100,
 
             "Bullet" : {
-                "image": "Enemies/Sprites/ToxicDefaultBullet.png",
+                "image": "Enemies/Sprites/GreenDefaultBullet.png",
                 "speed": 8,
                 "pixelWidth": 40,
                 "pixelHeight": 40 
