@@ -17,9 +17,9 @@ const KEYS = { LEFT: 65, RIGHT: 68, UP: 87, DOWN: 83 };
 const BULLET_DEFAULT_SIZE = 10;
 const BULLET_SPEED_SCALE = 30;
 const WEAPON_SIZE_SCALE = 30;
-const INTERACT_KEY = "e";
-const UNIQUE_ABILITY_KEY = "q";
-const DROP_ITEM_KEY = "x";
+let INTERACT_KEY = "e";
+let UNIQUE_ABILITY_KEY = "q";
+let DROP_ITEM_KEY = "x";
 
 // Data containers
 let charactersDataJson;
@@ -71,6 +71,11 @@ let swordSound;
 
 // Font
 let gameTextFont;
+
+// Inputs
+let interactKeyInput = null;
+let dropKeyInput = null;
+let uniqueAbilityKeyInput = null;
 
 function preload() {
   charactersDataJson = loadJSON(CHARACTERSPATH + '/CharactersData.json');  
@@ -125,7 +130,7 @@ function draw() {
     stopSound(menuMusic);
   }
   else if (scene === "Settings") {
-
+    drawSettings();
   }
   else if (scene === "Help") {
     drawHelp();
@@ -232,7 +237,7 @@ function drawMenu() {
   drawMenuCharacterStats();
 
   drawButton(200, 300, 300, 60, "Play", "black", color(129, 176, 0), "white", () => { console.log("Play!"); scene = "Game"; onGameStart(); player.lastTimeUsedUA = millis(); }, true, clickSound);
-  drawButton(200, 380, 300, 60, "Settings", "black", color(159, 164, 145), "white", () => { console.log("Settings!"); }, true, clickSound);
+  drawButton(200, 380, 300, 60, "Settings", "black", color(159, 164, 145), "white", () => { console.log("Settings!"); scene = "Settings"; }, true, clickSound);
   drawButton(200, 460, 300, 60, "Help?", "black", color(207, 29, 1), "white", () => { console.log("Help?!"); scene = "Help"; }, true, cancelSound);
 
   drawButton(800, 300, 100, 100, "<", "white", "white", "black", () => { console.log("Change character to previous!"); prevCharacter(); }, false);
@@ -267,6 +272,30 @@ function drawHelp() {
 
   drawButton(width / 2 - 150, 50, 300, 60, "HELP?", "black", "black", "white", () => {}, false, cancelSound);
   drawButton(width / 2 - 150, height - 100, 300, 60, "GOT IT!", "black", color(129, 176, 0), "white", () => { console.log("Got it!"); scene = "Menu"; }, false, cancelSound);
+}
+
+function drawSettings() {
+  background(0);
+
+  fill("white");
+  text("Interact Key:", 100, 200, 300, 250);
+  text("Drop Key:", 100, 250, 300, 300);
+  text("Unique Ability Key:", 100, 300, 500, 350);
+
+  text(`Current Key: [${INTERACT_KEY}]`, 800, 200, 500, 250);
+  text(`Current Key: [${DROP_ITEM_KEY}]`, 800, 250, 500, 300);
+  text(`Current Key: [${UNIQUE_ABILITY_KEY}]`, 800, 300, 500, 350);
+
+  noFill();
+
+  if (!interactKeyInput) {
+    interactKeyInput = createInputField(550, 170, 200, 30, "INTERACT_KEY");
+    dropKeyInput = createInputField(550, 220, 200, 30, "DROP_ITEM_KEY");
+    uniqueAbilityKeyInput = createInputField(550, 270, 200, 30, "UNIQUE_ABILITY_KEY");
+  }
+
+  drawButton(width / 2 - 150, 50, 300, 60, "SETTINGS", "black", "black", "white", () => {}, false, cancelSound);
+  drawButton(width / 2 - 150, height - 100, 300, 60, "Back", "black", color(129, 176, 0), "white", () => { console.log("Back to menu!"); scene = "Menu"; onSettingsExit(); }, false, cancelSound);
 }
 
 // ----- CODE -----
@@ -406,12 +435,28 @@ function onGameExit() {
 function onGameStart() {
   generateLevel();
   if (level === 1) { 
-    inventory.push(weaponName); 
     player = new window[charactersName](200, 200, 5, 100);
     player.setPlayerValues();
     player.loadAdditionalData();
     player.lastTimeUsedUA = startChargeUAFrom;
     loadPlayerWeapon();
+    inventory.push(weaponName); 
   }
   setTimeout(() => { bullets = []; }, 100); // clear 1st bullet
+}
+
+function onSettingsExit() {
+  // Удаляем поля ввода, если они существуют
+  if (interactKeyInput) {
+    interactKeyInput.remove();
+    interactKeyInput = null;
+  }
+  if (dropKeyInput) {
+    dropKeyInput.remove();
+    dropKeyInput = null;
+  }
+  if (uniqueAbilityKeyInput) {
+    uniqueAbilityKeyInput.remove();
+    uniqueAbilityKeyInput = null;
+  }
 }

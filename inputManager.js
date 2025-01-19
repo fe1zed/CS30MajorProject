@@ -1,11 +1,11 @@
 function mouseClicked(event) {
-  if (scene === "Menu") return;
+  if (scene !== "Game") return;
 
   player.attack();
 }
 
 function keyPressed() {
-  if (scene === "Menu") return;
+  if (scene !== "Game") return;
 
   if (key.toLowerCase() === UNIQUE_ABILITY_KEY || key === "й" || key === "Й") {
     if (!player.usingUniqueAbility)  {
@@ -20,7 +20,7 @@ function keyPressed() {
 }
 
 function keyTyped() {
-  if (scene === "Menu") return;
+  if (scene !== "Game") return;
 
   // TEST KEYS DELETE ON BUILD ------------------->               
   if (key === '1') {                
@@ -83,7 +83,7 @@ function keyTyped() {
 }
 
 function mouseWheel(event) {
-  if (scene === "Menu") return;
+  if (scene !== "Game") return;
 
   if (inventory.length < 2) return;
 
@@ -105,4 +105,39 @@ function mouseWheel(event) {
     weaponName = inventory[weaponIndex];
     loadPlayerWeapon();
   }
+}
+
+function updateInteractKey(newValue) {
+  INTERACT_KEY = checkNewKey(newValue, INTERACT_KEY);
+}
+
+function updateDropKey(newValue) {
+  DROP_ITEM_KEY = checkNewKey(newValue, DROP_ITEM_KEY);
+}
+
+function updateUAKey(newValue) {
+  UNIQUE_ABILITY_KEY = checkNewKey(newValue, UNIQUE_ABILITY_KEY);
+}
+
+function checkNewKey(newValue, oldValue) {
+  if (newValue === INTERACT_KEY || newValue === DROP_ITEM_KEY || newValue === UNIQUE_ABILITY_KEY) {
+    console.log("The key is already taken!");
+    return oldValue;
+  }
+
+  if (newValue == oldValue) { 
+    console.log("The new value of key is same!");
+    return oldValue 
+  };
+  
+  let blockKeys = ["w", "a", "s", "d", " "];
+
+  for (let blockKey of blockKeys) {
+    if (newValue === blockKey) { 
+      console.log("Not able to assign key to a new value!");
+      return oldValue;
+    }
+  }
+
+  return newValue;
 }

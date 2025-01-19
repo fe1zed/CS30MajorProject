@@ -261,3 +261,42 @@ function displayLevelAndStage(x, y) {
   text(`${stage}-${level}`, x, y, 100, 30);
   noFill();
 }
+
+// -------------------
+function createInputField(x, y, width, height, theVariableToChange) {
+  let inputField = createInput('Press a key...');
+  inputField.position(x, y);
+  inputField.size(width, height);
+  inputField.attribute('readonly', true); // Запретить ручной ввод
+
+  // Очищаем поле при клике
+  inputField.mousePressed(() => {
+    inputField.value('');
+  });
+
+  // Обработка события нажатия клавиши
+  inputField.elt.addEventListener('keydown', (e) => {
+    let selectedKey = e.key; // Сохраняем выбранную клавишу
+    inputField.value(`New Key: ${selectedKey}`); // Отображаем клавишу в поле
+    if (theVariableToChange == "INTERACT_KEY") {
+      updateInteractKey(selectedKey);
+    }
+    else if (theVariableToChange == "DROP_ITEM_KEY") {
+      updateDropKey(selectedKey);
+    }
+    else if (theVariableToChange == "UNIQUE_ABILITY_KEY") {
+      updateUAKey(selectedKey);
+    }
+    e.preventDefault(); // Предотвращаем стандартное поведение
+    console.log("The value of key changed to", selectedKey);
+  });
+
+  // Обработка события потери фокуса
+  inputField.elt.addEventListener('blur', () => {
+    if (inputField.value() === '') {
+      inputField.value('Press a key...');
+    }
+  });
+
+  return inputField;
+}

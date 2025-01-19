@@ -2,3 +2,4 @@
 
 3. Draw textures for map                                                                                        | -
 4. Make Shop on map                                                                                             | -
+5. Make saving for new chosen key
